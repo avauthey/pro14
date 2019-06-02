@@ -1,6 +1,14 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-#app_championnat_number:
- #   path: /
-  #  controller: App\Controller\ChampionnatController::number
+index:
+    path: /
+    controller: App\Controller\AccueilController::index
+competition:
+    path: /competition
+    controller: App\Controller\ChampionnatController::number
+equipe:
+    path : /equipe/{id}
+    controller: App\Controller\EquipeController::getUneEquipe
+    requirements:
+        id: '\d+'
+equipes:
+    path: /equipes
+    controller: App\Controller\EquipeController::getEquipes

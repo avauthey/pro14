@@ -1,0 +1,64 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Equipe - {{ equipe.nom }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('equipes')}}'>Equipes</a></li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>{{ equipe.nom ~' - '~ active }}</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            {{ include('equipes/blockMenu.html.twig',{'active': active, 'equipe' :equipe}) }}
+        </div>
+        <div class='col-lg-10 top'>
+            <div class='table-responsive'>
+                <table class='table table-bordered'>
+                    <tr>
+                        <td colspan='4' class='text-center'><img src='{{ asset('images/'~equipe.logo) }}' alt='logo {{ equipe.nom }}' width='100'></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i class="fas fa-city"></i> Ville : <span style='font-weight: 600'>{{equipe.ville}}</span>
+                        </td>
+                        <td colspan='2'>
+                            <img src='{{asset('images/stadium.png')}}' style='width:20px;height: 16px;'> Stade : <span style='font-weight: 600'>{{equipe.stade}}</span>
+                        </td>
+                        <td>
+                            <i class="fas fa-poll"></i> Capacité stade : <span style='font-weight: 600'>{{equipe.capaciteStade}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2' style='border-bottom: none'>
+                            <i class="fas fa-tshirt"></i> Maillot Domicile : 
+                        </td>
+                        <td colspan='2' style='border-bottom: none'>
+                            <i class="fas fa-tshirt reverseShirt"></i> Maillot Exterieur :
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2' class='text-center' style='border-top: none'>
+                            <img src='{{ asset('images/'~equipe.maillotDomicile) }}' alt='maillot domicile {{ equipe.nom}}' width='100' height='100'>
+                        </td>
+                        <td colspan='2' class='text-center' style='border-top: none'>
+                            <img class='ml-5' src='{{ asset('images/'~equipe.maillotExterieur) }}' alt='maillot domicile {{ equipe.nom}}' width='100' height='100'>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='4'>Palmarès : </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock  %}

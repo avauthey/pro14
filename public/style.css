@@ -1,0 +1,29 @@
+/* 
+    Created on : 1 juin 2019, 18:55:36
+    Author     : Antoine
+*/
+
+footer{
+    background-color: #343a40;
+    margin-top: 15px;
+    padding: 10px;
+}
+footer a{
+    color: white;
+}
+footer a:hover{
+    color: white;
+}
+.list-group-item.active{
+    background-color: #009198;
+    border-color: #009198;
+}
+.reverseShirt{
+    color: grey;
+}
+.uk-overlay-default{
+    background-color: #EEEEEE; 
+}
+.top{
+    margin-top: 15px;
+}

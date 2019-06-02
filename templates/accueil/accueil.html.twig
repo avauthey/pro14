@@ -1,0 +1,15 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Accueil
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Accueil</li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+<h1>Your lucky number is {{ number }}</h1>
+</div>
+{% endblock  %}
