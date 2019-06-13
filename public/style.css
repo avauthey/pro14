@@ -27,3 +27,20 @@ footer a:hover{
 .top{
     margin-top: 15px;
 }
+.card-body-reduce{
+    padding: 0.4rem
+}
+
+.classement-reduce-size{
+    font-size: 11px;
+}
+.border-bottom-grey{
+    border-bottom: 1px solid #DDDDDD;
+}
+.remove-link{
+    color: black;
+}
+.remove-link:hover{
+    color: black;
+    text-decoration: underline;
+}

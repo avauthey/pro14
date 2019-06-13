@@ -4,5 +4,25 @@
     Compétition
 {% endblock %}
 {% block body %}
-<h1>Your lucky number is {{ number }}</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('competition')}}'>Compétition</a></li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>Compétition - présentation</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-2">
+            {{ include('competition/blockMenu.html.twig',{'active': active}) }}
+        </div>
+        <div class="col-lg-10">
+            
+        </div>
+    </div>
+</div>
 {% endblock  %}

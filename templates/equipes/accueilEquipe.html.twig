@@ -54,7 +54,118 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan='4'>Palmarès : </td>
+                        <td colspan='4'>Palmarès : <br />
+                        {% set pro14 =[] %}
+                        {% set pro12 =[] %}
+                        {% set rabo =[] %}
+                        {% set magners =[] %}
+                        {% set celtic =[] %}
+                        {% set challenge =[] %}
+                        {% set champions =[] %}
+                        {% for palmares in equipe.palmares %}
+                            {% if palmares.nomCompetition == 'Celtic League'%}
+                                {% set celtic = celtic|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'Magners League'%}
+                                {% set magners = magners|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'RaboDirect Pro12'%}
+                                {% set rabo = rabo|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'Guinness Pro12'%}
+                                {% set pro12 = pro12|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'Guinness Pro14'%}
+                                {% set pro14 = pro14|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'Challenge Cup'%}
+                                {% set challenge = challenge|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'Champions Cup'%}
+                                {% set champions = champions|merge([palmares.saison]) %}
+                            {% endif  %}
+                        {% endfor %}
+                        {% set compteur = celtic|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #009198"></i>
+                            {% endfor %}
+                            Celtic League,
+                            {% for element in celtic %}
+                                {{ element }}
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = magners|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #009198"></i>
+                            {% endfor %}
+                            Magners League,
+                            {% for element in magners %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = rabo|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #009198"></i>
+                            {% endfor %}
+                            RaboDirect Pro12,
+                            {% for element in rabo %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = pro12|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #009198"></i>
+                            {% endfor %}
+                            Guinness Pro12,
+                            {% for element in pro12 %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = pro14|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #009198"></i>
+                            {% endfor %}
+                            Guinness Pro14,
+                            {% for element in pro14 %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = challenge|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #483D8B"></i>
+                            {% endfor %}
+                            Challenge Cup,
+                            {% for element in challenge %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = champions|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy" style="color: #FFD700"></i>
+                            {% endfor %}
+                            Champions Cup,
+                            {% for element in champions %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% if equipe.palmares|length == 0 %}
+                            Néant
+                        {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='4'> Présentation : </br>
+                            {{ equipe.histoire }}
+                            
+                        </td>
+                        
                     </tr>
                 </table>
             </div>

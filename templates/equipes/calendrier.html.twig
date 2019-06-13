@@ -1,0 +1,56 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Calendrier {{ equipe.nom }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('equipes')}}'>Equipes</a></li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>{{ equipe.nom ~' - '~ active }}</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            {{ include('equipes/blockMenu.html.twig',{'active': active, 'equipe' :equipe}) }}
+        </div>
+        <div class='col-lg-10 top'>
+            <div class="row">
+                <div class='col-lg-12'>
+                    <h2>Saison {{saison}}</h2>
+                </div>
+            </div>
+            <div class="row">
+            {% for journee in calendrier %}
+                <div class="col-lg-4 top">
+                    <div class="card border-dark" style="width: 100%">
+                        <div class="card-header text-white bg-dark">{% if journee.journee!='Demi finale' and journee.journee!='Barrage Play Off' and journee.journee!='Finale' and journee.journee!='Barrage Champions Cup' %}Journée n°{{journee.journee}}{% else %} {{journee.journee }}{% endif %}</div>
+                        <div class="card-body text-center card-body-reduce">
+                            <h5 class="card-title"><img src="{{ asset('images/'~journee.idEquipeHome.logo)}}" width="19"> {{ journee.idEquipeHome.nom}} <span class="font-weight-bold">{% if journee.scoreHome is not null%}{{ journee.scoreHome}}{% endif %} - {% if journee.scoreAway is not null%}{{ journee.scoreAway}}{% endif %}</span> {{journee.idEquipeAway.nom }} <img src="{{ asset('images/'~journee.idEquipeAway.logo)}}" width="19"></h5>
+                            <h6 class="card-subtitle mb-2"><i class="fas fa-calendar-alt"></i> {{ journee.jour|date('d/m/Y')}}</h6>
+                            <h6 class="card-subtitle mb-2 "><img src="https://img.icons8.com/metro/26/000000/performance.png"  style="width: 14px"> {{ journee.idEquipeHome.stade}}</h6>
+                            <h6 class="card-subtitle mb-2 "><img src="https://img.icons8.com/ios/50/000000/whistle-filled.png" style="width: 15px"> {{ journee.idArbitreCentral.prenom ~' '~journee.idArbitreCentral.nom }}</h6>
+                            <a href="#" class="card-link">Détails match</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h6>Voir les saison précédentes </h6>
+            {% for saisprec in saisonsPrécédentes %}
+                <a href="{{ path('calendrier_equipe_autre_saison',{'id':equipe.id,'nomSaison':saisprec.saison})}}">Saison {{saisprec.saison}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock  %}

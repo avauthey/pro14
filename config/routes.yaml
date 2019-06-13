@@ -3,7 +3,7 @@ index:
     controller: App\Controller\AccueilController::index
 competition:
     path: /competition
-    controller: App\Controller\ChampionnatController::number
+    controller: App\Controller\ChampionnatController::index
 equipe:
     path : /equipe/{id}
     controller: App\Controller\EquipeController::getUneEquipe
@@ -12,3 +12,25 @@ equipe:
 equipes:
     path: /equipes
     controller: App\Controller\EquipeController::getEquipes
+calendrier_equipe:
+    path: /equipe/calendrier/{id}/
+    controller: App\Controller\EquipeController::getCalendrier
+    requirements:
+        id: '\d+'
+calendrier_equipe_autre_saison:
+    path: /equipe/calendrier/{id}/{nomSaison}
+    controller: App\Controller\EquipeController::getCalendrier
+    requirements:
+        id: '\d+'
+classement_competition:
+    path: /competition/classement/
+    controller: App\Controller\ChampionnatController::getClassement
+calendrier_competition:
+    path: /competition/calendrier
+    controller: App\Controller\ChampionnatController::getCalendrier
+classement_competition_autre_saison:
+    path: /competition/classement/{nomSaison}
+    controller: App\Controller\ChampionnatController::getClassement
+calendrier_competition_autre_saison:
+    path: /competition/calendrier/{nomSaison}
+    controller: App\Controller\ChampionnatController::getCalendrier

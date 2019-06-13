@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -60,6 +62,22 @@ class Equipe
      * @ORM\Column(type="string", length=255)
      */
     private $capaciteStade;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Palmares", mappedBy="equipe")
+     */
+    private $palmares;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Classement", mappedBy="equipe")
+     */
+    private $classements;
+
+    public function __construct()
+    {
+        $this->palmares = new ArrayCollection();
+        $this->classements = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -170,6 +188,68 @@ class Equipe
     public function setCapaciteStade(string $capaciteStade): self
     {
         $this->capaciteStade = $capaciteStade;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Palmares[]
+     */
+    public function getPalmares(): Collection
+    {
+        return $this->palmares;
+    }
+
+    public function addPalmare(Palmares $palmare): self
+    {
+        if (!$this->palmares->contains($palmare)) {
+            $this->palmares[] = $palmare;
+            $palmare->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removePalmare(Palmares $palmare): self
+    {
+        if ($this->palmares->contains($palmare)) {
+            $this->palmares->removeElement($palmare);
+            // set the owning side to null (unless already changed)
+            if ($palmare->getEquipe() === $this) {
+                $palmare->setEquipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Classement[]
+     */
+    public function getClassements(): Collection
+    {
+        return $this->classements;
+    }
+
+    public function addClassement(Classement $classement): self
+    {
+        if (!$this->classements->contains($classement)) {
+            $this->classements[] = $classement;
+            $classement->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClassement(Classement $classement): self
+    {
+        if ($this->classements->contains($classement)) {
+            $this->classements->removeElement($classement);
+            // set the owning side to null (unless already changed)
+            if ($classement->getEquipe() === $this) {
+                $classement->setEquipe(null);
+            }
+        }
 
         return $this;
     }
