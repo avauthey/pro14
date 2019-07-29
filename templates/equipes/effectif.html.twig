@@ -1,0 +1,280 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Effectif {{ equipe.nom }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('equipes')}}'>Equipes</a></li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>{{ equipe.nom ~' - '~ active }}</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            {{ include('equipes/blockMenu.html.twig',{'active': active, 'equipe' :equipe}) }}
+        </div>
+        <div class='col-lg-10 top'>
+            <div class="row">
+                <div class='col-lg-12'>
+                    <h2>Saison {{saison}}</h2>
+                </div>
+            </div>
+            <ul class="nav justify-content-end nav-pills" style="margin-top: 0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" id="btnAvant">Avants</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="btnArriere">Arrières</a>
+                </li>
+            </ul>
+            <div class="row" id="blockAvant">
+                
+                <div class="col-lg-12">
+                    <h3>Avants</h3>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Piliers/Talonneurs</h4>
+                </div>
+                {% for joueur in joueurs %}
+                    {% if joueur.idJoueur.poste.id == 1 or joueur.idJoueur.poste.id == 2 or joueur.idJoueur.poste.id == 3 %}
+                <div class="col-lg-4 col-sm-6 text-center top">
+                    <div class="card text-center border-vert" style="width: 18rem;height: 200px">
+                        <a href='{{ path('consulter_joueur',{'id':joueur.idJoueur.id})}}' style='height: 100%' class="remove-link removeBorder">
+                            <div class="uk-inline-clip uk-transition-toggle top" tabindex="0" style="width: 100%">
+                                <!--<img src="images/dark.jpg" alt="">-->
+                                <div>
+                                {% if joueur.idJoueur.photo != null %}
+                                    <img src="{{ asset('images/'~joueur.idJoueur.photo)}}">
+                                {% else %}
+                                    <i class="fas fa-user-alt fa-5x"></i>
+                                {% endif %}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.prenom }} {{ joueur.idJoueur.nom }}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.poste.nom }}
+                                </div>
+                                <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle" >
+                                    <p class="uk-h4 uk-margin-remove">Détails joueur</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+                <hr />
+                <div class="col-lg-12">
+                    <h4>Deuxièmes lignes</h4>
+                </div>
+                {% for joueur in joueurs %}
+                    {% if joueur.idJoueur.poste.id == 4 or joueur.idJoueur.poste.id == 5 %}
+                <div class="col-lg-4 col-sm-6 text-center top">
+                    <div class="card text-center border-vert" style="width: 18rem;height: 200px">
+                        <a href='{{ path('equipe',{'id':equipe.id})}}' style='height: 100%' class="remove-link removeBorder">
+                            <div class="uk-inline-clip uk-transition-toggle top" tabindex="0" style="width: 100%">
+                                <!--<img src="images/dark.jpg" alt="">-->
+                                <div>
+                                {% if joueur.idJoueur.photo != null %}
+                                    <img src="{{ asset('images/'~joueur.idJoueur.photo)}}">
+                                {% else %}
+                                    <i class="fas fa-user-alt fa-5x"></i>
+                                {% endif %}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.prenom }} {{ joueur.idJoueur.nom }}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.poste.nom }}
+                                </div>
+                                <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle" >
+                                    <p class="uk-h4 uk-margin-remove">Détails joueur</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+                <hr />
+                <div class="col-lg-12">
+                    <h4>Troisièmes lignes</h4>
+                </div>
+                {% for joueur in joueurs %}
+                    {% if joueur.idJoueur.poste.id == 6 or joueur.idJoueur.poste.id == 7 or joueur.idJoueur.poste.id == 8 %}
+                <div class="col-lg-4 col-sm-6 text-center top">
+                    <div class="card text-center border-vert" style="width: 18rem;height: 200px">
+                        <a href='{{ path('equipe',{'id':equipe.id})}}' style='height: 100%' class="remove-link removeBorder">
+                            <div class="uk-inline-clip uk-transition-toggle top" tabindex="0" style="width: 100%">
+                                <!--<img src="images/dark.jpg" alt="">-->
+                                <div>
+                                {% if joueur.idJoueur.photo != null %}
+                                    <img src="{{ asset('images/'~joueur.idJoueur.photo)}}">
+                                {% else %}
+                                    <i class="fas fa-user-alt fa-5x"></i>
+                                {% endif %}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.prenom }} {{ joueur.idJoueur.nom }}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.poste.nom }}
+                                </div>
+                                <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle" >
+                                    <p class="uk-h4 uk-margin-remove">Détails joueur</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row" id="blockArriere">
+                <div class="col-lg-12">
+                    <h3>Arrières</h3>
+                </div>
+                <div class="col-lg-12">
+                    <h4>Demis</h4>
+                </div>
+                {% for joueur in joueurs %}
+                    {% if joueur.idJoueur.poste.id == 9 or joueur.idJoueur.poste.id == 10 %}
+                <div class="col-lg-4 col-sm-6 text-center top">
+                    <div class="card text-center border-vert" style="width: 18rem;height: 200px">
+                        <a href='{{ path('equipe',{'id':equipe.id})}}' style='height: 100%' class="remove-link removeBorder">
+                            <div class="uk-inline-clip uk-transition-toggle top" tabindex="0" style="width: 100%">
+                                <!--<img src="images/dark.jpg" alt="">-->
+                                <div>
+                                {% if joueur.idJoueur.photo != null %}
+                                    <img src="{{ asset('images/'~joueur.idJoueur.photo)}}">
+                                {% else %}
+                                    <i class="fas fa-user-alt fa-5x"></i>
+                                {% endif %}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.prenom }} {{ joueur.idJoueur.nom }}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.poste.nom }}
+                                </div>
+                                <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle" >
+                                    <p class="uk-h4 uk-margin-remove">Détails joueur</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+                <hr />
+                <div class="col-lg-12">
+                    <h4>Centres</h4>
+                </div>
+                {% for joueur in joueurs %}
+                    {% if joueur.idJoueur.poste.id == 12 or joueur.idJoueur.poste.id == 13 %}
+                <div class="col-lg-4 col-sm-6 text-center top">
+                    <div class="card text-center border-vert" style="width: 18rem;height: 200px">
+                        <a href='{{ path('equipe',{'id':equipe.id})}}' style='height: 100%' class="remove-link removeBorder">
+                            <div class="uk-inline-clip uk-transition-toggle top" tabindex="0" style="width: 100%">
+                                <!--<img src="images/dark.jpg" alt="">-->
+                                <div>
+                                {% if joueur.idJoueur.photo != null %}
+                                    <img src="{{ asset('images/'~joueur.idJoueur.photo)}}">
+                                {% else %}
+                                    <i class="fas fa-user-alt fa-5x"></i>
+                                {% endif %}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.prenom }} {{ joueur.idJoueur.nom }}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.poste.nom }}
+                                </div>
+                                <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle" >
+                                    <p class="uk-h4 uk-margin-remove">Détails joueur</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+                <hr />
+                <div class="col-lg-12">
+                    <h4>Ailiers/Arrières</h4>
+                </div>
+                {% for joueur in joueurs %}
+                    {% if joueur.idJoueur.poste.id == 14 or joueur.idJoueur.poste.id == 11 or joueur.idJoueur.poste.id == 15 %}
+                <div class="col-lg-4 col-sm-6 text-center top">
+                    <div class="card text-center border-vert" style="width: 18rem;height: 200px">
+                        <a href='{{ path('equipe',{'id':equipe.id})}}' style='height: 100%' class="remove-link removeBorder">
+                            <div class="uk-inline-clip uk-transition-toggle top" tabindex="0" style="width: 100%">
+                                <!--<img src="images/dark.jpg" alt="">-->
+                                <div>
+                                {% if joueur.idJoueur.photo != null %}
+                                    <img src="{{ asset('images/'~joueur.idJoueur.photo)}}">
+                                {% else %}
+                                    <i class="fas fa-user-alt fa-5x"></i>
+                                {% endif %}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.prenom }} {{ joueur.idJoueur.nom }}
+                                </div>
+                                <div class="top">
+                                {{ joueur.idJoueur.poste.nom }}
+                                </div>
+                                <div class="uk-transition-fade uk-position-cover uk-position-small uk-overlay uk-overlay-default uk-flex uk-flex-center uk-flex-middle" >
+                                    <p class="uk-h4 uk-margin-remove">Détails joueur</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row top">
+                <div class="col-lg-12 text-center">
+                    <span class="info">*Sont inclus les joueurs des académies étant apparus sur au moins une feuille de match lors de la saison 2018/2019.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h6>Voir les saison précédentes </h6>
+            {% for saisprec in saisonsPrécédentes %}
+                <a href="{{ path('effectif_equipe_autre_saison',{'id':equipe.id,'nomSaison':saisprec.saison})}}">Saison {{saisprec.saison}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock  %}
+{% block javascript %}
+    <script></script>
+    <script>
+        $('#blockArriere').hide();
+        $('#btnArriere').click(function(){
+            $('#btnAvant').removeClass('active');
+            $('#btnArriere').addClass('active');
+            $('#blockArriere').show();
+            $('#blockAvant').hide();
+        });
+        $('#btnAvant').click(function(){
+            $('#btnArriere').removeClass('active');
+            $('#btnAvant').addClass('active');
+            $('#blockAvant').show();
+            $('#blockArriere').hide();
+        });
+        
+        
+        </script>
+{% endblock %}

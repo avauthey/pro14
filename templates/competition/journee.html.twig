@@ -1,0 +1,382 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Pro 14 Journée {{journee.journee}} {{journee.idEquipeHome.nom ~' - '~journee.idEquipeAway.nom}}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('calendrier_competition')}}'>Calendrier</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{journee.idEquipeHome.nom ~' - '~journee.idEquipeAway.nom}}</li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-lg-6 text-right'>
+            <h1> <img src="{{ asset('images/'~journee.idEquipeHome.logo)}}" width="50"> {{journee.idEquipeHome.nom}} <span class="score">{{journee.scoreHome}}</span> </h1>
+            
+        </div>
+        <div class='col-lg-6'>
+            <h1> <span class="score">{{journee.scoreAway}}</span> {{journee.idEquipeAway.nom}} <img src="{{ asset('images/'~journee.idEquipeAway.logo)}}" width="50"></h1>
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <span>Journée n°{{journee.journee}}</span>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-2 ">
+            Date : {{journee.jour|date('d/m/Y')}}
+        </div>
+        <div class="col-lg-2 text-center">
+            Stade : {{journee.idEquipeHome.stade}}
+        </div>
+        <div class="col-lg-2 text-right">
+            Arbitre : {% if journee.idArbitreCentral is not null %}{{journee.idArbitreCentral.prenom~' '~journee.idArbitreCentral.nom}}{% endif %}
+        </div>
+    </div>
+    
+    <div class="row justify-content-center">
+        <div class='col-lg-10'>
+            <ul class="nav nav-pills nav-fill">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" id="btnComposition">Composition</a>
+                </li>
+                <li class="nav-item">
+                     <a class="nav-link {% if journee.scoreHome==null and journee.scoreAway==null%}disabled{%endif%}" href="#" id="btnResume">Résumé</a>
+                </li>
+                <li class="nav-item">
+                     <a class="nav-link {% if journee.scoreHome==null and journee.scoreAway==null%}disabled{%endif%}" href="#" id="btnMatch">Stats Match</a>
+                </li>
+                <li class="nav-item">
+                     <a class="nav-link {% if journee.scoreHome==null and journee.scoreAway==null%}disabled{%endif%}" href="#" id="btnJoueurs">Stats Joueurs</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+               
+    <div id='blockComposition'>
+        <div class='row justify-content-center top'>
+            <div class='col-lg-2'>
+                {%if equipeHome is not empty%}
+                    {% for home in equipeHome%}
+                        {{ home.numero~' - '~home.joueur.prenom|first~'. '~home.joueur.nom}} <br />
+                    {% endfor %}
+                {% else %}
+                    Pas de données pour l'équipe domicile
+                {% endif %}
+            </div>
+            <div class='col-lg-6'>
+                <div class="row">
+                    <div class='col-lg-12'>
+                        {%if equipeHome is not empty%}
+                            <table class='table table-borderless'>
+                                <tr>
+                                    <td class='bg-success terrainRow terrainLigneDashedDroite '></td>
+                                    <td class='bg-success terrainRow text-center text-white ' colspan='4'></td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche '></td>
+                                </tr>
+                                <tr>
+                                    <td class='bg-success terrainRow terrainLigneDashedDroite terrainLigneDashedTop'></td>
+                                    <td class='bg-success terrainRow text-center text-white terrainLigneDashedTop' colspan='4'>{{equipeHome[14].numero}} <br/> {{equipeHome[14].joueur.prenom|first~'. '~equipeHome[14].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneDashedTop'></td>
+                                </tr>
+                                <tr>
+                                    <td class='bg-success terrainRow terrainLigneDashedDroite'></td>
+                                    <td class='bg-success terrainRow text-center text-white ' >{{equipeHome[10].numero}} <br/> {{equipeHome[10].joueur.prenom|first~'. '~equipeHome[10].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-white text-center ' >{{equipeHome[11].numero}} <br/> {{equipeHome[11].joueur.prenom|first~'. '~equipeHome[11].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-center text-white ' >{{equipeHome[12].numero}} <br/> {{equipeHome[12].joueur.prenom|first~'. '~equipeHome[12].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-center text-white ' >{{equipeHome[13].numero}} <br/> {{equipeHome[13].joueur.prenom|first~'. '~equipeHome[13].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche '></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class='bg-success terrainRow terrainLigneDashedDroite terrainLigneSolidTop'></td>
+                                    <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop' colspan='2'>{{equipeHome[8].numero}} <br/> {{equipeHome[8].joueur.prenom|first~'. '~equipeHome[8].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-white text-center terrainLigneSolidTop' colspan='2'>{{equipeHome[9].numero}} <br/> {{equipeHome[9].joueur.prenom|first~'. '~equipeHome[9].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneSolidTop'></td>
+                                </tr>
+                                <tr>
+                                    <td class='bg-success terrainRow terrainLigneDashedDroite'></td>
+                                    <td class='bg-success terrainRow text-center text-white' >{{equipeHome[5].numero}} <br/> {{equipeHome[5].joueur.prenom|first~'. '~equipeHome[5].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-white text-center' colspan='2'>{{equipeHome[7].numero}} <br/> {{equipeHome[7].joueur.prenom|first~'. '~equipeHome[7].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-center text-white' >{{equipeHome[6].numero}} <br/> {{equipeHome[6].joueur.prenom|first~'. '~equipeHome[6].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche'></td>
+                                </tr>
+                                <tr>
+                                    <td class='bg-success terrainRow terrainLigneDashedDroite terrainLigneDashedTop'></td>
+                                    <td class='bg-success terrainRow text-center text-white terrainLigneDashedTop' colspan='2'>{{equipeHome[3].numero}} <br/> {{equipeHome[3].joueur.prenom|first~'. '~equipeHome[3].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-white text-center terrainLigneDashedTop' colspan='2'>{{equipeHome[4].numero}} <br/> {{equipeHome[4].joueur.prenom|first~'. '~equipeHome[4].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneDashedTop'></td>
+                                </tr>
+                                <tr>
+                                    <td class='bg-success terrainLigneDashedDroite terrainRow terrainLigneSolidBottom'></td>
+                                    <td class='bg-success terrainRow text-center text-white terrainLigneSolidBottom '>{{equipeHome[0].numero}} <br/> {{equipeHome[0].joueur.prenom|first~'. '~equipeHome[0].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-center text-white terrainLigneSolidBottom ' colspan='2'>{{equipeHome[1].numero}} <br/> {{equipeHome[1].joueur.prenom|first~'. '~equipeHome[1].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow text-center text-white terrainLigneSolidBottom '>{{equipeHome[2].numero}} <br/> {{equipeHome[2].joueur.prenom|first~'. '~equipeHome[2].joueur.nom}}</td>
+                                    <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneSolidBottom '></td>
+                                </tr>
+                                
+                            </table>
+                        {% else %}
+                            <div class="text-center">Pas de données pour l'équipe domicile</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-lg-12'>
+                        {%if equipeAway is not empty%}
+                        <table class='table table-borderless'>
+                            <tr>
+                                <td class='bg-success terrainLigneDashedDroite terrainRow terrainLigneSolidTop'></td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop'>{{equipeAway[0].numero}} <br/> {{equipeAway[0].joueur.prenom|first~'. '~equipeAway[0].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop' colspan='2'>{{equipeAway[1].numero}} <br/> {{equipeAway[1].joueur.prenom|first~'. '~equipeAway[1].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop'>{{equipeAway[2].numero}} <br/> {{equipeAway[2].joueur.prenom|first~'. '~equipeAway[2].joueur.nom}}</td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneSolidTop'></td>
+                            </tr>
+                            <tr>
+                                <td class='bg-success terrainRow terrainLigneDashedDroite'></td>
+                                <td class='bg-success terrainRow text-center text-white' colspan='2'>{{equipeAway[3].numero}} <br/> {{equipeAway[3].joueur.prenom|first~'. '~equipeAway[3].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-white text-center' colspan='2'>{{equipeAway[4].numero}} <br/> {{equipeAway[4].joueur.prenom|first~'. '~equipeAway[4].joueur.nom}}</td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche'></td>
+                            </tr>
+                            <tr>
+                                <td class='bg-success terrainRow terrainLigneDashedDroite terrainLigneDashedTop'></td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneDashedTop' >{{equipeAway[5].numero}} <br/> {{equipeAway[5].joueur.prenom|first~'. '~equipeAway[5].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-white text-center terrainLigneDashedTop' colspan='2'>{{equipeAway[7].numero}} <br/> {{equipeAway[7].joueur.prenom|first~'. '~equipeAway[7].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneDashedTop' >{{equipeAway[6].numero}} <br/> {{equipeAway[6].joueur.prenom|first~'. '~equipeAway[6].joueur.nom}}</td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneDashedTop'></td>
+                            </tr>
+                            <tr>
+                                <td class='bg-success terrainRow terrainLigneDashedDroite'></td>
+                                <td class='bg-success terrainRow text-center text-white' colspan='2'>{{equipeAway[8].numero}} <br/> {{equipeAway[8].joueur.prenom|first~'. '~equipeAway[8].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-white text-center' colspan='2'>{{equipeAway[9].numero}} <br/> {{equipeAway[9].joueur.prenom|first~'. '~equipeAway[9].joueur.nom}}</td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche'></td>
+                            </tr>
+                            <tr>
+                                <td class='bg-success terrainRow terrainLigneDashedDroite terrainLigneSolidTop'></td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop' >{{equipeAway[10].numero}} <br/> {{equipeAway[10].joueur.prenom|first~'. '~equipeAway[10].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-white text-center terrainLigneSolidTop' >{{equipeAway[11].numero}} <br/> {{equipeAway[11].joueur.prenom|first~'. '~equipeAway[11].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop' >{{equipeAway[12].numero}} <br/> {{equipeAway[12].joueur.prenom|first~'. '~equipeAway[12].joueur.nom}}</td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneSolidTop' >{{equipeAway[13].numero}} <br/> {{equipeAway[13].joueur.prenom|first~'. '~equipeAway[13].joueur.nom}}</td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneSolidTop'></td>
+                            </tr>
+                            <tr>
+                                <td class='bg-success terrainRow terrainLigneDashedDroite'></td>
+                                <td class='bg-success terrainRow text-center text-white' colspan='4'>{{equipeAway[14].numero}} <br/> {{equipeAway[14].joueur.prenom|first~'. '~equipeAway[14].joueur.nom}}</td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche'></td>
+                            </tr>
+                            <tr>
+                                <td class='bg-success terrainRow terrainLigneDashedDroite terrainLigneDashedTop'></td>
+                                <td class='bg-success terrainRow text-center text-white terrainLigneDashedTop' colspan='4'></td>
+                                <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneDashedTop'></td>
+                            </tr>
+                        </table>
+                        {% else %}
+                            <div class="text-center">Pas de données pour l'équipe extérieure</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class='col-lg-2'>
+                {%if equipeAway is not empty%}
+                    {% for away in equipeAway%}
+                        {{ away.numero~' - '~away.joueur.prenom|first~'. '~away.joueur.nom}} <br />
+                    {% endfor %}
+                {% else %}
+                    Pas de données pour l'équipe extérieure
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div id='blockResume'></div>
+    <div id='blockMatch'></div>
+    <div id='blockJoueurs'>
+        <div class='row justify-content-center top'>
+            <div class='col-lg-6'>
+                <div class='table-responsive'>
+                    <table class='table table-bordered table-xs table-striped'>
+                        <thead class='thead-dark'>
+                            <tr>
+                                <th rowspan='2' style="vertical-align : middle;text-align:center;">Nom</th>
+                                <th colspan='5' class="text-center">Score</th>
+                                <th colspan='7' class="text-center">Attaque</th>
+                                <th colspan='2' class="text-center">Défense</th>
+                                <th colspan='3' class="text-center">Discipline</th>
+                            </tr>
+                            <tr>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Essais" class="lien-tooltip">E</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Transformations" class="lien-tooltip">T</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Pénalités" class="lien-tooltip">Pen</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Drop" class="lien-tooltip">D</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Points" class="lien-tooltip">P</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Assists" class="lien-tooltip">A</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Offloads" class="lien-tooltip">O</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Passes" class="lien-tooltip">Pa</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Courses" class="lien-tooltip">C</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Metres gagnés" class="lien-tooltip">MG</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Percés" class="lien-tooltip">Per</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Défenseurs battus" class="lien-tooltip">DB</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Placages réussis" class="lien-tooltip">PR</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Placages manqués" class="lien-tooltip">PM</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Pénalités concédées" class="lien-tooltip">PC</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Carton jaune" class="lien-tooltip">CJ</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Carton rouge" class="lien-tooltip">CR</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if equipeHome is not empty %}
+                                {% for home in equipeHome %}
+                                    <tr>
+                                        <th scope="row">{{home.numero~' - '~home.joueur.prenom|first~'. '~home.joueur.nom}}</th>
+                                        <td>{{home.essais}}</td>
+                                        <td>{{home.transformation}}</td>
+                                        <td>{{home.penalite}}</td>
+                                        <td>{{home.drops}}</td>
+                                        <td>{{home.points}}</td>
+                                        <td>{{home.assist}}</td>
+                                        <td>{{home.offload}}</td>
+                                        <td>{{home.passe}}</td>
+                                        <td>{{home.course}}</td>
+                                        <td>{{home.metreGagne}}</td>
+                                        <td>{{home.perce}}</td>
+                                        <td>{{home.defenseurBattu}}</td>
+                                        <td>{{home.placagesReussis}}</td>
+                                        <td>{{home.placagesManques}}</td>
+                                        <td>{{home.penaliteConcedee}}</td>
+                                        <td>{{home.cj}}</td>
+                                        <td>{{home.cr}}</td>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan='18' class='text-center'>Pas de données pour l'équipe extérieure</td>
+                                </tr>
+                            {% endif %}
+                            
+                        </tbody>
+                    </table>                     
+                </div>                
+            </div>
+            <div class='col-lg-6'>
+                <div class='table-responsive'>
+                    <table class='table table-bordered table-xs table-striped'>
+                        <thead class='thead-dark'>
+                            <tr>
+                                <th rowspan='2' style="vertical-align : middle;text-align:center;">Joueur</th>
+                                <th colspan='5' class="text-center">Score</th>
+                                <th colspan='7' class="text-center">Attaque</th>
+                                <th colspan='2' class="text-center">Défense</th>
+                                <th colspan='3' class="text-center">Discipline</th>
+                            </tr>
+                            <tr>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Essais" class="lien-tooltip">E</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Transformations" class="lien-tooltip">T</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Pénalités" class="lien-tooltip">Pen</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Drop" class="lien-tooltip">D</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Points" class="lien-tooltip">P</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Assists" class="lien-tooltip">A</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Offloads" class="lien-tooltip">O</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Passes" class="lien-tooltip">Pa</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Courses" class="lien-tooltip">C</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Metres gagnés" class="lien-tooltip">MG</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Percés" class="lien-tooltip">Per</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Défenseurs battus" class="lien-tooltip">DB</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Placages réussis" class="lien-tooltip">PR</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Placages manqués" class="lien-tooltip">PM</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Pénalités concédées" class="lien-tooltip">PC</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Carton jaune" class="lien-tooltip">CJ</a></th>
+                                <th><a href="#" data-toggle="tooltip" data-placement="top" title="Carton rouge" class="lien-tooltip">CR</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if equipeAway is not empty %}
+                                {% for away in equipeAway %}
+                                    <tr>
+                                        <th scope="row">{{away.numero~' - '~away.joueur.prenom|first~'. '~away.joueur.nom}}</th>
+                                        <td>{{away.essais}}</td>
+                                        <td>{{away.transformation}}</td>
+                                        <td>{{away.penalite}}</td>
+                                        <td>{{away.drops}}</td>
+                                        <td>{{away.points}}</td>
+                                        <td>{{away.assist}}</td>
+                                        <td>{{away.offload}}</td>
+                                        <td>{{away.passe}}</td>
+                                        <td>{{away.course}}</td>
+                                        <td>{{away.metreGagne}}</td>
+                                        <td>{{away.perce}}</td>
+                                        <td>{{away.defenseurBattu}}</td>
+                                        <td>{{away.placagesReussis}}</td>
+                                        <td>{{away.placagesManques}}</td>
+                                        <td>{{away.penaliteConcedee}}</td>
+                                        <td>{{away.cj}}</td>
+                                        <td>{{away.cr}}</td>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan='18' class='text-center'>Pas de données pour l'équipe extérieure</td>
+                                </tr>
+                            {% endif %}
+                            
+                        </tbody>
+                    </table>                    
+                </div>                
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+    <script></script>
+    <script>
+        $('#blockResume').hide();
+        $('#blockMatch').hide();
+        $('#blockJoueurs').hide();
+        $('#btnComposition').click(function(){
+            $('#btnComposition').addClass('active');
+            $('#btnResume').removeClass('active');            
+            $('#btnMatch').removeClass('active');            
+            $('#btnJoueurs').removeClass('active');            
+            $('#blockComposition').show();
+            $('#blockResume').hide();
+            $('#blockMatch').hide();
+            $('#blockJoueurs').hide();
+        });
+        $('#btnResume').click(function(){
+            $('#btnResume').addClass('active');
+            $('#btnComposition').removeClass('active');            
+            $('#btnMatch').removeClass('active');            
+            $('#btnJoueurs').removeClass('active');            
+            $('#blockResume').show();
+            $('#blockComposition').hide();
+            $('#blockMatch').hide();
+            $('#blockJoueurs').hide();
+        });
+        $('#btnMatch').click(function(){
+            $('#btnMatch').addClass('active');
+            $('#btnComposition').removeClass('active');            
+            $('#btnResume').removeClass('active');            
+            $('#btnJoueurs').removeClass('active');            
+            $('#blockMatch').show();
+            $('#blockComposition').hide();
+            $('#blockResume').hide();
+            $('#blockJoueurs').hide();
+        });
+        $('#btnJoueurs').click(function(){
+            $('#btnJoueurs').addClass('active');
+            $('#btnComposition').removeClass('active');            
+            $('#btnResume').removeClass('active');            
+            $('#btnMatch').removeClass('active');            
+            $('#blockJoueurs').show();
+            $('#blockComposition').hide();
+            $('#blockResume').hide();
+            $('#blockMatch').hide();
+        });
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        
+        </script>
+{% endblock %}

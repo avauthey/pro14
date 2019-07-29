@@ -24,10 +24,11 @@ class AccueilController extends AbstractController {
             $lastJournee =  $repositoryJournee->findLastJourneePlayed($saison[0]->getSaison());
             //var_dump($saison[0]->getSaison());
         }
+        $saison = $repositorySaison->findBy(["actuelle"=>"Oui"]);
        // var_dump($lastJournee);
         $lastClassementA = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'A');
         if(empty($lastClassementA)){
-            $lastClassementA =  $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
+            $lastClassementA =  $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'A');
         }
         $lastClassementB = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
         if(empty($lastClassementB)){

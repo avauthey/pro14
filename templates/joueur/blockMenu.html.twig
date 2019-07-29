@@ -1,0 +1,6 @@
+<div class="list-group">
+    <li class="list-group-item">Rechercher</li>
+    <a href="{{ path('joueurs')}}" class="list-group-item list-group-item-action {% if active == 'Nom' %}active{% endif %} ">Par nom</a>
+    <a href="{{ path('search_by_equipe')}}" class="list-group-item list-group-item-action {% if active == 'Equipe' %}active{% endif %}">Par équipe</a>
+    <a href="{{ path('search_by_nationalite')}}" class="list-group-item list-group-item-action {% if active == 'Nationalité' %}active{% endif %}">Par nationalité</a>
+</div>

@@ -1,0 +1,31 @@
+{% if liste is empty %} 
+    <p style="color: red">Aucun joueur ne correspond à cette recherche</p>
+{% else %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Date de naissance</th>
+                    <th>Ville de naissance</th>
+                    <th>Pays de naissance</th>
+                    <th>Consulter</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for joueur in liste %}
+                    <tr>
+                        <td> {{ joueur.prenom }} </td>
+                        <td> {{ joueur.nom }} </td>
+                        <td> {{ joueur.dateNaissance|date('d/m/Y') }}</td>
+                        <td> {{ joueur.villeNaissance }} </td>
+                        <td> {{ joueur.paysNaissance }} </td>
+                        <td><a href="{{ path('consulter_joueur',{'id': joueur.id})}}"><i class="fas fa-search icon-search"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+{% endif %}

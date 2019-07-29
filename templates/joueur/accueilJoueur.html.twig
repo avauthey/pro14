@@ -1,0 +1,54 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Joueurs Guinness Pro 14
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Joueurs</li>
+    </ol>
+</nav>
+<div class='container-fluid' style="padding-bottom: 36vh">
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>Joueurs</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+        </div>
+        <div class="col-lg-10">
+            <h2>Rechercher par nom </h2><br />
+            <input type="text" class="form-control" id="search" placeholder="Saisissez le prénom ou le nom du joueur">
+            <div id="resultats" class="top">
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script></script>
+<script type="text/javascript">
+    $('#search').on("keyup",function(){
+        var path = "{{ path('search_joueur')}}";
+        console.log($('#search').val());
+        if($('#search').val().length >=3){
+            $.ajax({
+                method:"POST",
+                url: path,
+                data: {test: $('#search').val()}
+
+            }).done(function(retour){
+                   $('#resultats').html(retour)
+                });
+        }else{
+            $( "#resultats" ).empty();
+        }
+    })
+    
+</script>
+{% endblock %}

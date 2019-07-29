@@ -1,0 +1,59 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Joueurs {{nationalite}} Guinness Pro 14
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('search_by_nationalite')}}'>Joueurs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ nationalite }}</li>
+    </ol>
+</nav>
+<div class='container-fluid' style="padding-bottom: 36vh">
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>Joueurs</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            <a href="{{ path('search_by_nationalite')}}"><i class="fas fa-arrow-circle-left"></i> Précédent </a>
+            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+        </div>
+        <div class="col-lg-10">
+            <h2>Joueurs {{nationalite}} </h2><br />
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Prénom</th>
+                                <th>Nom</th>
+                                <th>Date de naissance</th>
+                                <th>Ville de naissance</th>
+                                <th>Pays de naissance</th>
+                                <th>Consulter</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for joueur in joueurs %}
+                            <tr>
+                                <td> {{ joueur.prenom }} </td>
+                                <td> {{ joueur.nom }} </td>
+                                <td> {{ joueur.dateNaissance|date('d/m/Y') }}</td>
+                                <td> {{ joueur.villeNaissance }} </td>
+                                <td> {{ joueur.paysNaissance }} </td>
+                                <td><a href="{{ path('consulter_joueur',{'id': joueur.id})}}"><i class="fas fa-search icon-search"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

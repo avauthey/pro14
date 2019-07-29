@@ -3,17 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp/www/pro14/templates/competition/blockMenu.html.twig</file>
-            <file>file:/C:/wamp/www/pro14/templates/competition/calendrier.html.twig</file>
             <file>file:/C:/wamp/www/pro14/config/routes.yaml</file>
-            <file>file:/C:/wamp/www/pro14/src/Entity/Journee.php</file>
             <file>file:/C:/wamp/www/pro14/templates/base.html.twig</file>
             <file>file:/C:/wamp/www/pro14/public/style.css</file>
-            <file>file:/C:/wamp/www/pro14/templates/competition/classement.html.twig</file>
-            <file>file:/C:/wamp/www/pro14/src/Controller/AccueilController.php</file>
-            <file>file:/C:/wamp/www/pro14/src/Controller/EquipeController.php</file>
+            <file>file:/C:/wamp/www/pro14/templates/competition/journee.html.twig</file>
             <file>file:/C:/wamp/www/pro14/src/Controller/ChampionnatController.php</file>
-            <file>file:/C:/wamp/www/pro14/src/Repository/ClassementRepository.php</file>
         </group>
     </open-files>
 </project-private>

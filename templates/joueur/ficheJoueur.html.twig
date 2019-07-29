@@ -1,0 +1,71 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    {{ joueur.prenom~" "~joueur.nom }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('joueurs')}}'>Joueurs</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ joueur.prenom~" "~joueur.nom }}</li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class="col-lg-2 d-flex align-self-center">
+            <a href="{{ path('joueurs')}}"><i class="fas fa-arrow-circle-left"></i> Précédent </a>
+        </div>
+        <div class="col-lg-10">
+            <h1>{{ joueur.prenom~" "~joueur.nom }}</h1>
+        </div>
+    </div>
+    <div class="row top justify-content-center ">
+        <div class="col-lg-2 bg-white text-center padd">
+            {% if joueur.photo != null %}
+                {{ joueur.photo }}
+                <img src="{{ asset('images/'~joueur.photo)}}">
+            {% else %}
+                <i class="fas fa-user-alt fa-7x"></i>
+            {% endif %}
+        </div>
+        <div class="col-lg-4 d-flex align-self-center bg-vertClair padd">
+            <div class="row">
+                <div class="col-lg-12">
+                    <i class="fas fa-birthday-cake"></i> Date de naissance : <b>{{ joueur.dateNaissance|date('d/m/Y') }}</b>
+                </div>
+                <div class="col-lg-12">
+                    <i class="fas fa-map-marker-alt"></i> Lieu de naissance : <b> {% if joueur.villeNaissance != null %}{{ joueur.villeNaissance~", "~joueur.paysNaissance }}{% else %} {{ joueur.paysNaissance }} {% endif %}</b>
+                </div>
+                <div class="col-lg-12">
+                    <i class="fas fa-weight-hanging"></i> Poids : <b> {{ joueur.poids~" kg" }}</b>
+                </div>
+                <div class="col-lg-12">
+                    <i class="fas fa-arrows-alt-v"></i> Taille : <b> {{ joueur.taille~" cm" }}</b>
+                </div>
+                <div class="col-lg-12">
+                    <i class="fas fa-tshirt"></i> Poste : <b> {{ joueur.poste.nom }}</b>
+                </div>
+                <div class="col-lg-4">
+                    <i class="fas fa-archway"></i> Equipe(s) :
+                </div>
+                <div class="col-lg-6">
+                    <b> {% for team in equipe %}{{ team.idEquipe.nom}}<br />{% endfor %} </b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row top justify-content-center">
+        <div class="col-lg-6">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Cette saison</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Général</a>
+                </li>
+            </ul>
+        </div>
+    </div>            
+</div>
+{% endblock %}

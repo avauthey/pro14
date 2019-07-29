@@ -13,13 +13,23 @@ equipes:
     path: /equipes
     controller: App\Controller\EquipeController::getEquipes
 calendrier_equipe:
-    path: /equipe/calendrier/{id}/
+    path: /equipe/calendrier/{id}
     controller: App\Controller\EquipeController::getCalendrier
     requirements:
         id: '\d+'
 calendrier_equipe_autre_saison:
     path: /equipe/calendrier/{id}/{nomSaison}
     controller: App\Controller\EquipeController::getCalendrier
+    requirements:
+        id: '\d+'
+effectif_equipe:
+    path: /equipe/effectif/{id}
+    controller: App\Controller\EquipeController::getEffectif
+    requirements:
+        id: '\d+'
+effectif_equipe_autre_saison:
+    path: /equipe/effectif/{id}/{nomSaison}
+    controller: App\Controller\EquipeController::getEffectif
     requirements:
         id: '\d+'
 classement_competition:
@@ -34,3 +44,28 @@ classement_competition_autre_saison:
 calendrier_competition_autre_saison:
     path: /competition/calendrier/{nomSaison}
     controller: App\Controller\ChampionnatController::getCalendrier
+joueurs:
+    path: /joueurs
+    controller: App\Controller\JoueurController::getParNom
+search_joueur:
+    path: /joueurs/searchJoueur/
+    controller: App\Controller\JoueurController::displayList
+consulter_joueur:
+    path: joueurs/{id}
+    controller: App\Controller\JoueurController::getJoueur
+    requirements:
+        id: '\d+'
+search_by_equipe:
+    path: /joueurs/JoueursEquipe/
+    controller: App\Controller\JoueurController:getByEquipe
+search_by_nationalite:
+    path: /joueurs/JoueursNationalite
+    controller: App\Controller\JoueurController:getNationalite
+display_by_nationalite:
+    path: /joueurs/Joueurs/{nationalite}
+    controller: App\Controller\JoueurController:getByNationalite
+journee:
+    path: /competition/journee/{id}
+    controller: App\Controller\ChampionnatController:getJournee
+    requirements:
+        id: '\d+'

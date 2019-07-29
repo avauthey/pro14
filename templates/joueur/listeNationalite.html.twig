@@ -1,0 +1,47 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Joueurs Guinness Pro 14
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Joueurs</li>
+    </ol>
+</nav>
+<div class='container-fluid' style="padding-bottom: 36vh">
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>Joueurs</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+        </div>
+        <div class="col-lg-10">
+            <h2>Rechercher par nationalité </h2><br />
+            <div class="row">
+                {% for nationalite in nationalites %}
+                <div class='col-lg-4 col-sm-6 text-center top'>
+                    <div class="card text-center" style="width: 18rem;height: 200px">
+                        <a href='{{ path('display_by_nationalite',{'nationalite':nationalite.pays_naissance})}}' style='height: 100%'>
+                            <div class="uk-inline-clip uk-transition-toggle" tabindex="0" style='width: 100%;height:100%'>
+                               <img src="{{ asset('images/flags/'~nationalite.pays_naissance~'.svg')}}" alt="Drapeau {{ nationalite.pays_naissance }}" width='150'  >
+                               <div class="uk-transition-slide-bottom uk-position-bottom uk-overlay uk-overlay-default uk-overlay-default-modify">
+                                   <p class="uk-h5 uk-margin-remove" style='font-weight: 600'>
+                                       {{nationalite.pays_naissance}}<br />
+                                       {{nationalite.nb}} Joueurs
+                                   </p>
+                               </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

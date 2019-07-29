@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -87,6 +89,16 @@ class Journee
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lieu;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AssoJoueurJournee", mappedBy="journee")
+     */
+    private $assoJoueurJournees;
+
+    public function __construct()
+    {
+        $this->assoJoueurJournees = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -258,6 +270,37 @@ class Journee
     public function setLieu(string $lieu)
     {
         $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AssoJoueurJournee[]
+     */
+    public function getAssoJoueurJournees(): Collection
+    {
+        return $this->assoJoueurJournees;
+    }
+
+    public function addAssoJoueurJournee(AssoJoueurJournee $assoJoueurJournee): self
+    {
+        if (!$this->assoJoueurJournees->contains($assoJoueurJournee)) {
+            $this->assoJoueurJournees[] = $assoJoueurJournee;
+            $assoJoueurJournee->setJournee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssoJoueurJournee(AssoJoueurJournee $assoJoueurJournee): self
+    {
+        if ($this->assoJoueurJournees->contains($assoJoueurJournee)) {
+            $this->assoJoueurJournees->removeElement($assoJoueurJournee);
+            // set the owning side to null (unless already changed)
+            if ($assoJoueurJournee->getJournee() === $this) {
+                $assoJoueurJournee->setJournee(null);
+            }
+        }
 
         return $this;
     }

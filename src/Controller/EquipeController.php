@@ -73,4 +73,34 @@ class EquipeController extends AbstractController {
             'saisonsPrécédentes' =>$saisonsPrecedentes,
         ]);
     }
+    
+    public function getEffectif($id, $nomSaison = null){
+        $repositorySaison = $this->getDoctrine()->getRepository(\App\Entity\Saison::class);
+        if($nomSaison == null){
+            $saison = $repositorySaison->findBy(["actuelle"=>"Oui"]);
+        }else{
+            $saison = $repositorySaison->findBy(["saison"=>$nomSaison]);
+        }
+        $saisonsPrecedentes = $repositorySaison->findPrevious($saison[0]->getId());
+        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $equipe = $repository->find($id);
+        if (!$equipe) {
+            throw $this->createNotFoundException(
+                    'Pas d\'équipe pour l\'id '.$id
+            );
+        }
+        $lesEquipes = $repository->findAllByNomOrder('ASC');
+        $repositoryJoueur = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurEquipe::class);
+        $joueurs = $repositoryJoueur->findBy(['idEquipe'=>$equipe->getId(),'saison'=>$saison[0]->getSaison()]);
+        //var_dump($joueurs);
+        return $this->render('equipes/effectif.html.twig', [
+            'selected' => "Equipe",
+            'active'=>'Effectif',
+            'equipes'=>$lesEquipes,
+            'equipe'=>$equipe,
+            'joueurs'=>$joueurs,
+            'saison'=>$saison[0]->getSaison(),
+            'saisonsPrécédentes' =>$saisonsPrecedentes,
+        ]);
+    }
 }

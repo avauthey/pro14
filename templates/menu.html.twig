@@ -21,8 +21,8 @@
                     {% endfor %}
                 </div>
             </li>
-            <li class="nav-item {% if selected == 'Joueur' %}active{% endif %}">
-                <a class="nav-link" href="#">Joueur</a>
+            <li class="nav-item {% if selected == 'Joueurs' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('joueurs') }}">Joueurs</a>
             </li>
         </ul>
     </div>

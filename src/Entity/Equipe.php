@@ -73,10 +73,22 @@ class Equipe
      */
     private $classements;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AssoJoueurEquipe", mappedBy="idEquipe")
+     */
+    private $joueurs;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AssoJoueurJournee", mappedBy="equipe")
+     */
+    private $assoJoueurJournees;
+
     public function __construct()
     {
         $this->palmares = new ArrayCollection();
         $this->classements = new ArrayCollection();
+        $this->joueurs = new ArrayCollection();
+        $this->assoJoueurJournees = new ArrayCollection();
     }
 
     public function getId()
@@ -248,6 +260,68 @@ class Equipe
             // set the owning side to null (unless already changed)
             if ($classement->getEquipe() === $this) {
                 $classement->setEquipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AssoJoueurEquipe[]
+     */
+    public function getJoueurs(): Collection
+    {
+        return $this->joueurs;
+    }
+
+    public function addJoueur(AssoJoueurEquipe $joueur): self
+    {
+        if (!$this->joueurs->contains($joueur)) {
+            $this->joueurs[] = $joueur;
+            $joueur->setIdEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJoueur(AssoJoueurEquipe $joueur): self
+    {
+        if ($this->joueurs->contains($joueur)) {
+            $this->joueurs->removeElement($joueur);
+            // set the owning side to null (unless already changed)
+            if ($joueur->getIdEquipe() === $this) {
+                $joueur->setIdEquipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AssoJoueurJournee[]
+     */
+    public function getAssoJoueurJournees(): Collection
+    {
+        return $this->assoJoueurJournees;
+    }
+
+    public function addAssoJoueurJournee(AssoJoueurJournee $assoJoueurJournee): self
+    {
+        if (!$this->assoJoueurJournees->contains($assoJoueurJournee)) {
+            $this->assoJoueurJournees[] = $assoJoueurJournee;
+            $assoJoueurJournee->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssoJoueurJournee(AssoJoueurJournee $assoJoueurJournee): self
+    {
+        if ($this->assoJoueurJournees->contains($assoJoueurJournee)) {
+            $this->assoJoueurJournees->removeElement($assoJoueurJournee);
+            // set the owning side to null (unless already changed)
+            if ($assoJoueurJournee->getEquipe() === $this) {
+                $assoJoueurJournee->setEquipe(null);
             }
         }
 

@@ -84,4 +84,27 @@ class ChampionnatController extends AbstractController {
             'saisonsPrécédentes' => $saisonsPrecedentes,
         ]);
     }
+    
+    public function getJournee($id){
+        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
+        $repositoryJournee = $this->getDoctrine()->getRepository(\App\Entity\Journee::class);
+        $journee = $repositoryJournee->find($id);
+        if (!$journee) {
+            throw $this->createNotFoundException(
+                    'Fuck off! Pas de journée pour l\'id '.$id
+            );
+        }
+        $repositoryAssoJoueurJournee = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurJournee::class);
+        $equipeHome = $repositoryAssoJoueurJournee->findByJourneeAndEquipe($journee->getId(),$journee->getIdEquipeHome());
+        $equipeAway = $repositoryAssoJoueurJournee->findByJourneeAndEquipe($journee->getId(),$journee->getIdEquipeAway());
+        //var_dump($equipeHome);
+        return $this->render('competition/journee.html.twig', [
+            'selected' => "Competition",
+            'equipes'=> $lesEquipes,
+            'journee'=> $journee,
+            'equipeHome'=>$equipeHome,
+            'equipeAway'=>$equipeAway,
+        ]);
+    }
 }
