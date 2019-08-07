@@ -1,0 +1,42 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Pro14 - {{ article.titre }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('articles')}}'>Articles</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Article {{article.id}}</li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row justify-content-center'>
+        <div class='col-lg-10'>
+            <h1>{{ article.titre }}</h1>
+            <small class="text-muted">Date Création : {{ article.dateCreation|date('d/m/Y')}}</small><br />
+            {% if article.dateDerniereModification is not null %}
+                <small class="text-muted">Date dernière modification : {{ article.dateDerniereModification|date('d/m/Y')}}</small><br />
+            {% endif %}
+        </div>
+    </div>
+    <div class='row justify-content-center top'>
+        <div class='col-lg-10'>{{article.contenu | raw}}</div>
+    </div>
+    <div class='row justify-content-center top'>
+        <div class="col-lg-10">
+            <span class="tags">
+                <i class="fas fa-tags text-vert"></i> Tags :
+                {% for tag in tags %}
+                    {% if tag.joueur is not null %}
+                        <a href="{{ path('consulter_joueur',{'id':tag.joueur.id})}}" class="badge badge-pill badge-primary">{{tag.joueur.prenom ~" "~tag.joueur.nom}}</a>
+                    {% endif %}
+                    {% if tag.equipe is not null %}
+                        <a href="{{ path('equipe_article',{'id':tag.equipe.id})}}" class="badge badge-pill badge-vert">{{tag.equipe.nom}}</a>
+                    {% endif %}
+                {% endfor %}
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

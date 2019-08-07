@@ -243,7 +243,7 @@ class Journee
         //return date('d/m/Y',strtotime($this->jour));
     }
 
-    public function setJour(DateTimeInterface $jour): self
+    public function setJour(string $jour)
     {
         $this->jour = $jour;
 

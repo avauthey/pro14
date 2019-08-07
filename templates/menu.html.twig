@@ -17,7 +17,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for equipe in equipes %}
-                    <a class="dropdown-item" href="{{ path('equipe',{id: equipe.id}) }}"><img src="{{asset('images/'~equipe.logo)}}" alt="logo {{equipe.nom}}" width="15"> {{equipe.nom}}</a>
+                    <a class="dropdown-item" href="{{ path('equipe',{id: equipe.id}) }}"><img src="{{asset('images/logo/'~equipe.logo)}}" alt="logo {{equipe.nom}}" width="15"> {{equipe.nom}}</a>
                     {% endfor %}
                 </div>
             </li>

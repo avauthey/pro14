@@ -83,12 +83,18 @@ class Equipe
      */
     private $assoJoueurJournees;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Tags", mappedBy="equipe")
+     */
+    private $tags;
+
     public function __construct()
     {
         $this->palmares = new ArrayCollection();
         $this->classements = new ArrayCollection();
         $this->joueurs = new ArrayCollection();
         $this->assoJoueurJournees = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getId()
@@ -322,6 +328,37 @@ class Equipe
             // set the owning side to null (unless already changed)
             if ($assoJoueurJournee->getEquipe() === $this) {
                 $assoJoueurJournee->setEquipe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tags[]
+     */
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function addTag(Tags $tag): self
+    {
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(Tags $tag): self
+    {
+        if ($this->tags->contains($tag)) {
+            $this->tags->removeElement($tag);
+            // set the owning side to null (unless already changed)
+            if ($tag->getEquipe() === $this) {
+                $tag->setEquipe(null);
             }
         }
 

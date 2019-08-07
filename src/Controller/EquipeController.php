@@ -63,6 +63,7 @@ class EquipeController extends AbstractController {
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         $repositoryJournee = $this->getDoctrine()->getRepository(\App\Entity\Journee::class);
         $calendrier = $repositoryJournee->findJourneeByIdEquipe($equipe->getId(), $saison[0]->getSaison());
+        
         return $this->render('equipes/calendrier.html.twig', [
             'selected' => "Equipe",
             'active'=>'Calendrier / Résultats',
@@ -102,5 +103,26 @@ class EquipeController extends AbstractController {
             'saison'=>$saison[0]->getSaison(),
             'saisonsPrécédentes' =>$saisonsPrecedentes,
         ]);
+    }
+    public function getArticles($id){
+        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $equipe = $repository->find($id);
+        if (!$equipe) {
+            throw $this->createNotFoundException(
+                    'Pas d\'équipe pour l\'id '.$id
+            );
+        }
+        
+        $repositoryTags = $this->getDoctrine()->getRepository(\App\Entity\Tags::class);
+        $lesTags = $repositoryTags->findBy(array('equipe'=>$equipe->getId()));
+        $lesEquipes = $repository->findAllByNomOrder('ASC');
+        return $this->render('equipes/articles.html.twig', [
+            'selected' => "Equipe",
+            'active'=>'Articles',
+            'equipes'=>$lesEquipes,
+            'equipe'=>$equipe,
+            'tags' =>$lesTags,
+        ]);
+        
     }
 }

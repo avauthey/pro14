@@ -53,6 +53,74 @@ class JoueurController extends AbstractController  {
         }
         $repositoryAssoJoueurEquipe = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurEquipe::class);
         $equipetmp = $repositoryAssoJoueurEquipe->findBy(['idJoueur'=>$joueur->getId()]);
+        
+        $repositorySaison = $this->getDoctrine()->getRepository(\App\Entity\Saison::class);
+        $saisonActuelle = $repositorySaison->findBy(array("actuelle"=>"Oui"));
+        //var_dump($saisonActuelle);
+        //$repositoryJournee  = $this->getDoctrine()->getRepository(\App\Entity\Journee::class);
+        /*$journeesSaisonActuelle = $repositoryJournee->findBy(array("saison"=>$saisonActuelle[0]->getSaison(),));
+        $allJournee = $repositoryJournee-*/
+        $repositoryAssoJoueurJournee = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurJournee::class);
+        $journeeJoueur = $repositoryAssoJoueurJournee->findBy(array("joueur"=>$joueur->getId()));
+       //var_dump($journeeJoueur);
+        $journeesSaisonActuelle = array();
+        $allJournees = array();
+        foreach($journeeJoueur as $uneJournee){
+            if($uneJournee->getJournee()->getSaison()==$saisonActuelle[0]->getSaison()){
+                $journeesSaisonActuelle[] = $uneJournee;
+            }
+            //$allJournees[] = $uneJournee;
+        }
+        $j = 0;
+        if(!empty($journeeJoueur)){
+            $allJournees[$j]['saison'] =  $journeeJoueur[0]->getJournee()->getSaison();
+            $allJournees[$j]['equipe'] =  $journeeJoueur[0]->getEquipe();
+            if($journeeJoueur[0]->getNumero()<16){
+                $allJournees[$j]['titulaire'] =  1;
+                $allJournees[$j]['remplacent'] = 0;
+            }else{
+                $allJournees[$j]['titulaire'] =  0;
+                $allJournees[$j]['remplacent'] = 1;
+            }
+            $allJournees[$j]['essai'] =  $journeeJoueur[0]->getEssais();
+            $allJournees[$j]['transformation'] =  $journeeJoueur[0]->getTransformation();
+            $allJournees[$j]['penalite'] =  $journeeJoueur[0]->getPenalite();
+            $allJournees[$j]['drops'] =  $journeeJoueur[0]->getDrops();
+            $allJournees[$j]['placageReussi'] =  $journeeJoueur[0]->getPlacagesReussis();
+            $allJournees[$j]['placageManque'] =  $journeeJoueur[0]->getPlacagesManques();
+            for($i = 1;$i<count($journeeJoueur);$i++){
+                if($journeeJoueur[$i-1]->getJournee()->getSaison() == $journeeJoueur[$i]->getJournee()->getSaison() && $journeeJoueur[$i-1]->getEquipe()->getId() == $journeeJoueur[$i]->getEquipe()->getId()){
+                    if($journeeJoueur[$i]->getNumero()<16){
+                        $allJournees[$j]['titulaire'] = $allJournees[$j]['titulaire'] + 1;
+                    }else{
+                        $allJournees[$j]['remplacent'] = $allJournees[$j]['remplacent'] + 1;
+                    }
+                    $allJournees[$j]['essai'] =  $allJournees[$j]['essai'] + $journeeJoueur[$i]->getEssais();
+                    $allJournees[$j]['transformation'] =  $allJournees[$j]['transformation'] + $journeeJoueur[$i]->getTransformation();
+                    $allJournees[$j]['penalite'] =  $allJournees[$j]['penalite'] + $journeeJoueur[$i]->getPenalite();
+                    $allJournees[$j]['drops'] =  $allJournees[$j]['drops'] + $journeeJoueur[$i]->getDrops();
+                    $allJournees[$j]['placageReussi'] =  $allJournees[$j]['placageReussi'] + $journeeJoueur[$i]->getPlacagesReussis();
+                    $allJournees[$j]['placageManque'] =  $allJournees[$j]['placageManque'] + $journeeJoueur[$i]->getPlacagesManques();
+                }else{
+                    $j++;
+                    $allJournees[$j]['saison'] =  $journeeJoueur[$i]->getJournee()->getSaison();
+                    $allJournees[$j]['equipe'] =  $journeeJoueur[$i]->getEquipe();
+                    if($journeeJoueur[$i]->getNumero()<16){
+                        $allJournees[$j]['titulaire'] =  1;
+                        $allJournees[$j]['remplacent'] = 0;
+                    }else{
+                        $allJournees[$j]['titulaire'] =  0;
+                        $allJournees[$j]['remplacent'] = 1;
+                    }
+                    $allJournees[$j]['essai'] =  $journeeJoueur[$i]->getEssais();
+                    $allJournees[$j]['transformation'] =  $journeeJoueur[$i]->getTransformation();
+                    $allJournees[$j]['penalite'] =  $journeeJoueur[$i]->getPenalite();
+                    $allJournees[$j]['drops'] =  $journeeJoueur[$i]->getDrops();
+                    $allJournees[$j]['placageReussi'] =  $journeeJoueur[$i]->getPlacagesReussis();
+                    $allJournees[$j]['placageManque'] =  $journeeJoueur[$i]->getPlacagesManques();
+                }
+            }
+        }
         //var_dump($equipetmp);
         $previous = "";
         foreach ($equipetmp as $asso) {
@@ -69,7 +137,8 @@ class JoueurController extends AbstractController  {
             'equipes'=>$lesEquipes,
             'joueur'=>$joueur,
             'equipe'=>$equipe,
-            'active'=>"",
+            'saisonActuelle'=>$journeesSaisonActuelle,
+            'allSaisons'=>$allJournees,
         ]);
     }
     

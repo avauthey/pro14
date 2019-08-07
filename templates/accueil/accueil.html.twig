@@ -18,6 +18,29 @@
     <div class='row'>
         <div class='col-lg-7'>
             <h3>Derniers articles</h3><br />
+            {% for article in articles %}
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-2 align-self-center text-center ">
+                            <img src="{{ asset('images/articles/article_'~article.id~'/'~article.miniature)}}"  alt="..." width="50">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{article.titre}}</h5>
+                                <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
+                                <p class="card-text">
+                                    {% if article.dateDerniereModification is not null %}
+                                        <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>
+                                    {%else%}
+                                        <small class="text-muted">Dernière création : {{article.dateCreation|date('d/m/Y')}}</small>
+                                    {% endif %}
+                                </p>
+                                <p class="card-text text-right"><a href="{{path('article',{'id':article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
         <div class='col-lg-5'>
             <h3>Classement</h3>
@@ -44,7 +67,7 @@
                                 {% for confA in classementA %}
                                     <tr>
                                         <th>{{ confA.classement }} </th>
-                                        <td><img src="{{ asset('images/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
+                                        <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
                                         <td> {{confA.joue }}</td>
                                         <td> {{confA.nbPoints }}</td>
                                         <td> {{confA.victoire }}</td>
@@ -82,7 +105,7 @@
                                 {% for confB in classementB %}
                                     <tr>
                                         <th>{{ confB.classement }} </th>
-                                        <td><img src="{{ asset('images/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
+                                        <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
                                         <td> {{confB.joue }}</td>
                                         <td> {{confB.nbPoints }}</td>
                                         <td> {{confB.victoire }}</td>
@@ -112,7 +135,7 @@
                 {% if lastJournee|first.journee!='Demi finale' and lastJournee|first.journee!='Barrage Play Off' and lastJournee|first.journee!='Finale' and lastJournee|first.journee!='Barrage Champions Cup' %}Journée n°{{lastJournee|first.journee}}{% else %} {{lastJournee|first.journee }}{% endif %}<br />
                 {% for journee in lastJournee %}
                 <div class='border-bottom-grey'>
-                    <img src="{{ asset('images/'~journee.idEquipeHome.logo)}}" width="19"> {{ journee.idEquipeHome.nom}} <span class="font-weight-bold">{% if journee.scoreHome!=null%}{{ journee.scoreHome}}{% endif %} - {% if journee.scoreAway!=null%}{{ journee.scoreAway}}{% endif %}</span> {{journee.idEquipeAway.nom }} <img src="{{ asset('images/'~journee.idEquipeAway.logo)}}" width="19">    
+                    <img src="{{ asset('images/logo/'~journee.idEquipeHome.logo)}}" width="19"> {{ journee.idEquipeHome.nom}} <span class="font-weight-bold">{% if journee.scoreHome!=null%}{{ journee.scoreHome}}{% endif %} - {% if journee.scoreAway!=null%}{{ journee.scoreAway}}{% endif %}</span> {{journee.idEquipeAway.nom }} <img src="{{ asset('images/logo/'~journee.idEquipeAway.logo)}}" width="19">    
                 </div>
                 {% endfor %}
             

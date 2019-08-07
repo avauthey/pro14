@@ -69,3 +69,16 @@ journee:
     controller: App\Controller\ChampionnatController:getJournee
     requirements:
         id: '\d+'
+articles:
+    path: /competition/articles
+    controller: App\Controller\ChampionnatController:getArticles    
+article:
+    path: /competition/article/{id}
+    controller: App\Controller\ChampionnatController:getArticle
+    requirements:
+        id: '\d+'
+equipe_article:
+    path: /equipe/articles/{id}
+    controller: App\Controller\EquipeController::getArticles
+    requirements:
+        id: '\d+'

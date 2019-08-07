@@ -4,5 +4,5 @@
     <a href="{{ path('effectif_equipe',{'id':equipe.id})}}" class="list-group-item list-group-item-action {% if active == 'Effectif' %}active{% endif %}">Effectif</a>
     <a href="#" class="list-group-item list-group-item-action {% if active == 'Stats' %}active{% endif %}">Stats</a>
     <a href="#" class="list-group-item list-group-item-action {% if active == 'Presse' %}active{% endif %}">Presse</a>
-    <a href="#" class="list-group-item list-group-item-action {% if active == 'Article' %}active{% endif %}">Article</a>
+    <a href="{{ path('equipe_article',{'id':equipe.id})}}" class="list-group-item list-group-item-action {% if active == 'Article' %}active{% endif %}">Articles</a>
 </div>

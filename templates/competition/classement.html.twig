@@ -49,7 +49,7 @@
                                 {% for confA in lastClassementA %}
                                     <tr>
                                         <th>{{ confA.classement }} </th>
-                                        <td><img src="{{ asset('images/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
+                                        <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
                                         <td> {{confA.joue }}</td>
                                         <td> {{confA.nbPoints }}</td>
                                         <td> {{confA.victoire }}</td>
@@ -86,7 +86,7 @@
                                 {% for confB in lastClassementB %}
                                     <tr>
                                         <th>{{ confB.classement }} </th>
-                                        <td><img src="{{ asset('images/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
+                                        <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
                                         <td> {{confB.joue }}</td>
                                         <td> {{confB.nbPoints }}</td>
                                         <td> {{confB.victoire }}</td>

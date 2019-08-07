@@ -1,0 +1,52 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Equipe - {{ equipe.nom }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('equipes')}}'>Equipes</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('equipe',{'id':equipe.id})}}'>{{equipe.nom}}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Articles</li>
+    </ol>
+</nav>
+<div class='container-fluid'>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1>{{ equipe.nom ~' - '~ active }}</h1>
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-lg-2 top'>
+            {{ include('equipes/blockMenu.html.twig',{'active': active, 'equipe' :equipe}) }}
+        </div>
+        <div class='col-lg-10 top'>
+            {% for tag in tags %}
+               <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-md-2 align-self-center text-center ">
+                            <img src="{{ asset('images/articles/article_'~tag.article.id~'/'~tag.article.miniature)}}"  alt="..." width="50">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{tag.article.titre}}</h5>
+                                <p class="card-text">{% if tag.article.contenu|length > 100 %}{% set var = tag.article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ tag.article.contenu|raw  }} {% endif %}</p>
+                                <p class="card-text">
+                                    {% if tag.article.dateDerniereModification is not null %}
+                                        <small class="text-muted">Dernière modification : {{tag.article.dateDerniereModification|date('d/m/Y')}}</small>
+                                    {%else%}
+                                        <small class="text-muted">Dernière création : {{tag.article.dateCreation|date('d/m/Y')}}</small>
+                                    {% endif %}
+                                </p>
+                                <p class="card-text text-right"><a href="{{path('article',{'id':tag.article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock  %}

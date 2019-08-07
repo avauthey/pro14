@@ -155,3 +155,27 @@ hr{
     color: inherit;
     text-decoration: none;
 }
+.subtitles{
+    color: grey;
+    font-size: 11px;
+}
+.tags{
+    font-size: 18px;
+    font-weight: 600;
+}
+.text-vert{
+    color: #00887A;
+}
+.badge-vert{
+    padding: .7em .7em;
+    background-color: #00887A;
+    color: white;
+}
+.badge-vert:hover{
+    border: 2px solid #00887A;
+    color: #00887A;
+    background-color: white;
+}
+.text-bold{
+    font-weight: 600;
+}

@@ -126,269 +126,269 @@ class AssoJoueurJournee
      */
     private $CR;
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getJournee(): ?Journee
+    public function getJournee()
     {
         return $this->journee;
     }
 
-    public function setJournee(?Journee $journee): self
+    public function setJournee(Journee $journee)
     {
         $this->journee = $journee;
 
         return $this;
     }
 
-    public function getJoueur(): ?Joueur
+    public function getJoueur()
     {
         return $this->joueur;
     }
 
-    public function setJoueur(?Joueur $joueur): self
+    public function setJoueur(Joueur $joueur)
     {
         $this->joueur = $joueur;
 
         return $this;
     }
 
-    public function getEquipe(): ?Equipe
+    public function getEquipe()
     {
         return $this->equipe;
     }
 
-    public function setEquipe(?Equipe $equipe): self
+    public function setEquipe(Equipe $equipe)
     {
         $this->equipe = $equipe;
 
         return $this;
     }
 
-    public function getPoste(): ?Poste
+    public function getPoste()
     {
         return $this->poste;
     }
 
-    public function setPoste(?Poste $poste): self
+    public function setPoste(Poste $poste)
     {
         $this->poste = $poste;
 
         return $this;
     }
 
-    public function getNumero(): ?int
+    public function getNumero()
     {
         return $this->numero;
     }
 
-    public function setNumero(int $numero): self
+    public function setNumero(int $numero)
     {
         $this->numero = $numero;
 
         return $this;
     }
 
-    public function getPoints(): ?int
+    public function getPoints()
     {
         return $this->points;
     }
 
-    public function setPoints(int $points): self
+    public function setPoints(int $points)
     {
         $this->points = $points;
 
         return $this;
     }
 
-    public function getEssais(): ?int
+    public function getEssais()
     {
         return $this->essais;
     }
 
-    public function setEssais(?int $essais): self
+    public function setEssais(int $essais)
     {
         $this->essais = $essais;
 
         return $this;
     }
 
-    public function getTransformation(): ?int
+    public function getTransformation()
     {
         return $this->transformation;
     }
 
-    public function setTransformation(?int $transformation): self
+    public function setTransformation(int $transformation)
     {
         $this->transformation = $transformation;
 
         return $this;
     }
 
-    public function getPenalite(): ?int
+    public function getPenalite()
     {
         return $this->penalite;
     }
 
-    public function setPenalite(?int $penalite): self
+    public function setPenalite(int $penalite)
     {
         $this->penalite = $penalite;
 
         return $this;
     }
 
-    public function getDrops(): ?int
+    public function getDrops()
     {
         return $this->drops;
     }
 
-    public function setDrops(?int $drops): self
+    public function setDrops(int $drops)
     {
         $this->drops = $drops;
 
         return $this;
     }
 
-    public function getPlacagesReussis(): ?int
+    public function getPlacagesReussis()
     {
         return $this->placagesReussis;
     }
 
-    public function setPlacagesReussis(?int $placagesReussis): self
+    public function setPlacagesReussis(int $placagesReussis)
     {
         $this->placagesReussis = $placagesReussis;
 
         return $this;
     }
 
-    public function getPlacagesManques(): ?int
+    public function getPlacagesManques()
     {
         return $this->placagesManques;
     }
 
-    public function setPlacagesManques(?int $placagesManques): self
+    public function setPlacagesManques(int $placagesManques)
     {
         $this->placagesManques = $placagesManques;
 
         return $this;
     }
 
-    public function getAssist(): ?int
+    public function getAssist()
     {
         return $this->assist;
     }
 
-    public function setAssist(?int $assist): self
+    public function setAssist(int $assist)
     {
         $this->assist = $assist;
 
         return $this;
     }
 
-    public function getOffload(): ?int
+    public function getOffload()
     {
         return $this->offload;
     }
 
-    public function setOffload(?int $offload): self
+    public function setOffload(int $offload)
     {
         $this->offload = $offload;
 
         return $this;
     }
 
-    public function getPasse(): ?int
+    public function getPasse()
     {
         return $this->passe;
     }
 
-    public function setPasse(?int $passe): self
+    public function setPasse(int $passe)
     {
         $this->passe = $passe;
 
         return $this;
     }
 
-    public function getCourse(): ?int
+    public function getCourse()
     {
         return $this->course;
     }
 
-    public function setCourse(?int $course): self
+    public function setCourse(int $course)
     {
         $this->course = $course;
 
         return $this;
     }
 
-    public function getMetreGagne(): ?int
+    public function getMetreGagne()
     {
         return $this->metreGagne;
     }
 
-    public function setMetreGagne(?int $metreGagne): self
+    public function setMetreGagne(int $metreGagne)
     {
         $this->metreGagne = $metreGagne;
 
         return $this;
     }
 
-    public function getPerce(): ?int
+    public function getPerce()
     {
         return $this->perce;
     }
 
-    public function setPerce(?int $perce): self
+    public function setPerce(int $perce)
     {
         $this->perce = $perce;
 
         return $this;
     }
 
-    public function getDefenseurBattu(): ?int
+    public function getDefenseurBattu()
     {
         return $this->defenseurBattu;
     }
 
-    public function setDefenseurBattu(?int $defenseurBattu): self
+    public function setDefenseurBattu(int $defenseurBattu)
     {
         $this->defenseurBattu = $defenseurBattu;
 
         return $this;
     }
 
-    public function getPenaliteConcedee(): ?int
+    public function getPenaliteConcedee()
     {
         return $this->penaliteConcedee;
     }
 
-    public function setPenaliteConcedee(?int $penaliteConcedee): self
+    public function setPenaliteConcedee(int $penaliteConcedee)
     {
         $this->penaliteConcedee = $penaliteConcedee;
 
         return $this;
     }
 
-    public function getCJ(): ?int
+    public function getCJ()
     {
         return $this->CJ;
     }
 
-    public function setCJ(?int $CJ): self
+    public function setCJ(int $CJ)
     {
         $this->CJ = $CJ;
 
         return $this;
     }
 
-    public function getCR(): ?int
+    public function getCR()
     {
         return $this->CR;
     }
 
-    public function setCR(?int $CR): self
+    public function setCR(int $CR)
     {
         $this->CR = $CR;
 

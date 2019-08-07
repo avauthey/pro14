@@ -28,7 +28,7 @@
                         <div class="card-header text-white bg-dark">{% if key!='Demi finale' and key!='Barrage Play Off' and key!='Finale' and key!='Barrage Champions Cup' %}Journée n°{{key}}{% else %} {{key }}{% endif %}</div>
                         <div class="card-body text-center card-body-reduce">
                             {% for rencontre in journees %}
-                            <a href="{{ path('journee', {'id':rencontre.id})}}" class="card-link remove-link"><img src="{{ asset('images/'~rencontre.idEquipeHome.logo)}}" width="19"> {{ rencontre.idEquipeHome.nom}} <span class="font-weight-bold">{% if rencontre.scoreHome!=null%}{{ rencontre.scoreHome}}{% endif %} - {% if rencontre.scoreAway!=null%}{{ rencontre.scoreAway}}{% endif %}</span> {{rencontre.idEquipeAway.nom }} <img src="{{ asset('images/'~rencontre.idEquipeAway.logo)}}" width="19"></a><br />
+                            <a href="{{ path('journee', {'id':rencontre.id})}}" class="card-link remove-link"><img src="{{ asset('images/logo/'~rencontre.idEquipeHome.logo)}}" width="19"> {{ rencontre.idEquipeHome.nom}} <span class="font-weight-bold">{% if rencontre.scoreHome!=null%}{{ rencontre.scoreHome}}{% endif %} - {% if rencontre.scoreAway!=null%}{{ rencontre.scoreAway}}{% endif %}</span> {{rencontre.idEquipeAway.nom }} <img src="{{ asset('images/logo/'~rencontre.idEquipeAway.logo)}}" width="19"></a><br />
                             {% endfor %}
                         </div>
                     </div>

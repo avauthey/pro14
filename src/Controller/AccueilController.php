@@ -34,6 +34,9 @@ class AccueilController extends AbstractController {
         if(empty($lastClassementB)){
             $lastClassementB =  $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
         }
+        
+        $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
+        $lastArticle = $repositoryArticle->findLastFive();
         //var_dump($lastClassementA);
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         return $this->render('accueil/accueil.html.twig', [
@@ -42,6 +45,7 @@ class AccueilController extends AbstractController {
             'lastJournee' => $lastJournee,
             'classementA' => $lastClassementA,
             'classementB' => $lastClassementB,
+            'articles' => $lastArticle,
         ]);
     }
 }

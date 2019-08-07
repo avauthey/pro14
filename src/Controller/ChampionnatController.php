@@ -107,4 +107,36 @@ class ChampionnatController extends AbstractController {
             'equipeAway'=>$equipeAway,
         ]);
     }
+    
+    public function getArticle($id){
+        $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
+        $article = $repositoryArticle->find($id);
+        if (!$article) {
+            throw $this->createNotFoundException(
+                    'Fuck off! Pas d\'article  pour l\'id '.$id
+            );
+        }
+        $repositoryTags = $this->getDoctrine()->getRepository(\App\Entity\Tags::class);
+        $lesTags = $repositoryTags->findBy(array('article'=>$article->getId()));
+        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
+        return $this->render('competition/unArticle.html.twig', [
+            'selected' => "Competition",
+            'equipes'=> $lesEquipes,
+            'article' => $article,
+            'tags'=>$lesTags,
+        ]);
+    }
+    public function getArticles() {
+        $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
+        $articles = $repositoryArticle->findAll();
+        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
+        return $this->render('competition/articles.html.twig', [
+            'selected' => "Competition",
+            'equipes'=> $lesEquipes,
+            'active' => "Article",
+            'articles' => $articles,
+        ]);
+    }
 }

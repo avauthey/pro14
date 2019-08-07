@@ -29,7 +29,7 @@
                 <i class="fas fa-user-alt fa-7x"></i>
             {% endif %}
         </div>
-        <div class="col-lg-4 d-flex align-self-center bg-vertClair padd">
+        <div class="col-lg-6 d-flex align-self-center bg-vertClair padd">
             <div class="row">
                 <div class="col-lg-12">
                     <i class="fas fa-birthday-cake"></i> Date de naissance : <b>{{ joueur.dateNaissance|date('d/m/Y') }}</b>
@@ -56,16 +56,149 @@
         </div>
     </div>
     <div class="row top justify-content-center">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Cette saison</a>
+                    <a class="nav-link active" href="#" id="btnSaisonActuelle">Cette saison</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Général</a>
+                    <a class="nav-link" href="#" id="btnGeneral">Général</a>
                 </li>
             </ul>
         </div>
-    </div>            
+    </div>
+    <div class="row top justify-content-center">
+        <div class="col-lg-8">
+            <div id="blockSaisonActuelle">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Match</th>
+                                <th>Score</th>
+                                <th>Titulaire</th>
+                                <th>Essai</th>
+                                <th>Trans</th>
+                                <th>Pén</th>
+                                <th>Drop</th>
+                                <th>Plac. réussi</th>
+                                <th>Plac. manqué</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if saisonActuelle is not empty %}
+                                {% set matchJoué = 0 %}
+                                {% set titulaire = 0 %}
+                                {% set essai = 0 %}
+                                {% set transformation = 0 %}
+                                {% set penalite = 0 %}
+                                {% set drops = 0 %}
+                                {% set placagesReussis = 0 %}
+                                {% set placagesManques = 0 %}
+                            {% for journee in saisonActuelle %}
+                                {% set matchJoué = matchJoué + 1 %}
+                                {% if journee.numero <16 %} 
+                                    {% set titulaire = titulaire + 1 %}
+                                {%endif%}
+                                {% set essai = essai + journee.essais %}
+                                {% set transformation = transformation +  journee.transformation%}
+                                {% set penalite = penalite + journee.penalite %}
+                                {% set drops = drops + journee.drops %}
+                                {% set placagesReussis = placagesReussis + journee.placagesReussis%}
+                                {% set placagesManques = placagesManques + journee.placagesManques %}
+                                <tr>
+                                    <td>{{journee.journee.idEquipeHome.nom~' - '~journee.journee.idEquipeAway.nom}}</td>
+                                    <td>{{journee.journee.scoreHome~' - '~journee.journee.scoreAway}}</td>
+                                    <td>{% if journee.numero <16 %} Oui {% else %} Non {%endif%}</td>
+                                    <td>{{journee.essais}}</td>
+                                    <td>{{journee.transformation}}</td>
+                                    <td>{{journee.penalite}}</td>
+                                    <td>{{journee.drops}}</td>
+                                    <td>{{journee.placagesReussis}}</td>
+                                    <td>{{journee.placagesManques}}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="2" class="text-center text-bold">TOTAL ({{matchJoué}} match(s) joué(s))</td>
+                                <td class="text-bold">{{titulaire}}</td>
+                                <td class="text-bold">{{essai}}</td>
+                                <td class="text-bold">{{transformation}}</td>
+                                <td class="text-bold">{{penalite}}</td>
+                                <td class="text-bold">{{drops}}</td>
+                                <td class="text-bold">{{placagesReussis}}</td>
+                                <td class="text-bold">{{placagesManques}}</td>
+                                
+                            {% else %}
+                                <tr> <td colspan="9" class="text-center">Pas de données encore pour cette saison</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="blockGeneral">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Saison</th>
+                                <th>Equipe</th>
+                                <th>Titulaire</th>
+                                <th>Remplacent</th>
+                                <th>Essai</th>
+                                <th>Trans</th>
+                                <th>Pén</th>
+                                <th>Drop</th>
+                                <th>Plac. réussi</th>
+                                <th>Plac. manqué</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if allSaisons is not empty %}
+                                
+                                {% for saisonJournee in allSaisons %}
+                                    <tr>
+                                        <td>{{saisonJournee.saison}}</td>
+                                        <td>{{saisonJournee.equipe.nom}}</td>
+                                        <td>{{saisonJournee.titulaire}}</td>
+                                        <td>{{saisonJournee.remplacent}}</td>
+                                        <td>{{saisonJournee.essai}}</td>
+                                        <td>{{saisonJournee.transformation}}</td>
+                                        <td>{{saisonJournee.penalite}}</td>
+                                        <td>{{saisonJournee.drops}}</td>
+                                        <td>{{saisonJournee.placageReussi}}</td>
+                                        <td>{{saisonJournee.placageManque}}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr> 
+                                    <td colspan="10" class="text-center">Pas de données pour ce joueur</td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+{% block javascript %}
+    <script></script>
+    <script>
+        $('#blockGeneral').hide();
+        $('#btnSaisonActuelle').click(function(){
+            $('#btnGeneral').removeClass('active');
+            $('#btnSaisonActuelle').addClass('active');
+            $('#blockSaisonActuelle').show();
+            $('#blockGeneral').hide();
+        });
+        $('#btnGeneral').click(function(){
+            $('#btnSaisonActuelle').removeClass('active');
+            $('#btnGeneral').addClass('active');
+            $('#blockGeneral').show();
+            $('#blockSaisonActuelle').hide();
+        });
+        
+        
+        </script>
 {% endblock %}
