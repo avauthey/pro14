@@ -127,7 +127,10 @@
     </div>
     <div class='row top'>
         <div class='col-lg-7'>
-            <h3>Presse</h3><br />
+            <h3>Presse</h3>
+            {% for nom,lien in presse %}
+                <a href="{{ lien }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ nom }}</a><br />
+            {% endfor %}
         </div>
         <div class='col-lg-5'>
             <h3>Derniers résultats</h3>

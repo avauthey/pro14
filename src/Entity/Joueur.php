@@ -290,4 +290,8 @@ class Joueur
 
         return $this;
     }
+    
+    public function getFullName(){
+        return sprintf('%s %s',$this->getPrenom(),$this->getNom());
+    }
 }

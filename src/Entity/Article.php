@@ -48,6 +48,11 @@ class Article
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $statut;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -87,7 +92,7 @@ class Article
         return $this->dateDerniereModification;
     }
 
-    public function setDateDerniereModification(\DateTimeInterface $dateDerniereModification)
+    public function setDateDerniereModification(?\DateTimeInterface $dateDerniereModification)
     {
         $this->dateDerniereModification = $dateDerniereModification;
 
@@ -145,6 +150,18 @@ class Article
                 $tag->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatut(): ?string
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?string $statut): self
+    {
+        $this->statut = $statut;
 
         return $this;
     }

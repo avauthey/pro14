@@ -72,6 +72,7 @@ class Journee
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Arbitre", inversedBy="journees")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $idArbitreCentral;
 
@@ -95,9 +96,15 @@ class Journee
      */
     private $assoJoueurJournees;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\StatsMatch", mappedBy="journee")
+     */
+    private $statsMatches;
+
     public function __construct()
     {
         $this->assoJoueurJournees = new ArrayCollection();
+        $this->statsMatches = new ArrayCollection();
     }
 
     public function getId()
@@ -243,7 +250,7 @@ class Journee
         //return date('d/m/Y',strtotime($this->jour));
     }
 
-    public function setJour(string $jour)
+    public function setJour(?string $jour): self
     {
         $this->jour = $jour;
 
@@ -299,6 +306,41 @@ class Journee
             // set the owning side to null (unless already changed)
             if ($assoJoueurJournee->getJournee() === $this) {
                 $assoJoueurJournee->setJournee(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function getInfoJournee(){
+        return sprintf('%s vs %s saison %s',$this->getIdEquipeHome()->getNom(),$this->getIdEquipeAway()->getNom(), $this->getSaison());
+    }
+
+    /**
+     * @return Collection|StatsMatch[]
+     */
+    public function getStatsMatches(): Collection
+    {
+        return $this->statsMatches;
+    }
+
+    public function addStatsMatch(StatsMatch $statsMatch): self
+    {
+        if (!$this->statsMatches->contains($statsMatch)) {
+            $this->statsMatches[] = $statsMatch;
+            $statsMatch->setJournee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStatsMatch(StatsMatch $statsMatch): self
+    {
+        if ($this->statsMatches->contains($statsMatch)) {
+            $this->statsMatches->removeElement($statsMatch);
+            // set the owning side to null (unless already changed)
+            if ($statsMatch->getJournee() === $this) {
+                $statsMatch->setJournee(null);
             }
         }
 

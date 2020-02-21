@@ -19,11 +19,12 @@
         </div>
     </div>
     <div class='row'>
-        <div class='col-lg-2 top'>
+        <div class='col-lg-2 mt-2'>
             {{ include('equipes/blockMenu.html.twig',{'active': active, 'equipe' :equipe}) }}
         </div>
-        <div class='col-lg-10 top'>
+        <div class='col-lg-10 mt-2'>
             {% for tag in tags %}
+                {% if tag.article.statut == 'Publié' %}
                <div class="card mb-3">
                     <div class="row no-gutters">
                         <div class="col-md-2 align-self-center text-center ">
@@ -45,6 +46,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

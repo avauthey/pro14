@@ -1,0 +1,14 @@
+#sonata_admin:
+#    title: 'Admin Pro14'
+#    dashboard:
+#        blocks:
+#            - { type: sonata.admin.block.admin_list, position: left, settings: {groups: ['Articles', 'Compétition']} }
+#            - { type: sonata.admin.block.admin_list, position: right, settings: {groups: ['Equipes/Joueurs', 'Autres']} }
+#            - { type: sonata.block.service.rss, position: bottom, settings: {title: 'RSS', url: http://localhost/article/archive.rss} }
+#
+#sonata_block:
+#    default_contexts: [sonata_page_bundle]
+#    blocks:
+#        sonata.admin.block.admin_list:
+#            contexts: [admin]
+#        sonata.block.service.rss: ~

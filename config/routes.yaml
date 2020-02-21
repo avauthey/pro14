@@ -71,7 +71,10 @@ journee:
         id: '\d+'
 articles:
     path: /competition/articles
-    controller: App\Controller\ChampionnatController:getArticles    
+    controller: App\Controller\ChampionnatController:getArticles
+presse:
+    path: /competition/presse
+    controller: App\Controller\ChampionnatController:getPresse   
 article:
     path: /competition/article/{id}
     controller: App\Controller\ChampionnatController:getArticle
@@ -82,3 +85,11 @@ equipe_article:
     controller: App\Controller\EquipeController::getArticles
     requirements:
         id: '\d+'
+equipe_stats:
+   path: /equipe/stats/{id}
+   controller: App\Controller\EquipeController::getStats
+   requirements:
+       id: '\d+'
+presentation:
+    path: /presentation
+    controller: App\Controller\AccueilController:getPresentation

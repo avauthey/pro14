@@ -64,4 +64,12 @@ class JourneeRepository extends ServiceEntityRepository
         return $query->execute();
     }
     
+    public function findPointsByEquipe($saison, $equipe){
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+                'Select j FROM App\Entity\Journee j WHERE j.saison = :saison AND (j.idEquipeHome = :equipe OR j.idEquipeAway = :equipe) ORDER BY j.id ASC')
+                ->setParameters(array('saison'=>$saison, 'equipe'=>$equipe));
+        return $query->execute();
+    }
+    
 }

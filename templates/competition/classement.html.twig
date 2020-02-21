@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h3>Conférence B :</h3>
+                    <h3>Conférence B</h3>
                     <div class="table-responsive classement-reduce-size">
                         <table class="table">
                             <thead class="thead-dark">
@@ -113,6 +113,60 @@
         <div class="col-lg-6">
             <h4> Classement évolutif conférence B</h4>
             <canvas id="confB" width="600" height="400"></canvas>
+        </div>
+    </div>
+    <div class="row justify-content-center classement-reduce-size">
+        <div class="col-lg-6">
+            <h3>Meilleur réalisateur :</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <th>Joueur</th>
+                        <th>Equipe</th>
+                        <th>Points</th>
+                        <th>Essais</th>
+                        <th>Pénalités</th>
+                        <th>Transformations</th>
+                        <th>Drops</th>
+                    </thead>
+                    <tbody>
+                        {% for realisateur in realisateurs %}
+                            <tr>
+                                <th>{{realisateur.joueur.joueur.prenom~' '~realisateur.joueur.joueur.nom}}</th>
+                                <td>{{realisateur.joueur.equipe.nom}}</td>
+                                <td>{{realisateur.p}}</td>
+                                <td>{{realisateur.1}}</td>
+                                <td>{{realisateur.2}}</td>
+                                <td>{{realisateur.3}}</td>
+                                <td>{{realisateur.4}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>Meilleur marqueur :</h3>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <th>Joueur</th>
+                        <th>Equipe</th>
+                        <th>Points</th>
+                        <th>Essais</th>
+                    </thead>
+                    <tbody>
+                        {% for marqueur in marqueurs %}
+                            <tr>
+                                <th>{{marqueur.joueur.joueur.prenom~' '~marqueur.joueur.joueur.nom}}</th>
+                                <td>{{marqueur.joueur.equipe.nom}}</td>
+                                <td>{{marqueur.points}}</td>
+                                <td>{{marqueur.essais}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="row">

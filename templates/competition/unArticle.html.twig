@@ -20,16 +20,16 @@
             {% endif %}
         </div>
     </div>
-    <div class='row justify-content-center top'>
+    <div class='row justify-content-center mt-2'>
         <div class='col-lg-10'>{{article.contenu | raw}}</div>
     </div>
-    <div class='row justify-content-center top'>
+    <div class='row justify-content-center mt-2'>
         <div class="col-lg-10">
             <span class="tags">
                 <i class="fas fa-tags text-vert"></i> Tags :
                 {% for tag in tags %}
                     {% if tag.joueur is not null %}
-                        <a href="{{ path('consulter_joueur',{'id':tag.joueur.id})}}" class="badge badge-pill badge-primary">{{tag.joueur.prenom ~" "~tag.joueur.nom}}</a>
+                        <a href="{{ path('consulter_joueur',{'id':tag.joueur.id})}}" class="badge badge-pill badge-vert">{{tag.joueur.prenom ~" "~tag.joueur.nom}}</a>
                     {% endif %}
                     {% if tag.equipe is not null %}
                         <a href="{{ path('equipe_article',{'id':tag.equipe.id})}}" class="badge badge-pill badge-vert">{{tag.equipe.nom}}</a>

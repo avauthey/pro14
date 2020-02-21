@@ -104,7 +104,7 @@ class EquipeController extends AbstractController {
             'saisonsPrécédentes' =>$saisonsPrecedentes,
         ]);
     }
-    public function getArticles($id){
+    public function getArticles($id, $nomSaison=null){
         $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $equipe = $repository->find($id);
         if (!$equipe) {
@@ -114,15 +114,92 @@ class EquipeController extends AbstractController {
         }
         
         $repositoryTags = $this->getDoctrine()->getRepository(\App\Entity\Tags::class);
-        $lesTags = $repositoryTags->findBy(array('equipe'=>$equipe->getId()));
+        $lesTagsEquipe = $repositoryTags->findBy(array('equipe'=>$equipe->getId()));
         $lesEquipes = $repository->findAllByNomOrder('ASC');
+        $repositorySaison = $this->getDoctrine()->getRepository(\App\Entity\Saison::class);
+        if($nomSaison == null){
+            $saison = $repositorySaison->findBy(["actuelle"=>"Oui"]);
+        }else{
+            $saison = $repositorySaison->findBy(["saison"=>$nomSaison]);
+        }
+        //$saisonsPrecedentes = $repositorySaison->findPrevious($saison[0]->getId());
+        $repositoryAssoJoueurEquipe = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurEquipe::class);
+        $lesJoueurs = $repositoryAssoJoueurEquipe->findBy(array('idEquipe'=>$equipe->getId(),"saison"=>$saison[0]->getSaison()));
+        foreach ($lesJoueurs as $unJoueur){
+            $lesArticles = $repositoryTags->findBy(array('joueur'=>$unJoueur->getIdJoueur()));
+            if(!empty($lesArticles)){
+                foreach ($lesArticles as $unArticle){
+                    $lesArticlesJoueurs[] = $unArticle;
+                }
+            }
+        }
+        /*var_dump($lesArticlesJoueurs);
+        var_dump($lesTagsEquipe);*/
+        //for
+        $tagsTmp = array_merge($lesTagsEquipe, $lesArticlesJoueurs);
+        //var_dump($tagsTmp);
+        if(!empty($tagsTmp)){
+            $taille = count($tagsTmp);
+            for($i = $taille-2; $i >= 0; $i--){
+                for($j = 0; $j <= $i; $j++){
+                    if($tagsTmp[$j+1]->getId() < $tagsTmp[$j]->getId()){
+                        $temp = $tagsTmp[$j+1];
+                        $tagsTmp[$j+1] = $tagsTmp[$j];
+                        $tagsTmp[$j] = $temp;
+                    }
+                }
+            }
+        }
+        //var_dump($tagsTmp);
+        $lesTags = array_reverse($tagsTmp);
         return $this->render('equipes/articles.html.twig', [
             'selected' => "Equipe",
-            'active'=>'Articles',
+            'active'=>'Article',
             'equipes'=>$lesEquipes,
             'equipe'=>$equipe,
             'tags' =>$lesTags,
         ]);
         
+    }
+    
+    public function getStats($id) {
+        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $repositorySaison = $this->getDoctrine()->getRepository(\App\Entity\Saison::class);
+        $repositoryAssoJoueurEquipe = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurEquipe::class);
+        $repositoryJournee = $this->getDoctrine()->getRepository(\App\Entity\Journee::class); 
+        $repositoryClassement = $this->getDoctrine()->getRepository(\App\Entity\Classement::class);
+        $repositoryAssoJourneeJoueur = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurJournee::class);
+        $equipe = $repository->find($id);
+        if (!$equipe) {
+            throw $this->createNotFoundException(
+                    'Pas d\'équipe pour l\'id '.$id
+            );
+        }
+        $saison = $repositorySaison->findBy(array('actuelle'=>'Oui'));
+        //var_dump($saison);
+        //$joueurs = $repositoryAssoJoueurEquipe->findBy(array('idEquipe'=>$equipe->getId(),'saison'=>$saison[0]->getSaison()));
+        $lastClassement = $repositoryClassement->findLastByEquipe($equipe->getId());
+        $journees = $repositoryJournee->findPointsByEquipe($saison[0]->getSaison(), $equipe->getId());
+        $realisateurs = $repositoryAssoJourneeJoueur->findRealisateurByEquipe($saison[0]->getSaison(),$equipe->getId());
+        $marqueurs = $repositoryAssoJourneeJoueur->findMarqueurByEquipe($saison[0]->getSaison(),$equipe->getId());
+        $placages = $repositoryAssoJourneeJoueur->findPlaqueurByEquipe($saison[0]->getSaison(), $equipe->getId());
+        $courses = $repositoryAssoJourneeJoueur->findCourseMetreByEquipe($saison[0]->getSaison(), $equipe->getId());
+        $discipline = $repositoryAssoJourneeJoueur->findDisciplineByEquipe($saison[0]->getSaison(), $equipe->getId());
+        //var_dump($realisateurs);
+        $lesEquipes = $repository->findAllByNomOrder('ASC');
+        return $this->render('equipes/stats.html.twig', [
+            'selected' => "Equipe",
+            'active'=>'Stats',
+            'equipes'=>$lesEquipes,
+            'equipe'=>$equipe,
+            'saison'=>$saison[0],
+            'journees' => $journees,
+            'classement'=>$lastClassement[0],
+            'realisateurs'=>$realisateurs,
+            'marqueurs'=>$marqueurs,
+            'plaqueurs'=> $placages,
+            'coureurs'=>$courses,
+            'fautifs'=>$discipline,
+        ]);
     }
 }

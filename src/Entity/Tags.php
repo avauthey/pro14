@@ -24,11 +24,13 @@ class Tags
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Equipe", inversedBy="tags")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $equipe;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Joueur", inversedBy="tags")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $joueur;
 
@@ -54,7 +56,7 @@ class Tags
         return $this->equipe;
     }
 
-    public function setEquipe(Equipe $equipe)
+    public function setEquipe(?Equipe $equipe)
     {
         $this->equipe = $equipe;
 
@@ -66,7 +68,7 @@ class Tags
         return $this->joueur;
     }
 
-    public function setJoueur(Joueur $joueur)
+    public function setJoueur(?Joueur $joueur)
     {
         $this->joueur = $joueur;
 

@@ -25,3 +25,82 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    admin.article:
+        class: App\Admin\ArticleAdmin
+        arguments: [~, App\Entity\Article,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Articles", label: "Articles"}
+            
+    admin.classement:
+        class: App\Admin\ClassementAdmin
+        arguments: [~,App\Entity\Classement,~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: "Compétition", label: "Classement"}
+            
+    admin.journee:
+        class: App\Admin\JourneeAdmin
+        arguments: [~, App\Entity\Journee,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Compétition", label: "Journées"}
+            
+    admin.compo:
+        class: App\Admin\AssoJoueurJourneeAdmin
+        arguments: [~, App\Entity\AssoJoueurJournee, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: "Compétition", label: "Compositions/stats Matchs" }
+            
+    admin.tags:
+        class: App\Admin\TagsAdmin
+        arguments: [~, App\Entity\Tags,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Articles", label: "Tags"}
+    
+    admin.equipe:
+        class: App\Admin\EquipeAdmin
+        arguments: [~, App\Entity\Equipe,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Equipes/Joueurs", label: "Equipes"}
+            
+    admin.joueur:
+        class: App\Admin\JoueurAdmin
+        arguments: [~, App\Entity\Joueur, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Equipes/Joueurs", label: "Joueurs"}
+            
+    admin.saison:
+        class: App\Admin\SaisonAdmin
+        arguments: [~, App\Entity\Saison,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Autres", label: "Saisons"}
+            
+    admin.arbitre:
+        class: App\Admin\ArbitreAdmin
+        arguments: [~, App\Entity\Arbitre,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Autres", label: "Arbitres"}
+            
+    admin.palmares:
+        class: App\Admin\PalmaresAdmin
+        arguments: [~, App\Entity\Palmares,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Autres", label: "Palmarès"}
+            
+    admin.poste:
+        class: App\Admin\PosteAdmin
+        arguments: [~, App\Entity\Poste,~]
+        tags:
+            - { name: sonata.admin, manager_type: orm,group: "Autres", label: "Postes"}
+    
+    admin.assoJoueurEquipe:
+        class: App\Admin\AssoJoueurEquipeAdmin
+        arguments: [~, App\Entity\AssoJoueurEquipe, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: "Equipes/Joueurs", label: "Joueurs/Equipes"}
+    #sonata.block.service.rss:
+     #   class: Sonata\BlockBundle\Block\Service\RssBlockService
+      #  arguments: [~, '@twig']
+       # tags:
+        #    - { name: sonata.block }
+    
+    
+    

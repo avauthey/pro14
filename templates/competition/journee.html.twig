@@ -13,11 +13,11 @@
 <div class='container-fluid'>
     <div class='row'>
         <div class='col-lg-6 text-right'>
-            <h1> <img src="{{ asset('images/'~journee.idEquipeHome.logo)}}" width="50"> {{journee.idEquipeHome.nom}} <span class="score">{{journee.scoreHome}}</span> </h1>
+            <h1> <img src="{{ asset('images/logo/'~journee.idEquipeHome.logo)}}" width="50"> {{journee.idEquipeHome.nom}} <span class="score">{{journee.scoreHome}}</span> </h1>
             
         </div>
         <div class='col-lg-6'>
-            <h1> <span class="score">{{journee.scoreAway}}</span> {{journee.idEquipeAway.nom}} <img src="{{ asset('images/'~journee.idEquipeAway.logo)}}" width="50"></h1>
+            <h1> <span class="score">{{journee.scoreAway}}</span> {{journee.idEquipeAway.nom}} <img src="{{ asset('images/logo/'~journee.idEquipeAway.logo)}}" width="50"></h1>
             
         </div>
     </div>
@@ -44,9 +44,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#" id="btnComposition">Composition</a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                      <a class="nav-link {% if journee.scoreHome==null and journee.scoreAway==null%}disabled{%endif%}" href="#" id="btnResume">Résumé</a>
-                </li>
+                </li>-->
                 <li class="nav-item">
                      <a class="nav-link {% if journee.scoreHome==null and journee.scoreAway==null%}disabled{%endif%}" href="#" id="btnMatch">Stats Match</a>
                 </li>
@@ -58,7 +58,7 @@
     </div>
                
     <div id='blockComposition'>
-        <div class='row justify-content-center top'>
+        <div class='row justify-content-center mt-2'>
             <div class='col-lg-2'>
                 {%if equipeHome is not empty%}
                     {% for home in equipeHome%}
@@ -120,8 +120,6 @@
                                 </tr>
                                 
                             </table>
-                        {% else %}
-                            <div class="text-center">Pas de données pour l'équipe domicile</div>
                         {% endif %}
                     </div>
                 </div>
@@ -174,8 +172,6 @@
                                 <td class='bg-success terrainRow terrainLigneDashedGauche terrainLigneDashedTop'></td>
                             </tr>
                         </table>
-                        {% else %}
-                            <div class="text-center">Pas de données pour l'équipe extérieure</div>
                         {% endif %}
                     </div>
                 </div>
@@ -191,10 +187,195 @@
             </div>
         </div>
     </div>
-    <div id='blockResume'></div>
-    <div id='blockMatch'></div>
+    <div id='blockMatch'>
+        <div class='row justify-content-center mt-2'>
+            <div class="col-lg-6 text-center">
+                <h4>Scoring</h4>
+                {% set pointAway = 0 %}
+                {% set pointHome = 0 %}
+                {% set essaisHome = 0 %}
+                {% set essaisAway = 0 %}
+                {% set transformationHome = 0 %}
+                {% set transformationAway = 0 %}
+                {% set penaliteHome = 0 %}
+                {% set penaliteAway = 0 %}
+                {% set dropHome = 0 %}
+                {% set dropAway = 0 %}
+                {% for home in equipeHome%}
+                    {% set pointHome = pointHome + home.points %}
+                    {% set essaisHome = essaisHome + home.essais %}
+                    {% set transformationHome = transformationHome + home.transformation %}
+                    {% set penaliteHome = penaliteHome + home.penalite %}
+                    {% set dropHome = dropHome + home.drops %}
+                {% endfor %}
+                {% for away in equipeAway%}
+                    {% set pointAway = pointAway + away.points%}
+                    {% set essaisAway = essaisAway + away.essais%}
+                    {% set transformationAway = transformationAway + away.transformation%}
+                    {% set penaliteAway = penaliteAway + away.penalite%}
+                    {% set dropAway = dropAway + away.drops%}
+                {% endfor %}
+                {% if pointHome == (journee.scoreHome-7) %}
+                    {% set essaisHome = essaisHome + 1 %}
+                {% endif %}
+                {% if pointAway == (journee.scoreAway-7) %}
+                    {% set essaisAway = essaisAway + 1 %}
+                {% endif %}
+                Essais<br/>
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (essaisHome+essaisAway) != 0 %}{{ essaisHome*100/(essaisHome+essaisAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ essaisHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (essaisHome+essaisAway) != 0 %}{{ essaisAway*100/(essaisHome+essaisAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ essaisAway}}</div> 
+                </div>
+                Transformations<br/>
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (transformationHome+transformationAway) != 0 %}{{ transformationHome*100/(transformationHome+transformationAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ transformationHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (transformationHome+transformationAway) != 0 %}{{ transformationAway*100/(transformationHome+transformationAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ transformationAway}}</div> 
+                </div>
+                Pénalités<br/>
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (penaliteHome+penaliteAway) != 0 %}{{ penaliteHome*100/(penaliteHome+penaliteAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ penaliteHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (penaliteHome+penaliteAway) != 0 %}{{ penaliteAway*100/(penaliteHome+penaliteAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ penaliteAway}}</div> 
+                </div>
+                Drops<br/>
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (dropHome+dropAway) != 0 %}{{ dropHome*100/(dropHome+dropAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ dropHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (dropHome+dropAway) != 0 %}{{ dropAway*100/(dropHome+dropAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ dropAway}}</div> 
+                </div>
+            </div>
+        
+            <div class="col-lg-6 text-center">
+                <div class='row'>
+                    <div class='col-lg-12 text-center'>
+                        <h4>Possession/occupation</h4>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='col-lg-6 text-center'>
+                        <canvas id="possession" width="400" height="300"></canvas>
+                    </div>
+                    <div class='col-lg-6 text-center'>
+                        <canvas id="occupation" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-6 text-center">
+                <h4>Attaque</h4>
+                {% set passesHome = 0 %}
+                {% set passesAway = 0 %}
+                {% set offloadHome = 0 %}
+                {% set offloadAway = 0 %}
+                {% set courseHome = 0 %}
+                {% set courseAway = 0 %}
+                {% set mgHome = 0 %}
+                {% set mgAway = 0 %}
+                {% set perceHome = 0 %}
+                {% set perceAway = 0 %}
+                {% set defHome = 0 %}
+                {% set defAway = 0 %}
+                {% for home in equipeHome%}
+                    {% set passesHome = passesHome + home.passe %}
+                    {% set offloadHome = offloadHome + home.offload %}
+                    {% set courseHome = courseHome + home.course %}
+                    {% set mgHome = mgHome + home.metreGagne %}
+                    {% set perceHome = perceHome + home.perce %}
+                    {% set defHome = defHome + home.defenseurBattu %}
+                {% endfor %}
+                {% for away in equipeAway%}
+                    {% set passesAway = passesAway + away.passe %}
+                    {% set offloadAway = offloadAway + away.offload %}
+                    {% set courseAway = courseAway + away.course %}
+                    {% set mgAway = mgAway + away.metreGagne %}
+                    {% set perceAway = perceAway + away.perce %}
+                    {% set defAway = defAway + away.defenseurBattu %}
+                {% endfor %}
+                Passes<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (passesHome+passesAway) != 0 %}{{ passesHome*100/(passesHome+passesAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ passesHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (passesHome+passesAway) != 0 %}{{ passesAway*100/(passesHome+passesAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ passesAway}}</div> 
+                </div>
+                Offload<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (offloadHome+offloadAway) != 0 %}{{ offloadHome*100/(offloadHome+offloadAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ offloadHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (offloadHome+offloadAway) != 0 %}{{ offloadAway*100/(offloadHome+offloadAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ offloadAway}}</div> 
+                </div>
+                Courses<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (courseHome+courseAway) != 0 %}{{ courseHome*100/(courseHome+courseAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ courseHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (courseHome+courseAway) != 0 %}{{ courseAway*100/(courseHome+courseAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ courseAway}}</div> 
+                </div>
+                Metres gagnés<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (mgHome+mgAway) != 0 %}{{ mgHome*100/(mgHome+mgAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ mgHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (mgHome+mgAway) != 0 %}{{ mgAway*100/(mgHome+mgAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ mgAway }}</div> 
+                </div>
+                Percés<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (perceHome+perceAway) != 0 %}{{ perceHome*100/(perceHome+perceAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ perceHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (perceHome+perceAway) != 0 %}{{ perceAway*100/(perceHome+perceAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ perceAway}}</div> 
+                </div>
+                Défenseurs battus<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (defHome+defAway) != 0 %}{{ defHome*100/(defHome+defAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ defHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (defHome+defAway) != 0 %}{{ defAway*100/(defHome+defAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ defAway}}</div> 
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Défense</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 text-center d-flex align-self-center">
+                        <canvas id="placageHome" width="400" height="300"></canvas>
+                    </div>
+                    <div class="col-lg-6 text-center d-flex align-self-center">
+                        <canvas id="placageAway" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-6 text-center">
+                <h4>Pénalités</h4>
+                {% set penalitesHome = 0 %}
+                {% set penalitesAway = 0 %}
+                {% set cjHome = 0 %}
+                {% set cjAway = 0 %}
+                {% set crHome = 0 %}
+                {% set crAway = 0 %}
+                {% for home in equipeHome%}
+                    {% set penalitesHome = penalitesHome + home.penaliteConcedee %}
+                    {% set cjHome = cjHome + home.cj %}
+                    {% set crHome = crHome + home.cr %}
+                {% endfor %}
+                {% for away in equipeAway%}
+                    {% set penalitesAway = penalitesAway + away.penaliteConcedee %}
+                    {% set cjAway = cjAway + away.cj %}
+                    {% set crAway = crAway + away.cr %}
+                {% endfor %}
+                Discipline<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (penalitesHome+penalitesAway) != 0 %}{{ penalitesHome*100/(penalitesHome+penalitesAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ penalitesHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (penalitesHome+penalitesAway) != 0 %}{{ penalitesAway*100/(penalitesHome+penalitesAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ penalitesAway}}</div> 
+                </div>
+                Carton jaune<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (cjHome+cjAway) != 0 %}{{ cjHome*100/(cjHome+cjAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ cjHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (cjHome+cjAway) != 0 %}{{ cjAway*100/(cjHome+cjAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ cjAway}}</div> 
+                </div>
+                Carton rouge<br />
+                <div class="progress my-progress">
+                    <div class="progress-bar home" role="progressbar" style="width: {% if (crHome+crAway) != 0 %}{{ crHome*100/(crHome+crAway)}}{% else %}0{% endif %}%" aria-valuemin="0" aria-valuemax="100">{{ crHome }} </div>
+                    <div class="progress-bar away" role="progressbar" style="width: {% if (crHome+crAway) != 0 %}{{ crAway*100/(crHome+crAway)}}{% else %}0{% endif %}%"  aria-valuemin="0" aria-valuemax="100">{{ crAway}}</div> 
+                </div>
+            </div>
+        </div>
+    </div>
     <div id='blockJoueurs'>
-        <div class='row justify-content-center top'>
+        <div class='row justify-content-center mt-2'>
             <div class='col-lg-6'>
                 <div class='table-responsive'>
                     <table class='table table-bordered table-xs table-striped'>
@@ -378,5 +559,192 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
         
+        function getColor(equipe){
+           var color;
+            switch (equipe){
+                case 'Glasgow Warriors':
+                    color = 'grey';
+                    break;
+                case 'Munster':
+                    color = 'red';
+                    break;
+                case 'Connacht':
+                    color = 'green';
+                    break;
+                case 'Ospreys':
+                    color = 'black';
+                    break;
+                case 'Cardiff Blues':
+                    color = 'blue';
+                    break;
+                case 'Toyota Cheetahs':
+                    color = 'orange';
+                    break;
+                case 'Zebres':
+                    color = 'yellow';
+                    break;
+                case 'Leinster':
+                    color = "blue";
+                    break;
+                case 'Ulster':
+                    color = "#CCCCCC";
+                    break;
+                case 'Benetton Trevise':
+                    color = "green";
+                    break;
+                case 'Scarlets':
+                    color = "red";
+                    break;
+                case 'Edinburgh':
+                    color = "purple";
+                    break;
+                case 'Dragons':
+                    color = "black";
+                    break;
+                case 'Southern Kings':
+                    color = "Orange";
+                    break;
+                
+            }
+            return color;
+        }
+        
+
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                        data: [
+                                {{statsMatch|first.possessionHome}},
+                                {{statsMatch|first.possessionAway}},
+                        ],
+                        backgroundColor: [
+                                getColor("{{journee.idEquipeHome.nom}}"),
+                                getColor("{{journee.idEquipeAway.nom}}"),
+                        ],
+                        label: 'Dataset 1'
+                }],
+                labels: [
+                        "{{journee.idEquipeHome.nom}}",
+                        '{{journee.idEquipeAway.nom}}'
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Possession',
+                    fontSize: '15',
+                },
+            }
+        };
+        var config2 = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                        data: [
+                                {{statsMatch|first.occupationHome}},
+                                {{statsMatch|first.occupationAway}},
+                        ],
+                        backgroundColor: [
+                                getColor("{{journee.idEquipeHome.nom}}"),
+                                getColor("{{journee.idEquipeAway.nom}}"),
+                        ],
+                        label: 'Dataset 1'
+                }],
+                labels: [
+                        "{{journee.idEquipeHome.nom}}",
+                        '{{journee.idEquipeAway.nom}}'
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Occupation',
+                    fontSize: '15',
+                },
+            }
+        };
+        var config3 = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                        data: [
+                            {% set placageHome = 0 %}
+                            {% set rateHome = 0 %}
+                        {% for home in equipeHome %}
+                            {% set placageHome = placageHome + home.placagesReussis%}
+                            {% set rateHome = rateHome + home.placagesManques%}
+                        {% endfor %}
+                            {{ placageHome }}, {{rateHome}},
+                        ],
+                        backgroundColor: [
+                                getColor("{{journee.idEquipeHome.nom}}"),
+                                getColor("#e9ecef"),
+                        ],
+                        label: 'Dataset 1'
+                }],
+                labels: [
+                        "Placages réussis",
+                        'Placages manqués'
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Placages',
+                    fontSize: '15',
+                },
+            }
+        };
+        var config4 = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                        data: [
+                            {% set placageAway = 0 %}
+                            {% set rateAway = 0 %}
+                        {% for away in equipeAway %}
+                            {% set placageAway = placageAway + away.placagesReussis%}
+                            {% set rateAway = rateAway + away.placagesManques%}
+                        {% endfor %}
+                            {{ placageAway }}, {{rateAway}},
+                        ],
+                        backgroundColor: [
+                                getColor("{{journee.idEquipeAway.nom}}"),
+                                getColor("#e9ecef"),
+                        ],
+                        label: 'Dataset 1'
+                }],
+                labels: [
+                        "Placages réussis",
+                        'Placages manqués'
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Placages',
+                    fontSize: '15',
+                },
+            }
+        };
+
+        window.onload = function() {
+                var ctx = document.getElementById('possession').getContext('2d');
+                window.myPie = new Chart(ctx, config);
+                var ctx2 = document.getElementById('occupation').getContext('2d');
+                window.myPie = new Chart(ctx2, config2);
+                var ctx3 = document.getElementById('placageHome').getContext('2d');
+                window.myPie = new Chart(ctx3, config3);
+                var ctx4 = document.getElementById('placageAway').getContext('2d');
+                window.myPie = new Chart(ctx4, config4);
+        };
+
+		$('.home').css('background-color', getColor("{{journee.idEquipeHome.nom}}") );
+		$('.away').css('background-color', getColor("{{journee.idEquipeAway.nom}}") );
         </script>
 {% endblock %}

@@ -15,10 +15,13 @@ class ChampionnatController extends AbstractController {
     public function index()
     {
         $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $repositoryPalmares = $this->getDoctrine()->getRepository(\App\Entity\Palmares::class);
+        $lesPalmares = $repositoryPalmares->findAll();
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         return $this->render('competition/accueilCompetition.html.twig', [
             'selected' => "Competition",
             'equipes'=> $lesEquipes,
+            'palmares'=>$lesPalmares,
             'active' => "Présentation",
         ]);
     }
@@ -26,6 +29,7 @@ class ChampionnatController extends AbstractController {
         $repository = $this->getDoctrine()->getRepository(\App\Entity\Classement::class);
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $repositorySaison = $this->getDoctrine()->getRepository(\App\Entity\Saison::class);
+        $repositoryJournee = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurJournee::class);
         if($nomSaison == null){
             $saison = $repositorySaison->findBy(['actuelle'=>"Oui"]);
         }else{
@@ -45,6 +49,8 @@ class ChampionnatController extends AbstractController {
         }
         $lastClassementA = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'A');
         $lastClassementB = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
+        $lesRealisateurs = $repositoryJournee->findRealisateur($saison[0]->getSaison());
+        $lesMarqueurs = $repositoryJournee->findMarqueur($saison[0]->getSaison());
         return $this->render('competition/classement.html.twig', [
             'selected' => "Competition",
             'equipes'=> $lesEquipes,
@@ -53,6 +59,8 @@ class ChampionnatController extends AbstractController {
             'active' => "Classement",
             'lastClassementA' => $lastClassementA,
             'lastClassementB' => $lastClassementB,
+            'realisateurs'=>$lesRealisateurs,
+            'marqueurs'=>$lesMarqueurs,
             'saison' => $saison[0]->getSaison(),
             'saisonsPrécédentes'=> $saisonsPrecedentes,
         ]);
@@ -89,6 +97,7 @@ class ChampionnatController extends AbstractController {
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
         $repositoryJournee = $this->getDoctrine()->getRepository(\App\Entity\Journee::class);
+        $repositoryStatsMatch = $this->getDoctrine()->getRepository(\App\Entity\StatsMatch::class);
         $journee = $repositoryJournee->find($id);
         if (!$journee) {
             throw $this->createNotFoundException(
@@ -98,13 +107,15 @@ class ChampionnatController extends AbstractController {
         $repositoryAssoJoueurJournee = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurJournee::class);
         $equipeHome = $repositoryAssoJoueurJournee->findByJourneeAndEquipe($journee->getId(),$journee->getIdEquipeHome());
         $equipeAway = $repositoryAssoJoueurJournee->findByJourneeAndEquipe($journee->getId(),$journee->getIdEquipeAway());
-        //var_dump($equipeHome);
+        $statsMatch = $repositoryStatsMatch->findBy(array('journee'=>$journee->getId()));
+        //var_dump($statsMatch);
         return $this->render('competition/journee.html.twig', [
             'selected' => "Competition",
             'equipes'=> $lesEquipes,
             'journee'=> $journee,
             'equipeHome'=>$equipeHome,
             'equipeAway'=>$equipeAway,
+            'statsMatch'=>$statsMatch,
         ]);
     }
     
@@ -129,7 +140,7 @@ class ChampionnatController extends AbstractController {
     }
     public function getArticles() {
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
-        $articles = $repositoryArticle->findAll();
+        $articles = $repositoryArticle->findBy(['statut'=>'Publié'],['id'=>'DESC']);
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
         return $this->render('competition/articles.html.twig', [
@@ -137,6 +148,34 @@ class ChampionnatController extends AbstractController {
             'equipes'=> $lesEquipes,
             'active' => "Article",
             'articles' => $articles,
+        ]);
+    }
+    
+    public function getPresse(){
+        $today = date('Y/m/d');
+        $data = array();
+        $fin = date('Y/m/d', strtotime('-7 days', strtotime($today)));
+        $date = $today;
+        date_default_timezone_set('Europe/Paris');
+        setlocale(LC_TIME, "fr_FR", "French");
+        while($date>=$fin){
+            $url = "https://www.pro14rugby.org/".$date."/rss";
+            $xml = simplexml_load_file($url);
+            foreach ($xml->channel->item as $element){
+                //$data[date("l d F Y",strtotime($date))][$element->title->__toString()] = $element->link->__toString();
+                $data[utf8_encode(ucfirst(strftime("%A %d %B %Y",strtotime($date))))][$element->title->__toString()] = $element->link->__toString();
+            }
+            $date = date('Y/m/d', strtotime('-1 days', strtotime($date)));
+        }
+        //var_dump($data);
+        
+        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
+        return $this->render('competition/presse.html.twig', [
+            'selected' => "Competition",
+            'equipes'=> $lesEquipes,
+            'active' => "Presse",
+            'presses' => $data,
         ]);
     }
 }

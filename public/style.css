@@ -39,9 +39,7 @@ footer a:hover{
 .uk-overlay-default-modify{
     background-color: #EEEEEE; 
 }
-.top{
-    margin-top: 15px;
-}
+
 .card-body-reduce{
     padding: 0.4rem
 }
@@ -178,4 +176,8 @@ hr{
 }
 .text-bold{
     font-weight: 600;
+}
+.my-progress{
+    height: 1.5rem;
+    font-size: 20px;
 }
