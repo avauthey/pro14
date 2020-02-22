@@ -3,6 +3,10 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Contact;
+use App\Form\Type\ContactType;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Description of AccueilController
  *
@@ -70,6 +74,37 @@ class AccueilController extends AbstractController {
         return $this->render('accueil/presentation.html.twig', [
             'selected' => "Accueil",
             'equipes'=>$lesEquipes,
+        ]);
+    }
+    
+    public function getContact(Request $request){
+        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $lesEquipes = $repository->findAllByNomOrder('ASC');
+        $contact = new Contact();
+        
+        $contact->setEmail('');
+        $contact->setMessage('');
+        $contact->setRobot(false);
+        
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            // $form->getData() holds the submitted values
+            // but, the original `$task` variable has also been updated
+            $contact = $form->getData();
+            //var_dump($contact);
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($task);
+            // $entityManager->flush();
+
+            //return $this->redirectToRoute('task_success');
+        }
+        return $this->render('accueil/contact.html.twig', [
+            'selected' => "Accueil",
+            'equipes'=>$lesEquipes,
+            'form' => $form->createView(),
         ]);
     }
 }

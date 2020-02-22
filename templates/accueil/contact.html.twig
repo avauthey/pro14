@@ -1,0 +1,52 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    Contact
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Accueil</li>
+    </ol>
+</nav>
+<div class='container-fluid' style="height:100%">
+    <div class='row justify-content-center'>
+        <div class='col-lg-6'>
+            <h1><i class="fas fa-paper-plane"></i> Contact me</h1>
+        </div>
+    </div>
+    <div class='row justify-content-center' >
+        <div class='col-lg-6'>
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ form_row(form.email) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ form_row(form.message) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ form_row(form.robot, {'label': 'Je ne suis pas un robot / I am not a robot'}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    {{ form_row(form.send, {'label': 'Envoyer / Send'}) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <br />
+            <br />
+            <br />
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

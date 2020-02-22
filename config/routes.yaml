@@ -93,3 +93,6 @@ equipe_stats:
 presentation:
     path: /presentation
     controller: App\Controller\AccueilController:getPresentation
+contact:
+    path: /contact
+    controller: App\Controller\AccueilController:getContact
