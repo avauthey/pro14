@@ -38,7 +38,7 @@
                             <h6 class="card-subtitle mb-2"><i class="fas fa-calendar-alt"></i> {{ journee.jour|date('d/m/Y')}}</h6>
                             <h6 class="card-subtitle mb-2 "><img src="https://img.icons8.com/metro/26/000000/performance.png"  style="width: 14px"> {{ journee.idEquipeHome.stade}}</h6>
                             <h6 class="card-subtitle mb-2 "><img src="https://img.icons8.com/ios/50/000000/whistle-filled.png" style="width: 15px"> {% if journee.idArbitreCentral is not null %} {{ journee.idArbitreCentral.prenom ~' '~journee.idArbitreCentral.nom }}{% endif %}</h6>
-                            <a href="#" class="card-link">Détails match</a>
+                            <a href="{{ path('journee', {'id':journee.id})}}" class="">Détails match</a>
                         </div>
                     </div>
                 </div>

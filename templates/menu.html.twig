@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="{{ path('index') }}"><img src="{{asset('images/logo.png')}}" alt='Guinness Pro 14 FR' width="200" class="d-inline-block align-top"></a>
+    <a class="navbar-brand" href="{{ path('index') }}"><img src="{{asset('images/logo.png')}}" alt='Guinness Pro 14 FR' width="100" class="d-inline-block align-top"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,6 +23,9 @@
             </li>
             <li class="nav-item {% if selected == 'Joueurs' %}active{% endif %}">
                 <a class="nav-link" href="{{ path('joueurs') }}">Joueurs</a>
+            </li>
+            <li class="nav-item {% if selected == 'ScottishRugby' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('scottishRugby') }}">Scottish rugby</a>
             </li>
         </ul>
     </div>

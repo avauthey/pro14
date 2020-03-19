@@ -53,6 +53,16 @@ class Article
      */
     private $statut;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $vues;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $type;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -162,6 +172,30 @@ class Article
     public function setStatut(?string $statut): self
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    public function getVues(): ?int
+    {
+        return $this->vues;
+    }
+
+    public function setVues(int $vues): self
+    {
+        $this->vues = $vues;
+
+        return $this;
+    }
+
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+
+    public function setType(int $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }

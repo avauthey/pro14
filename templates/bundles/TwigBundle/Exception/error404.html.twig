@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% set selected = 'accueil' %}
+{% set equipes = '' %}
+{% block title %}
+    Erreur
+{% endblock %}
+{% block body %}
+    <div class="container-fluid" style="height:100%">
+        <div class="row" style="height:30rem">
+            <div class="col-lg-12 text-center">
+                <h1>Page not found</h1>
+                <img src='{{asset('images/error.gif')}}'>
+                <p>
+                    <a href="{{ path('index') }}">Retourner à l'accueil</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

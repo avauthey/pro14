@@ -8,30 +8,51 @@ html{
 body{
     background-color: #F2F2F2;
     max-height: 100%;
+    font-family: Segoe UI, sans-serif;
 }
 footer{
-    background-color: #343A40;
+    background-color: #141E46;
     margin-top: 15px;
     padding: 0px 0px;
 }
-.breadcrumb{
-    background-color: #65CCB8;
-}
 a{
-    color: #4d6d9a;
+    color: #379911;
 }
 a:hover{
-    color: #31708e;
+    color: #42A41B;
 }
+.breadcrumb{
+    /*background-color: #65CCB8;*/
+    background-color: #527843;
+    border-radius: 0;
+}
+.breadcrumb-item.active{
+    color: #D0C2FF;
+}
+.breadcrumb-item a{
+    color: #D0C2FF;
+}
+.breadcrumb-item a:hover{
+    color: white;
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: #D0C2FF;
+}
+
 footer a{
     color: white;
 }
 footer a:hover{
     color: white;
 }
+.trophy-vert{
+    color: #379911;
+} 
 .list-group-item.active{
-    background-color: #00887A;
-    border-color: #00887A;
+    /*background-color: #00887A;
+    border-color: #00887A;*/
+    background-color: #527843;
+    border-color: #527843;
 }
 .reverseShirt{
     color: grey;
@@ -66,12 +87,16 @@ footer a:hover{
     text-decoration: none;
 }
 .border-vert{
-    border: 1px solid #00887A;
+    /*border: 1px solid #00887A;*/
+    border: 1px solid #527843;
 }
 .border-vert:hover{
-    border: 1px solid #00887A;
+    /*border: 1px solid #00887A;
     color: white;
-    background-color: #00887A;
+    background-color: #00887A;*/
+    border: 1px solid #527843;
+    color: white;
+    background-color: #527843;
 }
 hr{
     border-top: 2px solid #CCC;
@@ -79,21 +104,23 @@ hr{
 }
 
 .nav-pills .nav-link:hover{
-    background-color: #65CCB8;
+    background-color: #7CA36d;
     color: white;
 }
 .nav-pills .nav-link.active{
-    background-color: #00887A;
+    /*background-color: #00887A;*/
+    background-color: #527843;
 }
 .nav-pills .nav-link.active:hover{
-    background-color: #00887A;
+    /*background-color: #00887A;*/
+    background-color: #527843;
 }
 .info{
     color: #888888;
     font-size: 11px;
 }
 .list-group-item-action:focus, .list-group-item-action:hover{
-    background-color: #65ccb8;
+    background-color: #7CA36d;
 }
 
 .icon-search{
@@ -107,8 +134,18 @@ hr{
     color: #4d6d9a;
     background-color: white;
 }
-.bg-vertClair{
+/*.bg-vertClair{
     background-color: #65CCB8;
+}*/
+.bg-vertClair{
+    background-color: #527843;
+}
+.bg-dark{
+    background-color: #141E46!important;
+}
+.table .thead-dark th{
+    background-color: #141E46!important;
+    border-color: #141E46!important;
 }
 .padd{
     padding: 10px;
@@ -127,6 +164,9 @@ hr{
 .terrainRow{
     height: 40px;
     width: 240px;
+}
+.sizeTDCote{
+    width: 12%;
 }
 .terrainLigneDashedDroite{
     border-right: 1px dashed white!important;

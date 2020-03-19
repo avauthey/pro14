@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 {% block title %}
-    Pro14 - Articles
+    Scottish Rugby - Articles
 {% endblock %}
 {% block body %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Articles</li>
+        <li class="breadcrumb-item active" aria-current="page">Scottish Rugby - Articles</li>
     </ol>
 </nav>
 <div class='container-fluid'>
@@ -16,14 +16,11 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-2 mt-2">
-            {{ include('competition/blockMenu.html.twig',{'active': active}) }}
-        </div>
-        <div class="col-lg-10 mt-2">
+        <div class="col-lg-10">
             {% for article in articles %}
                 <div class="card mb-3">
                     <div class="row no-gutters">
-                        <div class="col-sm-2 mx-1 align-self-center text-center ">
+                        <div class="col-sm-3 align-self-center text-center px-1">
                             <img src="{{ asset('images/articles/article_'~article.id~'/'~article.miniature)}}"  alt="..." class="img-fluid">
                         </div>
                         <div class="col-sm-9">
@@ -37,7 +34,7 @@
                                         <small class="text-muted">Dernière création : {{article.dateCreation|date('d/m/Y')}}</small>
                                     {% endif %}
                                 </p>
-                                <p class="card-text text-right"><a href="{{path('article',{'id':article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+                                <p class="card-text text-right"><a href="{{path('scottishRugby_article',{'id':article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
                             </div>
                         </div>
                     </div>

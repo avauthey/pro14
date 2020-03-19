@@ -122,6 +122,7 @@ class EquipeController extends AbstractController {
         }else{
             $saison = $repositorySaison->findBy(["saison"=>$nomSaison]);
         }
+        $lesArticlesJoueurs= array();
         //$saisonsPrecedentes = $repositorySaison->findPrevious($saison[0]->getId());
         $repositoryAssoJoueurEquipe = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurEquipe::class);
         $lesJoueurs = $repositoryAssoJoueurEquipe->findBy(array('idEquipe'=>$equipe->getId(),"saison"=>$saison[0]->getSaison()));

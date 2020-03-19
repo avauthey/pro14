@@ -9,7 +9,7 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ChampionnatController extends AbstractController {
     public function index()
@@ -101,7 +101,7 @@ class ChampionnatController extends AbstractController {
         $journee = $repositoryJournee->find($id);
         if (!$journee) {
             throw $this->createNotFoundException(
-                    'Fuck off! Pas de journée pour l\'id '.$id
+                    'Page non trouvée. Pas de journée pour l\'id '.$id
             );
         }
         $repositoryAssoJoueurJournee = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurJournee::class);
@@ -121,11 +121,21 @@ class ChampionnatController extends AbstractController {
     
     public function getArticle($id){
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
+        /** @var Article $article */
         $article = $repositoryArticle->find($id);
         if (!$article) {
             throw $this->createNotFoundException(
                     'Fuck off! Pas d\'article  pour l\'id '.$id
             );
+        }
+        $session = new Session();
+        $entityManager = $this->getDoctrine()->getManager();
+        $read = $session->get("article".$article->getId(), null);
+        if($read == null){
+            $vues = $article->getVues();
+            $article->setVues($vues+1);
+            $entityManager->flush();
+            $session->set("article".$article->getId(), true);
         }
         $repositoryTags = $this->getDoctrine()->getRepository(\App\Entity\Tags::class);
         $lesTags = $repositoryTags->findBy(array('article'=>$article->getId()));
@@ -140,7 +150,7 @@ class ChampionnatController extends AbstractController {
     }
     public function getArticles() {
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
-        $articles = $repositoryArticle->findBy(['statut'=>'Publié'],['id'=>'DESC']);
+        $articles = $repositoryArticle->findByTypes('Publié',[0,2]);
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
         return $this->render('competition/articles.html.twig', [
@@ -152,25 +162,27 @@ class ChampionnatController extends AbstractController {
     }
     
     public function getPresse(){
-        $today = date('Y/m/d');
-        $data = array();
-        $fin = date('Y/m/d', strtotime('-7 days', strtotime($today)));
-        $date = $today;
-        date_default_timezone_set('Europe/Paris');
-        setlocale(LC_TIME, "fr_FR", "French");
-        while($date>=$fin){
-            $url = "https://www.pro14rugby.org/".$date."/rss";
-            $xml = simplexml_load_file($url);
-            foreach ($xml->channel->item as $element){
-                //$data[date("l d F Y",strtotime($date))][$element->title->__toString()] = $element->link->__toString();
-                $data[utf8_encode(ucfirst(strftime("%A %d %B %Y",strtotime($date))))][$element->title->__toString()] = $element->link->__toString();
-            }
-            $date = date('Y/m/d', strtotime('-1 days', strtotime($date)));
-        }
-        //var_dump($data);
-        
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
+        
+        $data  = array();
+        $xml = simplexml_load_file("http://feeds.bbci.co.uk/sport/rugby-union/rss.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+        foreach ($xml->channel->item as $element){
+            //var_dump($element);
+            if((strpos($element->title,"Pro14")!=false || strpos($element->description,"Pro14")!=false) && !in_array($element, $data)){
+                $date = explode(' ',$element->pubDate);
+                $data["$date[0] $date[1] $date[2] $date[3]"][] = $element;
+            }
+            foreach ($lesEquipes as $uneEquipe){
+                if((strpos($element->title,$uneEquipe['nom'])!=false || strpos($element->description,$uneEquipe['nom'])!=false) && !in_array($element, $data)){
+                    $date = explode(' ',$element->pubDate);
+                    $data["$date[0] $date[1] $date[2] $date[3]"][] = $element;
+                }
+            }
+            
+            
+        }
+        
         return $this->render('competition/presse.html.twig', [
             'selected' => "Competition",
             'equipes'=> $lesEquipes,

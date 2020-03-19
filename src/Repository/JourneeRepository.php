@@ -58,8 +58,15 @@ class JourneeRepository extends ServiceEntityRepository
     
     public function findLastJourneePlayed($saison){
         $entityManager = $this->getEntityManager();
+                
         $query = $entityManager->createQuery(
-                'Select j FROM App\Entity\Journee j WHERE j.journee IN (SELECT MAX(jb.journee) FROM App\Entity\Journee jb WHERE jb.saison = :saison AND jb.scoreHome is not null AND jb.scoreAway is not null)AND j.saison=:saison ORDER BY j.id ASC')
+                'Select j FROM App\Entity\Journee j WHERE j.journee IN ('
+                . 'SELECT jb.journee FROM App\Entity\Journee jb WHERE jb.id = ('
+                . 'SELECT MAX(jc.id) FROM App\Entity\Journee jc '
+                . 'WHERE jc.saison=:saison AND (jc.scoreHome is not null AND jc.scoreAway is not null)'
+                . '))'
+                . 'AND j.saison=:saison ORDER BY j.id ASC')
+                
                 ->setParameters(array('saison'=>$saison));
         return $query->execute();
     }

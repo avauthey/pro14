@@ -2,6 +2,11 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\EmailValidator;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 /**
  * Description of Contact
  *
@@ -9,17 +14,15 @@ namespace App\Entity;
  */
 class Contact {
     /**
-     *
-     * @var string 
+     * 
      */
     protected $email;
     /**
-     * @var string 
+     * 
      */
     protected $message;
     /**
-     *
-     * @var boolean 
+     * 
      */
     protected $robot;
     
@@ -59,5 +62,17 @@ class Contact {
         $this->robot = $robot;
     }
 
-
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('email', new Assert\Email([
+            'message' => 'L\'adresse "{{ value }}" n\'est pas correcte.',
+            'checkMX' => true,
+        ]));
+        $metadata->addPropertyConstraint('message', new NotBlank([
+            'message' => 'Le message ne peut pas $etre vide.',
+        ]));
+        $metadata->addPropertyConstraint('robot', new IsTrue([
+            'message' => 'Veuillez cocher cette case.',
+        ]));
+    }
 }

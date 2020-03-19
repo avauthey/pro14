@@ -91,8 +91,16 @@ equipe_stats:
    requirements:
        id: '\d+'
 presentation:
-    path: /presentation
+    path: /A-propos
     controller: App\Controller\AccueilController:getPresentation
 contact:
     path: /contact
     controller: App\Controller\AccueilController:getContact
+scottishRugby:
+    path: /scottish-rugby
+    controller: App\Controller\ScottishRugbyController:index
+scottishRugby_article:
+    path: /scottish-rugby/{id}
+    controller: App\Controller\ScottishRugbyController:getArticle
+    requirements:
+       id: '\d+'

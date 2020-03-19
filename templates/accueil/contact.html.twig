@@ -14,6 +14,13 @@
             <h1><i class="fas fa-paper-plane"></i> Contact me</h1>
         </div>
     </div>
+    {% if error !='' %}
+        <div class='row justify-content-center'>
+            <div class='col-lg-6'>
+                {{ error }}
+            </div>
+        </div>
+    {% endif %}
     <div class='row justify-content-center' >
         <div class='col-lg-6'>
             {{ form_start(form) }}
@@ -23,16 +30,19 @@
 
             <div class="row">
                 <div class="col-lg-12">
+                    {{ form_errors(form.email) }}
                     {{ form_row(form.email) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
+                    {{ form_errors(form.message) }}
                     {{ form_row(form.message) }}
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
+                    {{ form_errors(form.robot) }}
                     {{ form_row(form.robot, {'label': 'Je ne suis pas un robot / I am not a robot'}) }}
                 </div>
             </div>
