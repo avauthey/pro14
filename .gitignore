@@ -1,5 +1,7 @@
 
 ###> symfony/framework-bundle ###
+/.env
+/config/packages/swiftmailer.yaml
 /.env.local
 /.env.local.php
 /.env.*.local
