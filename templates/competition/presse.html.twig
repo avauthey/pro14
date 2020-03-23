@@ -10,13 +10,13 @@
         <li class="breadcrumb-item active" aria-current="page">Presse</li>
     </ol>
 </nav>
-<div class='container-fluid'>
+<div class='container-fluid pb-5 mb-5'>
     <div class='row'>
         <div class='col-lg-12'>
             <h1>Compétition - Presse</h1>
         </div>
     </div>
-    <div class="row">
+    <div class="row" >
         <div class="col-lg-2">
             {{ include('competition/blockMenu.html.twig',{'active': active}) }}
         </div>
@@ -28,6 +28,7 @@
                     <a href="{{ titre.link }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ titre.title }}</a><br />
                 {% endfor %}
             {% endfor %}
+            
         </div>
     </div>
 </div>

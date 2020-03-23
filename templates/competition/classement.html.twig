@@ -10,7 +10,7 @@
         <li class="breadcrumb-item active" aria-current="page">Classement</li>
     </ol>
 </nav>
-<div class='container-fluid'>
+<div class='container-fluid pb-5 mb-5'>
     <div class='row'>
         <div class='col-lg-12'>
             <h1>Compétition - classement</h1>
@@ -108,11 +108,11 @@
     <div class="row">
         <div class="col-lg-6">
             <h4> Classement évolutif conférence A</h4>
-            <canvas id="confA" width="600" height="400"></canvas>
+            <canvas id="confA" width="600" height="550"></canvas>
         </div>
         <div class="col-lg-6">
             <h4> Classement évolutif conférence B</h4>
-            <canvas id="confB" width="600" height="400"></canvas>
+            <canvas id="confB" width="600" height="550"></canvas>
         </div>
     </div>
     <div class="row justify-content-center classement-reduce-size">
@@ -235,7 +235,7 @@
         var configA = {
             type:'line',
             data:{
-                labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+                labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
                 datasets: [{% for uneEquipe in classementsA %} {
                     label: '{{ uneEquipe|first.equipe.nom }}',
                     backgroundColor: getColor("{{uneEquipe|first.equipe.nom}}"),
@@ -285,7 +285,7 @@
         var configB = {
             type:'line',
             data:{
-                labels:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
+                labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
                 datasets: [{% for uneEquipe in classementsB %} {
                     label: '{{ uneEquipe|first.equipe.nom }}',
                     backgroundColor: getColor("{{uneEquipe|first.equipe.nom}}"),

@@ -101,20 +101,22 @@ class AccueilController extends AbstractController {
             if(filter_var($contact->getEmail(), FILTER_VALIDATE_EMAIL) && $contact->getMessage()!='' && $contact->getRobot()===true){
                 //$email = new \Swift_Mailer('Nouveau contact');
                 $content = (new \Swift_Message('Nouveau contact'))
-                        ->setFrom("vauthey.antoine@gmail.com")
+                        ->setFrom("contact@pro14fr.com")
                         //->setFrom($contact->getEmail())
                         ->setTo("vauthey.antoine@gmail.com")
-                        ->setBody($contact->getMessage(),'text/html');
-                        /*->setBody(
+                        //->setBody($contact->getMessage(),'text/html');
+                        ->setBody(
                             $this->renderView(
                                 // templates/
                                 'email.html.twig',
-                                ['message' => $contact->getMessage()]
+                                ['message' => $contact->getMessage(),
+                                'expediteur' => $contact->getEmail()]
                             ),
                             'text/html'
-                        );*/
+                        );
                 $array = array();
                 $x = $email->send($content, $array);
+                $this->addFlash('success', 'Message envoyé avec succès. L\'administrateur du site reviendra dès que possible');
             }else{
                 $errorMessage .= " Une erreur 1 s'est produite. Veuillez réessayer plus tard.";
             }

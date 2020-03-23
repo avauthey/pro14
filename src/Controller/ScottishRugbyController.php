@@ -49,7 +49,7 @@ class ScottishRugbyController extends AbstractController {
         $lesTags = $repositoryTags->findBy(array('article'=>$article->getId()));
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
-        return $this->render('ScottishRugby/unArticle.html.twig', [
+        return $this->render('scottishRugby/unArticle.html.twig', [
             'selected' => "ScottishRugby",
             'equipes'=> $lesEquipes,
             'article' => $article,
