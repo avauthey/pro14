@@ -1,0 +1,36 @@
+{# empty Twig template #}
+{% extends "base.html.twig" %}
+{% block title %}
+    Equipe - {{ equipe.nom }}
+{% endblock %}
+{% block body %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('equipes')}}'>Equipes</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Presse</li>
+    </ol>
+</nav>
+<div class='container-fluid pb-5 mb-5'>
+    <div class='row'>
+        <div class='col-lg-12'>
+            <h1> {{equipe.nom }} - Presse</h1>
+        </div>
+    </div>
+    <div class="row" >
+        <div class="col-lg-2">
+            {{ include('equipes/blockMenu.html.twig',{'active': active}) }}
+        </div>
+        <div class="col-lg-10">
+            <h2>Article presse des derniers jours</h2>
+            {% for date,articles in presses %}
+                <h3>{{ date|date('l d F Y', "Europe/Paris") }}</h3>
+                {% for link,titre in articles %}
+                    <a href="{{ link }}" target="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ titre }}</a><br />
+                {% endfor %}
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+{% endblock  %}
