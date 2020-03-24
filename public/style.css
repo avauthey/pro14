@@ -4,7 +4,7 @@
 */
 html{
     min-height: 100%;
-    background-color: #F2F2F2;
+    background-color: #F2F2F2!important;
     height: auto;
     /*height: 100%;*/
 }
