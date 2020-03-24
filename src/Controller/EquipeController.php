@@ -203,4 +203,48 @@ class EquipeController extends AbstractController {
             'fautifs'=>$discipline,
         ]);
     }
+    
+    public function getPresse($id) {
+        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
+        $equipe = $repository->find($id);
+        if (!$equipe) {
+            throw $this->createNotFoundException(
+                    'Pas d\'équipe pour l\'id '.$id
+            );
+        }
+        $lesEquipes = $repository->findAllByNomOrder('ASC');
+        $data = array();
+        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?page=1&pageSize=20&CategorySlug=feed&Language=en";        
+        $file_headers = @get_headers($filename);
+        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+            $exists = false;
+        }
+        else {
+            $exists = true;
+        }
+        if($filename != false){
+            $json = file_get_contents($filename);
+            if($json != false){
+                $tmp = json_decode($json,true);
+                $articles = $tmp['articles'];
+                foreach($articles as $unArticle){
+                    $lien = $unArticle['url'];
+                    $dateTab = explode("T", $unArticle['publishDate']);
+                    $article = $unArticle['heroMedia']['title'];
+                    $nom = $equipe->getNom();
+                    if(preg_match("/$nom/", $article)==1){
+                        $data["$dateTab[0]"]["$lien"] = $article;
+                    }
+                }
+            }
+        }
+        
+        return $this->render('equipes/presse.html.twig', [
+            'selected' => "Equipe",
+            'active'=>'Presse',
+            'equipes'=>$lesEquipes,
+            'equipe'=>$equipe,
+            'presses'=>$data,
+        ]);
+    }
 }

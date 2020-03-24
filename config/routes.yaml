@@ -104,3 +104,8 @@ scottishRugby_article:
     controller: App\Controller\ScottishRugbyController:getArticle
     requirements:
        id: '\d+'
+equipe_presse:
+    path: /equipe/presse/{id}
+    controller: App\Controller\EquipeController:getPresse
+    requirements:
+       id: '\d+'

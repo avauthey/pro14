@@ -128,8 +128,11 @@
     <div class='row top'>
         <div class='col-lg-7'>
             <h3>Presse</h3>
-            {% for article in presse %}
+            {#{% for article in presse %}
                 <a href="{{ article.link }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ article.title }}</a><br />
+            {% endfor %}#}
+            {% for lien,article in presse %}
+                <a href="{{ lien }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ article }}</a><br />
             {% endfor %}
         </div>
         <div class='col-lg-5'>

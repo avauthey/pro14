@@ -23,9 +23,9 @@
         <div class="col-lg-10">
             <h2>Article presse des derniers jours</h2>
             {% for date,articles in presses %}
-                <h3>{{ date }}</h3>
-                {% for titre in articles %}
-                    <a href="{{ titre.link }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ titre.title }}</a><br />
+                <h3>{{ date|date('l d F Y', "Europe/Paris") }}</h3>
+                {% for link,titre in articles %}
+                    <a href="{{ link }}" target="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ titre }}</a><br />
                 {% endfor %}
             {% endfor %}
             

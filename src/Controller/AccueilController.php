@@ -46,7 +46,9 @@ class AccueilController extends AbstractController {
         //var_dump($lastClassementA);
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         $data  = array();
-        $xml = simplexml_load_file("http://feeds.bbci.co.uk/sport/rugby-union/rss.xml",'SimpleXMLElement', LIBXML_NOCDATA);
+        $json = false;
+        //$filename = "dsfhjs";
+        /*$xml = simplexml_load_file("http://feeds.bbci.co.uk/sport/rugby-union/rss.xml",'SimpleXMLElement', LIBXML_NOCDATA);
         foreach ($xml->channel->item as $element){
             //var_dump($element);
             if((strpos($element->title,"Pro14")!=false || strpos($element->description,"Pro14")!=false) && !in_array($element, $data)){
@@ -57,8 +59,29 @@ class AccueilController extends AbstractController {
                     $data[] = $element;
                 }
             }
-            
-            
+
+
+        }*/
+        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?page=1&pageSize=20&CategorySlug=feed&Language=en";        
+        $file_headers = @get_headers($filename);
+        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+            $exists = false;
+        }
+        else {
+            $exists = true;
+        }
+        if($filename != false){
+            $json = file_get_contents($filename);
+            if($json != false){
+                $tmp = json_decode($json,true);
+                $articles = $tmp['articles'];
+                
+                for($i =0;$i<8;$i++){
+                    $lien = $articles[$i]['url'];
+                    $article = $articles[$i]['heroMedia']['title'];
+                    $data["$lien"] = $article;
+                }
+            }
         }
         //var_dump($xml);
         return $this->render('accueil/accueil.html.twig', [
