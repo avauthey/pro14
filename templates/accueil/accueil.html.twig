@@ -67,7 +67,7 @@
                                 {% for confA in classementA %}
                                     <tr>
                                         <th>{{ confA.classement }} </th>
-                                        <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
+                                        <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confA.equipe.id})}}">{{ confA.equipe.nom }}</a></td>
                                         <td> {{confA.joue }}</td>
                                         <td> {{confA.nbPoints }}</td>
                                         <td> {{confA.victoire }}</td>
@@ -105,7 +105,7 @@
                                 {% for confB in classementB %}
                                     <tr>
                                         <th>{{ confB.classement }} </th>
-                                        <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
+                                        <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confB.equipe.id})}}">{{ confB.equipe.nom }}</a> </td>
                                         <td> {{confB.joue }}</td>
                                         <td> {{confB.nbPoints }}</td>
                                         <td> {{confB.victoire }}</td>
@@ -141,7 +141,7 @@
                 {% if lastJournee|first.journee!='Demi finale' and lastJournee|first.journee!='Barrage Play Off' and lastJournee|first.journee!='Finale' and lastJournee|first.journee!='Barrage Champions Cup' %}Journée n°{{lastJournee|first.journee}}{% else %} {{lastJournee|first.journee }}{% endif %}<br />
                 {% for journee in lastJournee %}
                 <div class='border-bottom-grey'>
-                    <img src="{{ asset('images/logo/'~journee.idEquipeHome.logo)}}" width="19"> {{ journee.idEquipeHome.nom}} <span class="font-weight-bold">{% if journee.scoreHome!=null%}{{ journee.scoreHome}}{% endif %} - {% if journee.scoreAway!=null%}{{ journee.scoreAway}}{% endif %}</span> {{journee.idEquipeAway.nom }} <img src="{{ asset('images/logo/'~journee.idEquipeAway.logo)}}" width="19">    
+                    <img src="{{ asset('images/logo/'~journee.idEquipeHome.logo)}}" width="19"> {{ journee.idEquipeHome.nom}} <a style="color: inherit" class="text-black" href="{{ path('journee', {'id':journee.id }) }}"><span class="font-weight-bold text-black">{% if journee.scoreHome!=null%}{{ journee.scoreHome}}{% endif %} - {% if journee.scoreAway!=null%}{{ journee.scoreAway}}{% endif %}</span></a> {{journee.idEquipeAway.nom }} <img src="{{ asset('images/logo/'~journee.idEquipeAway.logo)}}" width="19">    
                 </div>
                 {% endfor %}
             
