@@ -23,8 +23,7 @@
     <div class="row mt-2 justify-content-center ">
         <div class="col-lg-2 bg-white text-center padd">
             {% if joueur.photo != null %}
-                {{ joueur.photo }}
-                <img src="{{ asset('images/'~joueur.photo)}}">
+                <img src="{{ asset('images/joueurs/'~joueur.photo)}}">
             {% else %}
                 <i class="fas fa-user-alt fa-7x"></i>
             {% endif %}
