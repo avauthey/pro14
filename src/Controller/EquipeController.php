@@ -214,7 +214,7 @@ class EquipeController extends AbstractController {
         }
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         $data = array();
-        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?page=1&pageSize=20&CategorySlug=feed&Language=en";        
+        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?pageSize=40";        
         $file_headers = @get_headers($filename);
         if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
             $exists = false;
