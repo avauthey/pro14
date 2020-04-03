@@ -180,28 +180,29 @@ class ChampionnatController extends AbstractController {
                 }
             }
         }*/
-        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?pageSize=40";        
-        $file_headers = @get_headers($filename);
-        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
-            $exists = false;
-        }
-        else {
-            $exists = true;
-        }
-        if($filename != false){
-            $json = file_get_contents($filename);
-            if($json != false){
-                $tmp = json_decode($json,true);
-                $articles = $tmp['articles'];
-                foreach($articles as $unArticle){
-                    $lien = $unArticle['url'];
-                    $dateTab = explode("T", $unArticle['publishDate']);
-                    $article = $unArticle['heroMedia']['title'];
-                    $data["$dateTab[0]"]["$lien"] = $article;
+        for($i=0; $i<5; $i++){
+            $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?page=$i&pageSize=10";        
+            $file_headers = @get_headers($filename);
+            if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+                $exists = false;
+            }
+            else {
+                $exists = true;
+            }
+            if($filename != false){
+                $json = file_get_contents($filename);
+                if($json != false){
+                    $tmp = json_decode($json,true);
+                    $articles = $tmp['articles'];
+                    foreach($articles as $unArticle){
+                        $lien = $unArticle['url'];
+                        $dateTab = explode("T", $unArticle['publishDate']);
+                        $article = $unArticle['heroMedia']['title'];
+                        $data["$dateTab[0]"]["$lien"] = $article;
+                    }
                 }
             }
         }
-        
         return $this->render('competition/presse.html.twig', [
             'selected' => "Competition",
             'equipes'=> $lesEquipes,

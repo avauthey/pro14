@@ -62,7 +62,7 @@ class AccueilController extends AbstractController {
 
 
         }*/
-        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?pageSize=20";        
+        $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews";        
         $file_headers = @get_headers($filename);
         if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
             $exists = false;
