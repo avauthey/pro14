@@ -31,7 +31,7 @@ class ScottishRugbyController extends AbstractController {
     public function getArticle($id){
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
         $article = $repositoryArticle->find($id);
-        if (!$article) {
+        if (!$article || (is_object($article) && $article->getStatut()!='Publié')) {
             throw $this->createNotFoundException(
                     'Fuck off! Pas d\'article  pour l\'id '.$id
             );

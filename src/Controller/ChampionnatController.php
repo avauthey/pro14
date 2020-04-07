@@ -123,7 +123,7 @@ class ChampionnatController extends AbstractController {
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
         /** @var Article $article */
         $article = $repositoryArticle->find($id);
-        if (!$article) {
+        if (!$article || (is_object($article) && $article->getStatut()!='Publié')) {
             throw $this->createNotFoundException(
                     'Fuck off! Pas d\'article  pour l\'id '.$id
             );
