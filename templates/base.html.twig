@@ -32,11 +32,11 @@
         {% if (selected == 'Competition' or selected == 'ScottishRugby') and article is defined %}
         <meta property="og:title" content="{{ article.titre}}" />
         <meta property="og:description" content="{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(3, 100)~"..." %} {{ var | raw }}{% else %} {% set var = article.contenu|slice(3, -4) %}{{ var|raw  }} {% endif %}" />
-        <meta property="og:image" content="{{ asset('images/articles/article_'~article.id~'/'~article.miniature)}}" />
+        <meta property="og:image" content="{{ 'https://pro14fr.com'~asset('images/articles/article_'~article.id~'/'~article.miniature)}}" />
         {% else %}
         <meta property="og:title" content="Pro14fr" />
         <meta property="og:description" content="Pro14fr, site d'actualité sur le Pro14 et le rugby écossais" />
-        <meta property="og:image" content="{{asset('images/logo.png')}}" />
+        <meta property="og:image" content="{{'https://pro14fr.com'~asset('images/logo.png')}}" />
         {% endif %}
         
         {% block stylesheets %}<link href='{{ asset('style.css') }}' type='text/css' rel='stylesheet'>{% endblock %}
