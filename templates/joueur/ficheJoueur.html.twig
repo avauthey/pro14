@@ -154,7 +154,8 @@
                         <tbody>
                             {% if allSaisons is not empty %}
                                 
-                                {% for saisonJournee in allSaisons %}
+                                {% for saisonEquipe in allSaisons %}
+                                    {% for saisonJournee in saisonEquipe %}
                                     <tr>
                                         <td>{{saisonJournee.saison}}</td>
                                         <td>{{saisonJournee.equipe.nom}}</td>
@@ -167,6 +168,7 @@
                                         <td>{{saisonJournee.placageReussi}}</td>
                                         <td>{{saisonJournee.placageManque}}</td>
                                     </tr>
+                                    {% endfor %}
                                 {% endfor %}
                             {% else %}
                                 <tr> 

@@ -73,36 +73,36 @@ class JoueurController extends AbstractController  {
             $j = 0;
             
             foreach($journeeJoueur as $uneJournee){
-                if(array_key_exists($uneJournee->getJournee()->getSaison(), $allJournees)){
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['saison'] =  $uneJournee->getJournee()->getSaison();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['equipe'] =  $uneJournee->getEquipe();
+                if(array_key_exists($uneJournee->getJournee()->getSaison(), $allJournees) && array_key_exists($uneJournee->getEquipe()->getId(), $allJournees[$uneJournee->getJournee()->getSaison()])){
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['saison'] =  $uneJournee->getJournee()->getSaison();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['equipe'] =  $uneJournee->getEquipe();
                     if($uneJournee->getNumero()<16){
-                        $allJournees[$uneJournee->getJournee()->getSaison()]['titulaire'] = $allJournees[$uneJournee->getJournee()->getSaison()]['titulaire'] + 1;
+                        $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['titulaire'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['titulaire'] + 1;
                     }else{
-                        $allJournees[$uneJournee->getJournee()->getSaison()]['remplacent'] = $allJournees[$uneJournee->getJournee()->getSaison()]['remplacent'] + 1;
+                        $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['remplacent'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['remplacent'] + 1;
                     }
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['essai'] = $allJournees[$uneJournee->getJournee()->getSaison()]['essai'] + $uneJournee->getEssais();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['transformation'] = $allJournees[$uneJournee->getJournee()->getSaison()]['transformation'] + $uneJournee->getTransformation();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['penalite'] = $allJournees[$uneJournee->getJournee()->getSaison()]['penalite'] + $uneJournee->getPenalite();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['drops'] = $allJournees[$uneJournee->getJournee()->getSaison()]['drops'] + $uneJournee->getDrops();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['placageReussi'] = $allJournees[$uneJournee->getJournee()->getSaison()]['placageReussi'] + $uneJournee->getPlacagesReussis();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['placageManque'] = $allJournees[$uneJournee->getJournee()->getSaison()]['placageManque'] + $uneJournee->getPlacagesManques();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['essai'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['essai'] + $uneJournee->getEssais();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['transformation'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['transformation'] + $uneJournee->getTransformation();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['penalite'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['penalite'] + $uneJournee->getPenalite();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['drops'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['drops'] + $uneJournee->getDrops();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['placageReussi'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['placageReussi'] + $uneJournee->getPlacagesReussis();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['placageManque'] = $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['placageManque'] + $uneJournee->getPlacagesManques();
                 }else{
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['saison'] =  $uneJournee->getJournee()->getSaison();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['equipe'] =  $uneJournee->getEquipe();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['saison'] =  $uneJournee->getJournee()->getSaison();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['equipe'] =  $uneJournee->getEquipe();
                     if($uneJournee->getNumero()<16){
-                        $allJournees[$uneJournee->getJournee()->getSaison()]['titulaire'] = 1;
-                        $allJournees[$uneJournee->getJournee()->getSaison()]['remplacent'] = 0;
+                        $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['titulaire'] = 1;
+                        $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['remplacent'] = 0;
                     }else{
-                        $allJournees[$uneJournee->getJournee()->getSaison()]['remplacent'] = 1;
-                        $allJournees[$uneJournee->getJournee()->getSaison()]['titulaire'] = 0;
+                        $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['remplacent'] = 1;
+                        $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['titulaire'] = 0;
                     }
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['essai'] = $uneJournee->getEssais();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['transformation'] = $uneJournee->getTransformation();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['penalite'] = $uneJournee->getPenalite();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['drops'] = $uneJournee->getDrops();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['placageReussi'] = $uneJournee->getPlacagesReussis();
-                    $allJournees[$uneJournee->getJournee()->getSaison()]['placageManque'] = $uneJournee->getPlacagesManques();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['essai'] = $uneJournee->getEssais();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['transformation'] = $uneJournee->getTransformation();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['penalite'] = $uneJournee->getPenalite();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['drops'] = $uneJournee->getDrops();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['placageReussi'] = $uneJournee->getPlacagesReussis();
+                    $allJournees[$uneJournee->getJournee()->getSaison()][$uneJournee->getEquipe()->getId()]['placageManque'] = $uneJournee->getPlacagesManques();
                 }
             }
             ksort($allJournees);
