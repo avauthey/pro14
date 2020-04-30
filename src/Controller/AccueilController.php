@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Contact;
 use App\Form\Type\ContactType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of AccueilController
@@ -152,5 +153,60 @@ class AccueilController extends AbstractController {
             'form' => $form->createView(),
             'error'=>$errorMessage,
         ]);
+    }
+    
+    public function getRss()
+    {
+        $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
+        $posts = $repositoryArticle->findBy(array(), array('dateDerniereModification'=>'desc'));
+
+        $response = new Response();
+        $response->headers->set("Content-type", "text/xml");
+        $response->setContent(self::generate($posts));
+        return $response;
+
+    }
+    
+    private static function generate(array $posts)
+    {
+        $xml = <<<xml
+<?xml version='1.0' encoding='UTF-8'?>
+<rss version='2.0'>
+<channel>
+<title>Pro14fr</title>
+<link>https://pro14fr.com</link>
+<description>Pro14fr rss feed</description>
+<language>fr</language>
+xml;
+        foreach ($posts as $post) {
+
+            $title = self::xmlEscape($post->getTitre());
+            if($post->getType()==1){
+                $url = "scottish-rugby/".$post->getId();
+            }else{
+                $url = "competition/article/".$post->getId();
+            }
+            $slug = self::xmlEscape(mb_substr($post->getContenu(), 3, 100).'...');
+            if($post->getDateDerniereModification() != null){
+                $pubDate = $post->getDateDerniereModification()->format('Y-m-d');
+            }else{
+                $pubDate = $post->getDateCreation()->format('Y-m-d');
+            }            
+            $xml .= <<<xml
+<item>
+<title>{$title}</title>
+<link>https://pro14fr.com/{$url}</link>
+<description>{$slug}</description>
+<pubDate>{$pubDate}</pubDate>
+</item>
+xml;
+        }
+        $xml .= "</channel></rss>";
+
+        return $xml;
+    }
+
+    private static function xmlEscape($string) {
+        return str_replace(array('&', '<', '>', '\'', '"'), array('&amp;', '&lt;', '&gt;', '&apos;', '&quot;'), $string);
     }
 }

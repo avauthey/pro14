@@ -109,3 +109,6 @@ equipe_presse:
     controller: App\Controller\EquipeController:getPresse
     requirements:
        id: '\d+'
+rss:
+    path: /rss
+    controller: App\Controller\AccueilController:getRss
