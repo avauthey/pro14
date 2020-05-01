@@ -19,6 +19,9 @@ footer{
     margin-top: 15px;
     padding: 0px 0px;
 }
+.pb-6{
+    padding-bottom: 5rem!important; 
+}
 a{
     color: #379911;
 }
