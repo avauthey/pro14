@@ -65,13 +65,13 @@ class AccueilController extends AbstractController {
         }*/
         $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews";        
         $file_headers = @get_headers($filename);
-        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+        if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found' || $file_headers[0] == 'HTTP/1.1 400 Bad Request') {
             $exists = false;
         }
         else {
             $exists = true;
         }
-        if($filename != false){
+        if($exists != false){
             $json = file_get_contents($filename);
             if($json != false){
                 $tmp = json_decode($json,true);
