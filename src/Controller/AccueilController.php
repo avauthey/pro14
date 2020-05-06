@@ -158,7 +158,7 @@ class AccueilController extends AbstractController {
     public function getRss()
     {
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
-        $posts = $repositoryArticle->findBy(array(), array('dateDerniereModification'=>'desc'));
+        $posts = $repositoryArticle->findBy(array('statut'=>'Publié'), array('dateCreation'=>'desc','dateDerniereModification'=>'desc'));
 
         $response = new Response();
         $response->headers->set("Content-type", "text/xml");
