@@ -7,7 +7,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('search_by_nationalite')}}'>Joueurs</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('search_by_nationalite')}}'>Competition > Joueurs</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ nationalite }}</li>
     </ol>
 </nav>
@@ -19,11 +19,11 @@
     </div>
     <div class='row'>
         <div class='col-lg-2 mt-2'>
-            <a href="{{ path('search_by_nationalite')}}"><i class="fas fa-arrow-circle-left"></i> Précédent </a>
-            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+            {{ include('competition/blockMenu.html.twig',{'active': active}) }}
         </div>
         <div class="col-lg-10">
-            <h2>Joueurs {{nationalite}} </h2><br />
+            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+            <h2>Joueurs {{nationalite}} </h2>
             <div class="row">
                 <div class="table-responsive">
                     <table class="table">

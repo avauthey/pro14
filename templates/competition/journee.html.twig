@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 {% block title %}
-    Pro 14 Journée {{journee.journee}} {{journee.idEquipeHome.nom ~' - '~journee.idEquipeAway.nom}}
+    Pro14 - Journée {{journee.journee}} {{journee.idEquipeHome.nom ~' - '~journee.idEquipeAway.nom}}
 {% endblock %}
 {% block body %}
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('calendrier_competition')}}'>Calendrier</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href='{{ path('calendrier_competition')}}'>Compétition > Calendrier</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{journee.idEquipeHome.nom ~' - '~journee.idEquipeAway.nom}}</li>
     </ol>
 </nav>

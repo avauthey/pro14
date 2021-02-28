@@ -9,22 +9,8 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class ChampionnatController extends AbstractController {
-    public function index()
-    {
-        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $repositoryPalmares = $this->getDoctrine()->getRepository(\App\Entity\Palmares::class);
-        $lesPalmares = $repositoryPalmares->findAll();
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
-        return $this->render('competition/accueilCompetition.html.twig', [
-            'selected' => "Competition",
-            'equipes'=> $lesEquipes,
-            'palmares'=>$lesPalmares,
-            'active' => "Présentation",
-        ]);
-    }
     public function getClassement($nomSaison = null){
         $repository = $this->getDoctrine()->getRepository(\App\Entity\Classement::class);
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
@@ -118,49 +104,7 @@ class ChampionnatController extends AbstractController {
             'statsMatch'=>$statsMatch,
         ]);
     }
-    
-    public function getArticle($id){
-        $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
-        /** @var Article $article */
-        $article = $repositoryArticle->find($id);
-        if (!$article || (is_object($article) && $article->getStatut()!='Publié')) {
-            throw $this->createNotFoundException(
-                    'Fuck off! Pas d\'article  pour l\'id '.$id
-            );
-        }
-        $session = new Session();
-        $entityManager = $this->getDoctrine()->getManager();
-        $read = $session->get("article".$article->getId(), null);
-        if($read == null){
-            $vues = $article->getVues();
-            $article->setVues($vues+1);
-            $entityManager->flush();
-            $session->set("article".$article->getId(), true);
-        }
-        $repositoryTags = $this->getDoctrine()->getRepository(\App\Entity\Tags::class);
-        $lesTags = $repositoryTags->findBy(array('article'=>$article->getId()));
-        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
-        return $this->render('competition/unArticle.html.twig', [
-            'selected' => "Competition",
-            'equipes'=> $lesEquipes,
-            'article' => $article,
-            'tags'=>$lesTags,
-        ]);
-    }
-    public function getArticles() {
-        $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
-        $articles = $repositoryArticle->findByTypes('Publié',[0,2]);
-        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
-        return $this->render('competition/articles.html.twig', [
-            'selected' => "Competition",
-            'equipes'=> $lesEquipes,
-            'active' => "Article",
-            'articles' => $articles,
-        ]);
-    }
-    
+        
     public function getPresse(){
         $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');

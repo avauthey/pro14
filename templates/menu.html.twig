@@ -9,24 +9,11 @@
                 <a class="nav-link" href="{{ path('index') }}">Accueil</a>
             </li>
             <li class="nav-item {% if selected == 'Competition' %}active{% endif %}">
-                <a class="nav-link" href="{{ path('competition') }}">Compétition</a>
+                <a class="nav-link" href="{{ path('calendrier_competition') }}">Compétition</a>
             </li>
-            <li class="nav-item dropdown {% if selected == 'Equipe' %}active{% endif %}">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Equipes
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    {% for equipe in equipes %}
-                    <a class="dropdown-item" href="{{ path('equipe',{id: equipe.id}) }}"><img src="{{asset('images/logo/'~equipe.logo)}}" alt="logo {{equipe.nom}}" width="15"> {{equipe.nom}}</a>
-                    {% endfor %}
-                </div>
-            </li>
-            <li class="nav-item {% if selected == 'Joueurs' %}active{% endif %}">
-                <a class="nav-link" href="{{ path('joueurs') }}">Joueurs</a>
-            </li>
-            <li class="nav-item {% if selected == 'ScottishRugby' %}active{% endif %}">
-                <a class="nav-link" href="{{ path('scottishRugby') }}">Scottish rugby</a>
-            </li>
+            <li class="nav-item {% if selected == 'APropos' %}active{% endif %}">
+                <a class="nav-link" href="{{ path('aboutPro14') }}">A Propos du Pro14</a>
+            </li>     
         </ul>
     </div>
 </nav>

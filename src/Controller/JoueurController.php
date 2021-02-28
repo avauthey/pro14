@@ -20,12 +20,24 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class JoueurController extends AbstractController  {
     //put your code here
     public function getParNom() {
-        $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
+        $repositoryJoueur = $this->getDoctrine()->getRepository(\App\Entity\Joueur::class);
+        $joueurs = $repositoryJoueur->findAll();
+        $datasPlayer = array_map(function(\App\Entity\Joueur $joueur){
+            return [
+                'id' => $joueur->getId(),
+                'nom' => $joueur->getNom(),
+                'prenom' => $joueur->getPrenom(),
+                'dateNaissance' => $joueur->getDateNaissance(),
+                'dateNaissance' => $joueur->getDateNaissance()->format('d/m/Y'),
+                'villeNaissance' => $joueur->getVilleNaissance(),
+                'paysNaissance' => $joueur->getPaysNaissance()
+            ];
+        }, $joueurs);
         return $this->render('joueur/accueilJoueur.html.twig', [
-            'selected' => "Joueurs",
-            'equipes'=>$lesEquipes,
-            'active'=>'Nom',
+            'selected' =>"Competition",
+            'active' => "Joueurs",
+            'joueurs'=>$datasPlayer,
+            'activeSubMenu'=>'Nom',
         ]);
     }
     
@@ -115,12 +127,8 @@ class JoueurController extends AbstractController  {
             }
             $previous = $asso->getIdEquipe()->getId();
         }
-        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
-    
         return $this->render('joueur/ficheJoueur.html.twig', [
-            'selected' => "Joueurs",
-            'equipes'=>$lesEquipes,
+            'selected' => "Competition",
             'joueur'=>$joueur,
             'equipe'=>$equipe,
             'saisonActuelle'=>$journeesSaisonActuelle,
@@ -132,34 +140,31 @@ class JoueurController extends AbstractController  {
         $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         return $this->render('joueur/joueurEquipe.html.twig', [
-            'selected' => "Joueurs",
+            'selected' => "Competition",
             'equipes'=>$lesEquipes,
-            'active'=>'Equipe',
+            'active'=>'Joueurs',
+            'activeSubMenu'=>'Equipes'
         ]);
     }
     public function getNationalite() {
-        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
         $repositoryJoueur = $this->getDoctrine()->getRepository(\App\Entity\Joueur::class);
         $nationalites = $repositoryJoueur->getNationalites();
         //var_dump($nationalites);
         return $this->render('joueur/listeNationalite.html.twig', [
-            'selected' => "Joueurs",
-            'equipes'=>$lesEquipes,
-            'active'=>'Nationalité',
+            'selected' => "Competition",
+            'active'=>'Joueurs',
+            'activeSubMenu'=>'Nationalité',
             'nationalites'=>$nationalites,
         ]);
     }
     public function getByNationalite($nationalite) {
-        $repositoryEquipe = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
-        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
         $repositoryJoueur = $this->getDoctrine()->getRepository(\App\Entity\Joueur::class);
         $joueurs = $repositoryJoueur->findBy(["paysNaissance"=>$nationalite],['nom'=>'ASC']);
         //var_dump($nationalites);
         return $this->render('joueur/joueurNationalite.html.twig', [
-            'selected' => "Joueurs",
-            'equipes'=>$lesEquipes,
-            'active'=>'Nationalité',
+            'selected' => "Competition",
+            'active'=>'Joueurs',
+            'activeSubMenu'=>'Nationalité',
             'joueurs'=>$joueurs,
             'nationalite'=>$nationalite,
         ]);

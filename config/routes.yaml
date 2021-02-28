@@ -1,9 +1,12 @@
 index:
     path: /
     controller: App\Controller\AccueilController::index
-competition:
-    path: /competition
-    controller: App\Controller\ChampionnatController::index
+#competition:
+ #   path: /competition
+  #  controller: App\Controller\ChampionnatController::index
+aboutPro14:
+    path: /a-propos-du-Pro14
+    controller: App\Controller\AboutController::index
 equipe:
     path : /equipe/{id}
     controller: App\Controller\EquipeController::getUneEquipe
@@ -56,13 +59,13 @@ consulter_joueur:
     requirements:
         id: '\d+'
 search_by_equipe:
-    path: /joueurs/JoueursEquipe/
+    path: /joueurs/joueurs-par-equipe/
     controller: App\Controller\JoueurController:getByEquipe
 search_by_nationalite:
-    path: /joueurs/JoueursNationalite
+    path: /joueurs/joueurs-par-nationalite
     controller: App\Controller\JoueurController:getNationalite
 display_by_nationalite:
-    path: /joueurs/Joueurs/{nationalite}
+    path: /joueurs/joueurs-par-nationalite/{nationalite}
     controller: App\Controller\JoueurController:getByNationalite
 journee:
     path: /competition/journee/{id}
@@ -70,14 +73,14 @@ journee:
     requirements:
         id: '\d+'
 articles:
-    path: /competition/articles
-    controller: App\Controller\ChampionnatController:getArticles
+    path: /articles
+    controller: App\Controller\AccueilController:getArticles
 presse:
     path: /competition/presse
     controller: App\Controller\ChampionnatController:getPresse   
 article:
-    path: /competition/article/{id}
-    controller: App\Controller\ChampionnatController:getArticle
+    path: /article/{id}
+    controller: App\Controller\AccueilController:getArticle
     requirements:
         id: '\d+'
 equipe_article:

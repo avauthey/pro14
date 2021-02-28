@@ -1,23 +1,37 @@
-<footer class="footer mt-4 fixed-bottom">
+<footer class="footer mt-3">
     <div class='container-fluid'>
         <div class='row justify-content-center'>
             <div class='col-lg-12 text-center padd bg-vertClair'>
             </div>
         </div>
         <div class='row justify-content-center padd'>
-            <div class='col-6 col-md-2 text-center'>
-                <a href='{{path('contact')}}'>Contact</a>
+            <div class='col-12 col-md-3 text-center mt-4'>
+                <img src="{{asset('images/logo.png')}}" alt='Guinness Pro 14 FR' width="100" class="d-inline-block align-top">
             </div>
-            <div class='col-6 col-md-2 text-center'>
-                <a href='{{path('presentation')}}'>A propos</a>
+            <div class='col-12 col-md-3 text-center mt-4 align-self-center'>
+                <div class='row justify-content-center'>
+                    <div class="col-4">
+                        <a href='{{path('contact')}}'>Contact</a>
+                    </div>
+                    <div class="col-4">
+                        <a href='{{path('presentation')}}'>A propos</a>
+                    </div>
+                </div>
             </div>
-            <div class='col-6 col-md-2 text-center'>
-                <a href='https://twitter.com/A_Vauthey' target="_BLANK"><i class="fab fa-twitter-square fa-2x"></i></a>
+            <div class='col-12 col-md-3 mt-4 align-self-center'>
+                <div class='row justify-content-center'>
+                    <div class="col-3">
+                       <a href='https://twitter.com/A_Vauthey' target="_BLANK"><i class="fab fa-twitter-square fa-2x"></i></a>
+                    </div>
+                    <div class="col-3">
+                        <a href='{{path('rss')}}'><i class="fas fa-rss-square fa-2x"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class='col-6 col-md-2 text-center'>
-                <a href='{{path('rss')}}'><i class="fas fa-rss-square fa-2x"></i></a>
+            <div class='col-10 text-center mt-4'>
+                <hr class="end">
             </div>
-            <div class='col-12 text-center' style="font-size:11px">
+            <div class='col-12 text-center mb-2' style="font-size:12px">
                 <span>© Pro14fr - Antoine Vauthey - 2020</span>
             </div>
         </div>

@@ -49,9 +49,11 @@ class ArticleRepository extends ServiceEntityRepository
     }
     */
     
-   public function findLastFive() {
+   public function findLast(int $numbers) {
         $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery('Select a FROM App\Entity\Article a WHERE a.statut=:publie and a.type in (0,2) ORDER BY a.id DESC ')->setParameters(array('publie'=>"Publié"))->setMaxResults(4);
+        $query = $entityManager->createQuery('Select a FROM App\Entity\Article a WHERE a.statut=:publie ORDER BY a.id DESC ')
+                ->setParameters(array('publie'=>"Publié"))
+                ->setMaxResults($numbers);
         return $query->execute();
    }
    public function findByTypes($statut, array $types) {

@@ -7,7 +7,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Joueurs</li>
+        <li class="breadcrumb-item active" aria-current="page">Competition > Joueurs</li>
     </ol>
 </nav>
 <div class='container-fluid mb-5 pb-6'>
@@ -18,9 +18,10 @@
     </div>
     <div class='row'>
         <div class='col-lg-2 mt-2'>
-            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+            {{ include('competition/blockMenu.html.twig',{'active': active}) }}
         </div>
         <div class="col-lg-10">
+            {{ include('joueur/blockMenu.html.twig',{'activeSubMenu': activeSubMenu}) }}
             <h2>Rechercher par nationalité </h2><br />
             <div class="row">
                 {% for nationalite in nationalites %}

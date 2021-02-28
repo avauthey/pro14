@@ -7,7 +7,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item" aria-current="page"><a href='{{ path('index')}}'>Accueil</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Joueurs</li>
+        <li class="breadcrumb-item active" aria-current="page">Compétition > Joueurs</li>
     </ol>
 </nav>
 <div class='container-fluid mb-5 pb-6'>
@@ -18,14 +18,44 @@
     </div>
     <div class='row'>
         <div class='col-lg-2 mt-2'>
-            {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+            {{ include('competition/blockMenu.html.twig',{'active': active}) }}
         </div>
         <div class="col-lg-10 mt-4 mt-md-0">
-            <h2>Rechercher par nom </h2><br />
-            <input type="text" class="form-control" id="search" placeholder="Saisissez le prénom ou le nom du joueur">
-            <div id="resultats" class="mt-2">
-                
-            </div>
+             {{ include('joueur/blockMenu.html.twig',{'active': active}) }}
+             <div class="row">
+                 <div class="col-lg-12">
+                    <h2>Rechercher par nom </h2><br />
+                    <input type="text" class="form-control" id="search" placeholder="Saisissez le prénom ou le nom du joueur">
+                    <p style="color: red" id='emptyData' class='mt-5'>Aucun joueur ne correspond à cette recherche</p>
+                   <div class="table-responsive mt-5" id='data'>
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Prénom</th>
+                                    <th>Nom</th>
+                                    <th>Date de naissance</th>
+                                    <th>Ville de naissance</th>
+                                    <th>Pays de naissance</th>
+                                    <th>Consulter</th>
+                                </tr>
+                            </thead>
+                            <tbody id='content'>
+                                {# for joueur in liste %}
+                                    <tr>
+                                        <td> {{ joueur.prenom }} </td>
+                                        <td> {{ joueur.nom }} </td>
+                                        <td> {{ joueur.dateNaissance|date('d/m/Y') }}</td>
+                                        <td> {{ joueur.villeNaissance }} </td>
+                                        <td> {{ joueur.paysNaissance }} </td>
+                                        <td><a href="{{ path('consulter_joueur',{'id': joueur.id})}}"><i class="fas fa-search icon-search"></i></a></td>
+                                    </tr>
+                                {% endfor #}
+                            </tbody>
+                        </table>
+
+                    </div>
+                 </div>
+             </div>
         </div>
     </div>
 </div>
@@ -33,18 +63,44 @@
 {% block javascript %}
 <script></script>
 <script type="text/javascript">
+    $('#emptyData').hide();
+    $('#data').hide();
     $('#search').on("keyup",function(){
-        var path = "{{ path('search_joueur')}}";
+        var data = {{ joueurs|json_encode|raw }};
+        console.log(data);
+        //var path = "{{ path('search_joueur')}}";
         console.log($('#search').val());
-        if($('#search').val().length >=3){
-            $.ajax({
+        if($('#search').val().length >=1){
+            var text = $('#search').val();
+            var newData = data.filter(function(p){
+                return p.nom.toUpperCase().match(text.toUpperCase()) ||  p.prenom.toUpperCase().match(text.toUpperCase());
+            });
+            console.log(newData);
+            if(newData.length === 0){
+                $('#emptyData').show();
+                $('#data').hide();
+            }else{
+                $('#content').empty();
+                //$('#content').html('<tr><td>Coucou</td></tr>');
+                var content = newData.map(function(p){
+                    return '<tr><td>'+p.prenom+'</td><td>'+p.nom+'</td><td>'+p.dateNaissance+'</td><td>'+p.villeNaissance+'</td><td>'+p.paysNaissance+'</td><td><a href="joueurs/'+p.id+'"><i class="fas fa-search icon-search"></i></a></td></tr>'
+                });
+                console.log(content)
+                $('#content').html(content);
+                $('#emptyData').hide();
+                $('#data').show();
+                
+            }
+            /*$.ajax({
                 method:"POST",
                 url: path,
                 data: {test: $('#search').val()}
 
             }).done(function(retour){
                    $('#resultats').html(retour)
-                });
+                });*/
+        
+            
         }else{
             $( "#resultats" ).empty();
         }

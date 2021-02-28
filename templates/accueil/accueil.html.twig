@@ -9,45 +9,70 @@
         <li class="breadcrumb-item active" aria-current="page">Accueil</li>
     </ol>
 </nav>
-<div class='container-fluid pb-6 mb-5'>
-    <div class='row'>
-        <div class='col-lg-12'>
-            <h1>Accueil</h1>
-        </div>
-    </div>
-    <div class='row'>
-        <div class='col-lg-7'>
+<div class='container-fluid pb-2 mb-5'>
+    <div class='row justify-content-center'>
+        <div class='col-lg-9'>
             <h3>Derniers articles</h3><br />
-            {% for article in articles %}
-                <div class="card mb-3">
-                    <div class="row no-gutters">
-                        <div class="col-sm-2 align-self-center text-center mx-1">
-                            <img src="{{ asset('images/articles/article_'~article.id~'/'~article.miniature)}}"  alt="..." class="img-fluid">
-                        </div>
-                        <div class="col-sm-9">
-                            <div class="card-body">
-                                <h5 class="card-title">{{article.titre}}</h5>
-                                <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
-                                <p class="card-text">
-                                    {% if article.dateDerniereModification is not null %}
-                                        <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>
-                                    {%else%}
-                                        <small class="text-muted">Dernière création : {{article.dateCreation|date('d/m/Y')}}</small>
-                                    {% endif %}
-                                </p>
-                                <p class="card-text text-right"><a href="{{path('article',{'id':article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card mb-3">
+                        <div class="row no-gutters">
+                            <div class="col-sm-2 align-self-center text-center mx-1">
+                                <img src="{{ asset('images/articles/article_'~lastFiveArticles|first.id~'/'~lastFiveArticles|first.miniature)}}"  alt="..." class="img-fluid">
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{lastFiveArticles|first.titre}}</h5>
+                                    <p class="card-text">{% if lastFiveArticles|first.contenu|length > 120 %}
+                                        {% set var = lastFiveArticles|first.contenu|slice(0, 120)~"...</p>" %} 
+                                        {{ var | raw }}{% else %} 
+                                            {{ lastFiveArticles|first.contenu|raw  }}
+                                            {% endif %}
+                                    </p>
+                                    <p class="card-text">
+                                        {% if lastFiveArticles|first.dateDerniereModification is not null %}
+                                            <small class="text-muted">Dernière modification : {{lastFiveArticles|first.dateDerniereModification|date('d/m/Y')}}</small>
+                                        {%else%}
+                                            <small class="text-muted">Dernière création : {{lastFiveArticles|first.dateCreation|date('d/m/Y')}}</small>
+                                        {% endif %}
+                                    </p>
+                                    <p class="card-text text-right"><a href="{{path('article',{'id':lastFiveArticles|first.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            {% for article in lastFiveArticles|slice(1) %}
+                <div class="col-lg-4">
+                    <div class="card mb-3">
+                        <img src="{{ asset('images/articles/article_'~article.id~'/'~article.miniature)}}"  alt="..." class="img-fluid card-img-top">
+                        <div class="card-body">
+                            <div class="block-card-title">
+                                <h5 class="card-title">{{article.titre}}</h5>
+                            </div>
+                            <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
+                            <p class="card-text">
+                                {% if article.dateDerniereModification is not null %}
+                                    <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>
+                                {%else%}
+                                    <small class="text-muted">Dernière création : {{article.dateCreation|date('d/m/Y')}}</small>
+                                {% endif %}
+                            </p>
+                            <p class="card-text text-right"><a href="{{path('article',{'id':article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
+            </div>
         </div>
-        <div class='col-lg-5'>
-            <h3>Classement</h3>
+    </div>
+    <div class='row justify-content-center bg-vertClair py-2'>
+        <div class='col-lg-10'>
+            <h3 class="text-white">Classement</h3>
             <div class="row">
-                <div class="col-lg-12">
-                    Conférence A :<br />
-                    <div class="table-responsive classement-reduce-size">
+                <div class="col-lg-6">
+                    <span class="text-white">Conférence A :</span>
+                    <div class="table-responsive classement-reduce-size mt-1">
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -65,7 +90,7 @@
                             </thead>
                             <tbody>
                                 {% for confA in classementA %}
-                                    <tr>
+                                    <tr style='background-color: #F2F2F2'>
                                         <th>{{ confA.classement }} </th>
                                         <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confA.equipe.id})}}">{{ confA.equipe.nom }}</a></td>
                                         <td> {{confA.joue }}</td>
@@ -83,9 +108,9 @@
                     </div>
                         
                 </div>
-                <div class="col-lg-12">
-                    Conférence B :<br />
-                    <div class="table-responsive classement-reduce-size">
+                <div class="col-lg-6">
+                    <span class="text-white">Conférence B :</span>
+                    <div class="table-responsive classement-reduce-size mt-1">
                         <table class="table">
                             <thead class="thead-dark">
                                 <tr>
@@ -103,7 +128,7 @@
                             </thead>
                             <tbody>
                                 {% for confB in classementB %}
-                                    <tr>
+                                    <tr style='background-color: #F2F2F2'>
                                         <th>{{ confB.classement }} </th>
                                         <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confB.equipe.id})}}">{{ confB.equipe.nom }}</a> </td>
                                         <td> {{confB.joue }}</td>
@@ -125,27 +150,62 @@
             </div>
         </div>
     </div>
-    <div class='row top'>
-        <div class='col-lg-7'>
-            <h3>Presse</h3>
+    <div class="row justify-content-center mt-4">
+        <div class="col-lg-9">
+            <div class="row">
+            {% for article in othersArticles %}
+                <div class="col-lg-4">
+                    <div class="card mb-3">
+                        <img src="{{ asset('images/articles/article_'~article.id~'/'~article.miniature)}}"  alt="..." class="img-fluid card-img-top">
+                        <div class="card-body">
+                            <div class="block-card-title">
+                                <h5 class="card-title">{{article.titre}}</h5>
+                            </div>
+                            <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
+                            <p class="card-text">
+                                {% if article.dateDerniereModification is not null %}
+                                    <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>
+                                {%else%}
+                                    <small class="text-muted">Dernière création : {{article.dateCreation|date('d/m/Y')}}</small>
+                                {% endif %}
+                            </p>
+                            <p class="card-text text-right"><a href="{{path('article',{'id':article.id})}}">Lire plus <i class="fas fa-arrow-circle-right"></i> </a></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-2">
+        <div class="col-lg-12 text-center"><a href="{{path('articles')}}" class="text-bold">Voir plus d'article</a></div>
+    </div>
+    <div class='row justify-content-center mt-3 bg-vertClair py-2'>
+        <div class='col-lg-9'>
+            <h3 class="text-white">Presse</h3>
             {#{% for article in presse %}
                 <a href="{{ article.link }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ article.title }}</a><br />
             {% endfor %}#}
-            {% for lien,article in presse %}
-                <a href="{{ lien }}" targer="_BLANK"><i class="fas fa-newspaper"></i>&nbsp;{{ article }}</a><br />
-            {% endfor %}
-        </div>
-        <div class='col-lg-5'>
-            <h3>Derniers résultats</h3>
-            
-                {% if lastJournee|first.journee!='Demi finale' and lastJournee|first.journee!='Barrage Play Off' and lastJournee|first.journee!='Finale' and lastJournee|first.journee!='Barrage Champions Cup' %}Journée n°{{lastJournee|first.journee}}{% else %} {{lastJournee|first.journee }}{% endif %}<br />
-                {% for journee in lastJournee %}
-                <div class='border-bottom-grey'>
-                    <img src="{{ asset('images/logo/'~journee.idEquipeHome.logo)}}" width="19"> {{ journee.idEquipeHome.nom}} <a style="color: inherit" class="text-black" href="{{ path('journee', {'id':journee.id }) }}"><span class="font-weight-bold text-black">{% if journee.scoreHome!=null%}{{ journee.scoreHome}}{% endif %} - {% if journee.scoreAway!=null%}{{ journee.scoreAway}}{% endif %}</span></a> {{journee.idEquipeAway.nom }} <img src="{{ asset('images/logo/'~journee.idEquipeAway.logo)}}" width="19">    
+            <div class="row">
+                <div class="col-lg-6">
+                    {% for lien,article in presse|slice(0, 5) %}
+                        <a href="{{ lien }}" targer="_BLANK" class="press-link"><i class="fas fa-newspaper"></i>&nbsp;{{ article }}</a><br />
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            
-            
+                <div class="col-lg-6">
+                    {% for lien,article in presse|slice(5) %}
+                        <a href="{{ lien }}" targer="_BLANK" class="press-link"><i class="fas fa-newspaper"></i>&nbsp;{{ article }}</a><br />
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-lg-9">
+            <h3>Ils nous ont fait confiance</h3>
+        
+            Café Crème Sport : <a href="https://cafecremesport.com/2021/02/18/stuart-hogg-le-boss-final-dans-les-highlands/" class="text-bold">Stuart Hogg : Le Boss final dans les Highlands</a><br>
+            Le Rugbynistere : <a href="https://www.lerugbynistere.fr/news/6-nations-hastings-vs-ntamack-qui-est-le-meilleur-des-fistons-0403201602.php" class="text-bold">6 Nations - Hastings vs Ntamack : qui est le meilleur des fistons ?</a>
         </div>
     </div>
 

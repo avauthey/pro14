@@ -235,3 +235,23 @@ hr{
     /*width: 600px!important;
     height:500px!important;*/
 }
+
+.card-joueur-active {
+    background-color: #527843;
+}
+.card-joueur-active > a{
+    color: white!important;
+    cursor: auto;
+}
+.end{
+    border-top: 1px solid #527843;
+}
+.block-card-title{
+    height: 4rem;
+}
+.press-link{
+    color: #F2F2F2;
+}
+.press-link:hover{
+    color: #F2F2F2;
+}

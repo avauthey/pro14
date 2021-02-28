@@ -27,11 +27,9 @@ class EquipeController extends AbstractController {
                     'Pas d\'équipe pour l\'id '.$id
             );
         }
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
     
         return $this->render('equipes/accueilEquipe.html.twig', [
-            'selected' => "Equipe",
-            'equipes'=>$lesEquipes,
+            'selected' => "Competition",
             'active'=>'Présentation',
             'equipe'=>$equipe,
         ]);
@@ -41,7 +39,8 @@ class EquipeController extends AbstractController {
         $repository = $this->getDoctrine()->getRepository(\App\Entity\Equipe::class);
         $lesEquipes = $repository->findAllByNomOrder('ASC');
         return $this->render('equipes/lesEquipes.html.twig', [
-            'selected' => "Equipe",
+            'active'=> "Equipe",
+            'selected' => "Competition",
             'equipes'=>$lesEquipes,
         ]);
     }
@@ -60,14 +59,12 @@ class EquipeController extends AbstractController {
                     'Pas d\'équipe pour l\'id '.$id
             );
         }
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
         $repositoryJournee = $this->getDoctrine()->getRepository(\App\Entity\Journee::class);
         $calendrier = $repositoryJournee->findJourneeByIdEquipe($equipe->getId(), $saison[0]->getSaison());
         
         return $this->render('equipes/calendrier.html.twig', [
-            'selected' => "Equipe",
+            'selected' => "Competition",
             'active'=>'Calendrier / Résultats',
-            'equipes'=>$lesEquipes,
             'equipe'=>$equipe,
             'calendrier'=>$calendrier,
             'saison'=>$saison[0]->getSaison(),
@@ -90,14 +87,12 @@ class EquipeController extends AbstractController {
                     'Pas d\'équipe pour l\'id '.$id
             );
         }
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
         $repositoryJoueur = $this->getDoctrine()->getRepository(\App\Entity\AssoJoueurEquipe::class);
         $joueurs = $repositoryJoueur->findBy(['idEquipe'=>$equipe->getId(),'saison'=>$saison[0]->getSaison()]);
         //var_dump($joueurs);
         return $this->render('equipes/effectif.html.twig', [
-            'selected' => "Equipe",
+            'selected' => "Competition",
             'active'=>'Effectif',
-            'equipes'=>$lesEquipes,
             'equipe'=>$equipe,
             'joueurs'=>$joueurs,
             'saison'=>$saison[0]->getSaison(),
@@ -154,7 +149,7 @@ class EquipeController extends AbstractController {
         //var_dump($tagsTmp);
         $lesTags = array_reverse($tagsTmp);
         return $this->render('equipes/articles.html.twig', [
-            'selected' => "Equipe",
+            'selected' => "Competition",
             'active'=>'Article',
             'equipes'=>$lesEquipes,
             'equipe'=>$equipe,
@@ -186,12 +181,9 @@ class EquipeController extends AbstractController {
         $placages = $repositoryAssoJourneeJoueur->findPlaqueurByEquipe($saison[0]->getSaison(), $equipe->getId());
         $courses = $repositoryAssoJourneeJoueur->findCourseMetreByEquipe($saison[0]->getSaison(), $equipe->getId());
         $discipline = $repositoryAssoJourneeJoueur->findDisciplineByEquipe($saison[0]->getSaison(), $equipe->getId());
-        //var_dump($realisateurs);
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
         return $this->render('equipes/stats.html.twig', [
-            'selected' => "Equipe",
+            'selected' => "Competition",
             'active'=>'Stats',
-            'equipes'=>$lesEquipes,
             'equipe'=>$equipe,
             'saison'=>$saison[0],
             'journees' => $journees,
@@ -212,7 +204,6 @@ class EquipeController extends AbstractController {
                     'Pas d\'équipe pour l\'id '.$id
             );
         }
-        $lesEquipes = $repository->findAllByNomOrder('ASC');
         $data = array();
         for($i=0; $i<5; $i++){
             $filename = "https://www.pro14.rugby/api/v1/newsfeed/latestnews?page=$i&pageSize=10";        
@@ -242,9 +233,8 @@ class EquipeController extends AbstractController {
         }
         
         return $this->render('equipes/presse.html.twig', [
-            'selected' => "Equipe",
+            'selected' => "Competition",
             'active'=>'Presse',
-            'equipes'=>$lesEquipes,
             'equipe'=>$equipe,
             'presses'=>$data,
         ]);
