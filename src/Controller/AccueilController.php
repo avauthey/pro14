@@ -163,11 +163,7 @@ xml;
         foreach ($posts as $post) {
 
             $title = self::xmlEscape($post->getTitre());
-            if($post->getType()==1){
-                $url = "scottish-rugby/".$post->getId();
-            }else{
-                $url = "competition/article/".$post->getId();
-            }
+            $url = "article/".$post->getId();
             $slug = self::xmlEscape(mb_substr($post->getContenu(), 3, 100).'...');
             if($post->getDateDerniereModification() != null){
                 $pubDate = $post->getDateDerniereModification()->format('Y-m-d');
