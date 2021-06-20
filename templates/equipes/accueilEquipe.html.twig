@@ -63,6 +63,7 @@
                         {% set celtic =[] %}
                         {% set challenge =[] %}
                         {% set champions =[] %}
+                        {% set rainbowCup =[] %}
                         {% for palmares in equipe.palmares %}
                             {% if palmares.nomCompetition == 'Celtic League'%}
                                 {% set celtic = celtic|merge([palmares.saison]) %}
@@ -84,6 +85,9 @@
                             {% endif  %}
                             {% if palmares.nomCompetition == 'Champions Cup'%}
                                 {% set champions = champions|merge([palmares.saison]) %}
+                            {% endif  %}
+                            {% if palmares.nomCompetition == 'Rainbow Cup'%}
+                                {% set rainbowCup = rainbowCup|merge([palmares.saison]) %}
                             {% endif  %}
                         {% endfor %}
                         {% set compteur = celtic|length %}
@@ -133,6 +137,16 @@
                             {% endfor %}
                             Guinness Pro14,
                             {% for element in pro14 %}
+                                {{ element }}                                
+                            {% endfor %}<br />
+                        {% endif %}
+                        {% set compteur = rainbowCup|length %}
+                        {% if compteur != 0%}
+                            {% for i in 1..compteur %}
+                                <i class="fas fa-trophy trophy-vert"></i>
+                            {% endfor %}
+                            Rainbow Cup,
+                            {% for element in rainbowCup %}
                                 {{ element }}                                
                             {% endfor %}<br />
                         {% endif %}
