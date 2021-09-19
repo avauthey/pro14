@@ -26,7 +26,17 @@
                         <div class="col-sm-9">
                             <div class="card-body">
                                 <h5 class="card-title">{{article.titre}}</h5>
-                                <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
+                                <p class="card-text">{% if article.resume|length > 0 %}
+                                    {{ article.resume | raw }}
+                                {% else %}
+                                    {% if article.contenu|length > 100 %}
+                                        {% set var = article.contenu|slice(0, 100)~"...</p>" %} 
+                                        {{ var | raw }}
+                                    {% else %} 
+                                        {{ article.contenu|raw  }} 
+                                    {% endif %}
+                                {% endif %}
+                                </p>
                                 <p class="card-text">
                                     {% if article.dateDerniereModification is not null %}
                                         <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>

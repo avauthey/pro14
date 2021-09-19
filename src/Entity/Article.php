@@ -62,6 +62,18 @@ class Article
      * @ORM\Column(type="integer")
      */
     private $type;
+    
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resume;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
 
     public function __construct()
     {
@@ -168,6 +180,11 @@ class Article
     {
         return $this->statut;
     }
+    
+    public function getResume(): ?string
+    {
+        return $this->resume;
+    }
 
     public function setStatut(?string $statut): self
     {
@@ -196,6 +213,25 @@ class Article
     public function setType(int $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+    
+    public function setResume(string $resume): self
+    {
+        $this->resume = $resume;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

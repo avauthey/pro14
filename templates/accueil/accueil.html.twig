@@ -23,11 +23,17 @@
                             <div class="col-sm-9">
                                 <div class="card-body">
                                     <h5 class="card-title">{{lastFiveArticles|first.titre}}</h5>
-                                    <p class="card-text">{% if lastFiveArticles|first.contenu|length > 120 %}
-                                        {% set var = lastFiveArticles|first.contenu|slice(0, 120)~"...</p>" %} 
-                                        {{ var | raw }}{% else %} 
-                                            {{ lastFiveArticles|first.contenu|raw  }}
+                                    <p class="card-text">
+                                        {% if lastFiveArticles|first.resume|length > 0 %}
+                                            {{ lastFiveArticles|first.resume | raw }}
+                                        {% else %}
+                                            {% if lastFiveArticles|first.contenu|length > 120 %}
+                                                {% set var = lastFiveArticles|first.contenu|slice(0, 120)~"...</p>" %} 
+                                                    {{ var | raw }}
+                                            {% else %} 
+                                                {{ lastFiveArticles|first.contenu|raw  }}
                                             {% endif %}
+                                        {% endif %}
                                     </p>
                                     <p class="card-text">
                                         {% if lastFiveArticles|first.dateDerniereModification is not null %}
@@ -50,7 +56,18 @@
                             <div class="block-card-title">
                                 <h5 class="card-title">{{article.titre}}</h5>
                             </div>
-                            <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
+                            <p class="card-text">
+                                {% if article.resume|length > 0 %}
+                                    {{ article.resume | raw }}
+                                {% else %}
+                                    {% if article.contenu|length > 100 %}
+                                        {% set var = article.contenu|slice(0, 100)~"...</p>" %} 
+                                        {{ var | raw }}
+                                    {% else %} 
+                                        {{ article.contenu|raw  }} 
+                                    {% endif %}
+                                {% endif %}
+                                </p>
                             <p class="card-text">
                                 {% if article.dateDerniereModification is not null %}
                                     <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>
@@ -161,7 +178,18 @@
                             <div class="block-card-title">
                                 <h5 class="card-title">{{article.titre}}</h5>
                             </div>
-                            <p class="card-text">{% if article.contenu|length > 100 %}{% set var = article.contenu|slice(0, 100)~"...</p>" %} {{ var | raw }}{% else %} {{ article.contenu|raw  }} {% endif %}</p>
+                            <p class="card-text">
+                                {% if article.resume|length > 0 %}
+                                    {{ article.resume | raw }}
+                                {% else %}
+                                    {% if article.contenu|length > 100 %}
+                                        {% set var = article.contenu|slice(0, 100)~"...</p>" %} 
+                                        {{ var | raw }}
+                                    {% else %} 
+                                        {{ article.contenu|raw  }} 
+                                    {% endif %}
+                                {% endif %}
+                            </p>
                             <p class="card-text">
                                 {% if article.dateDerniereModification is not null %}
                                     <small class="text-muted">Dernière modification : {{article.dateDerniereModification|date('d/m/Y')}}</small>
