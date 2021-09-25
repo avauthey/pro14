@@ -39,7 +39,7 @@ class EquipeRepository extends ServiceEntityRepository
     public function findAllByNomOrder($value){
         $entityManager = $this->getEntityManager();
         $con = $entityManager->getConnection();
-        $sql = 'SELECT * FROM equipe ORDER BY nom '.$value;
+        $sql = 'SELECT * FROM equipe WHERE active=1 ORDER BY nom '.$value;
         $stmt = $con->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();

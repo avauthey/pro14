@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <h3>{{lastClassementIrish|first.conference}} Conference</h3>
+                    <h3>Conférence A</h3>
                     <div class="table-responsive classement-reduce-size">
                         <table class="table">
                             <thead class="thead-dark">
@@ -46,7 +46,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for confA in lastClassementIrish %}
+                                {% for confA in lastClassementA %}
                                     <tr>
                                         <th>{{ confA.classement }} </th>
                                         <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h3>{{lastClassementScottish|first.conference}} Conference</h3>
+                    <h3>Conférence B</h3>
                     <div class="table-responsive classement-reduce-size">
                         <table class="table">
                             <thead class="thead-dark">
@@ -83,84 +83,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for confB in lastClassementScottish %}
-                                    <tr>
-                                        <th>{{ confB.classement }} </th>
-                                        <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
-                                        <td> {{confB.joue }}</td>
-                                        <td> {{confB.nbPoints }}</td>
-                                        <td> {{confB.victoire }}</td>
-                                        <td> {{confB.nul }}</td>
-                                        <td> {{confB.defaite }}</td>
-                                        <td> {{confB.bo }}</td>
-                                        <td> {{confB.bd }}</td>
-                                        <td> {{confB.difference }}</td>
-                                    </tr>                                    
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                        
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <h3>{{lastClassementSouthAfrican|first.conference}} Conference</h3>
-                    <div class="table-responsive classement-reduce-size">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Pos</th>
-                                    <th>Equipe</th>
-                                    <th>Joué</th>
-                                    <th>Points</th>
-                                    <th>V</th>
-                                    <th>N</th>
-                                    <th>D</th>
-                                    <th>BO</th>
-                                    <th>BD</th>
-                                    <th>+/-</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for confA in lastClassementSouthAfrican %}
-                                    <tr>
-                                        <th>{{ confA.classement }} </th>
-                                        <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> {{ confA.equipe.nom }} </td>
-                                        <td> {{confA.joue }}</td>
-                                        <td> {{confA.nbPoints }}</td>
-                                        <td> {{confA.victoire }}</td>
-                                        <td> {{confA.nul }}</td>
-                                        <td> {{confA.defaite }}</td>
-                                        <td> {{confA.bo }}</td>
-                                        <td> {{confA.bd }}</td>
-                                        <td> {{confA.difference }}</td>
-                                    </tr>                                    
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <h3>{{lastClassementWelsh|first.conference}} Conference</h3>
-                    <div class="table-responsive classement-reduce-size">
-                        <table class="table">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Pos</th>
-                                    <th>Equipe</th>
-                                    <th>Joué</th>
-                                    <th>Points</th>
-                                    <th>V</th>
-                                    <th>N</th>
-                                    <th>D</th>
-                                    <th>BO</th>
-                                    <th>BD</th>
-                                    <th>+/-</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for confB in lastClassementWelsh %}
+                                {% for confB in lastClassementB %}
                                     <tr>
                                         <th>{{ confB.classement }} </th>
                                         <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> {{ confB.equipe.nom }} </td>
@@ -184,20 +107,12 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <h4> Classement évolutif Irish Conference</h4>
-            <canvas id="confIrish" width="600" height="300"></canvas>
+            <h4> Classement évolutif conférence A</h4>
+            <canvas id="confA" width="600" height="550"></canvas>
         </div>
         <div class="col-lg-6">
-            <h4> Classement évolutif Scottish/Italian Conference</h4>
-            <canvas id="confScottish" width="600" height="300"></canvas>
-        </div>
-        <div class="col-lg-6">
-            <h4> Classement évolutif South African Conference </h4>
-            <canvas id="confSouthAfrican" width="600" height="300"></canvas>
-        </div>
-        <div class="col-lg-6">
-            <h4> Classement évolutif Welsh Conference</h4>
-            <canvas id="confWelsh" width="600" height="300"></canvas>
+            <h4> Classement évolutif conférence B</h4>
+            <canvas id="confB" width="600" height="550"></canvas>
         </div>
     </div>
     <div class="row justify-content-center classement-reduce-size">
@@ -308,31 +223,20 @@
                     color = "purple";
                     break;
                 case 'Dragons':
-                    color = "orange";
+                    color = "black";
                     break;
                 case 'Southern Kings':
                     color = "Orange";
                     break;
-                case 'Vodacom Blue Bulls':
-                    color = '#33D8FF';
-                    break;
-                case 'Lions':
-                    color = 'red';
-                    break;
-                case 'Sharks':
-                    color = 'black';
-                    break;
-                case 'DHL Stormers':
-                    color = 'blue';
-                    break;
+                
             }
             return color;
         }
-        var configIrish = {
+        var configA = {
             type:'line',
             data:{
                 labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
-                datasets: [{% for uneEquipe in classementsIrish %} {
+                datasets: [{% for uneEquipe in classementsA %} {
                     label: '{{ uneEquipe|first.equipe.nom }}',
                     backgroundColor: getColor("{{uneEquipe|first.equipe.nom}}"),
                     borderColor: getColor("{{uneEquipe|first.equipe.nom}}"),
@@ -344,7 +248,7 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Classement évolutif conférence Irish',
+                    text: 'Classement évolutif conférence A',
                 },
                 tooltips:{
                     mode: 'index',
@@ -370,23 +274,19 @@
                        },
                        ticks: {
                             reverse: true,
-                            userCallback: function(label, index, labels) {
-                                if (Math.floor(label) === label) {
-                                    return label;
-                                }
-
-                            },
                         }
                     }],
                 }
             }
         };
-
-        var configScottish = {
+     /*   window.onload = function(){
+            
+        };*/
+        var configB = {
             type:'line',
             data:{
                 labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
-                datasets: [{% for uneEquipe in classementsScottish %} {
+                datasets: [{% for uneEquipe in classementsB %} {
                     label: '{{ uneEquipe|first.equipe.nom }}',
                     backgroundColor: getColor("{{uneEquipe|first.equipe.nom}}"),
                     borderColor: getColor("{{uneEquipe|first.equipe.nom}}"),
@@ -398,7 +298,7 @@
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Classement évolutif conférence Scottish/Italian',
+                    text: 'Classement évolutif conférence B',
                 },
                 tooltips:{
                     mode: 'index',
@@ -424,132 +324,16 @@
                        },
                        ticks: {
                             reverse: true,
-                            userCallback: function(label, index, labels) {
-                                if (Math.floor(label) === label) {
-                                    return label;
-                                }
-
-                            },
-                        }
-                    }],
-                }
-            }
-        };
-        var configSouthAfrican = {
-            type:'line',
-            data:{
-                labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
-                datasets: [{% for uneEquipe in classementsSouthAfrican %} {
-                    label: '{{ uneEquipe|first.equipe.nom }}',
-                    backgroundColor: getColor("{{uneEquipe|first.equipe.nom}}"),
-                    borderColor: getColor("{{uneEquipe|first.equipe.nom}}"),
-                    data: [{% for classement in uneEquipe %}{{classement.classement}},{% endfor %}],
-                    fill: false,
-                    },{% endfor %}]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Classement évolutif conférence South African',
-                },
-                tooltips:{
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover:{
-                    mode: 'nearest',
-                    intersect: true,
-                },
-                scales:{
-                    xAxes: [{
-                        display: true, 
-                        scaleLabel:{
-                           display: true,
-                           labelString: 'Journée',
-                       }
-                    }],
-                    yAxes: [{
-                        display: true, 
-                        scaleLabel:{
-                           display: true,
-                           labelString: 'Position',
-                       },
-                       ticks: {
-                            reverse: true,
-                            userCallback: function(label, index, labels) {
-                                if (Math.floor(label) === label) {
-                                    return label;
-                                }
-
-                            },
-                        }
-                    }],
-                }
-            }
-        };
-        var configWelsh = {
-            type:'line',
-            data:{
-                labels:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21],
-                datasets: [{% for uneEquipe in classementsWelsh %} {
-                    label: '{{ uneEquipe|first.equipe.nom }}',
-                    backgroundColor: getColor("{{uneEquipe|first.equipe.nom}}"),
-                    borderColor: getColor("{{uneEquipe|first.equipe.nom}}"),
-                    data: [{% for classement in uneEquipe %}{{classement.classement}},{% endfor %}],
-                    fill: false,
-                    },{% endfor %}]
-            },
-            options: {
-                responsive: true,
-                title: {
-                    display: true,
-                    text: 'Classement évolutif conférence Welsh',
-                },
-                tooltips:{
-                    mode: 'index',
-                    intersect: false,
-                },
-                hover:{
-                    mode: 'nearest',
-                    intersect: true,
-                },
-                scales:{
-                    xAxes: [{
-                        display: true, 
-                        scaleLabel:{
-                           display: true,
-                           labelString: 'Journée',
-                       }
-                    }],
-                    yAxes: [{
-                        display: true, 
-                        scaleLabel:{
-                           display: true,
-                           labelString: 'Position',
-                       },
-                       ticks: {
-                            reverse: true,
-                            userCallback: function(label, index, labels) {
-                                if (Math.floor(label) === label) {
-                                    return label;
-                                }
-
-                            },
                         }
                     }],
                 }
             }
         };
         window.onload = function(){
-            var ctx = document.getElementById('confIrish').getContext('2d');
-            window.myLine = new Chart(ctx,configIrish);
-            var ctx2 = document.getElementById('confScottish').getContext('2d');
-            window.myLine = new Chart(ctx2,configScottish);
-            var ctx3 = document.getElementById('confSouthAfrican').getContext('2d');
-            window.myLine = new Chart(ctx3,configSouthAfrican);
-            var ctx4 = document.getElementById('confWelsh').getContext('2d');
-            window.myLine = new Chart(ctx4,configWelsh);
+            var ctx = document.getElementById('confA').getContext('2d');
+            window.myLine = new Chart(ctx,configA);
+            var ctx2 = document.getElementById('confB').getContext('2d');
+            window.myLine = new Chart(ctx2,configB);
         };
 </script>
 {% endblock %}

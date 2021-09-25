@@ -27,7 +27,7 @@ class Classement
     private $journee;
 
     /**
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string", length=255)
      */
     private $conference;
 

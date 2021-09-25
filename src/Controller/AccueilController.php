@@ -22,16 +22,25 @@ class AccueilController extends AbstractController {
         $repositorySaison = $this->getDoctrine()->getRepository(\App\Entity\Saison::class);
         $saison = $repositorySaison->findBy(["actuelle"=>"Oui"]);
         
-        $lastClassementA = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'A');
-        //var_dump($lastClassementA);
-        if(empty($lastClassementA)){
+        $lastClassementIrish = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'Irish');
+        if(empty($lastClassementIrish)){
             $saisonB = $repositorySaison->findBy(["actuelle"=>"Non"],['id'=>'desc']);
-            $lastClassementA =  $repositoryClassement->findLastClassementPlayedByConf($saisonB[0]->getSaison(),'A');
+            $lastClassementIrish =  $repositoryClassement->findLastClassementPlayedByConf($saisonB[0]->getSaison(),'Irish');
         }
-        $lastClassementB = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
-        if(empty($lastClassementB)){
+        $lastClassementScottish = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'Scottish/Italian');
+        if(empty($lastClassementScottish)){
             $saisonB = $repositorySaison->findBy(["actuelle"=>"Non"],['id'=>'desc']);
-            $lastClassementB =  $repositoryClassement->findLastClassementPlayedByConf($saisonB[0]->getSaison(),'B');
+            $lastClassementScottish =  $repositoryClassement->findLastClassementPlayedByConf($saisonB[0]->getSaison(),'Scottish/Italian');
+        }
+        $lastClassementSouthAfrican = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'South African');
+        if(empty($lastClassementScottish)){
+            $saisonB = $repositorySaison->findBy(["actuelle"=>"Non"],['id'=>'desc']);
+            $lastClassementSouthAfrican =  $repositoryClassement->findLastClassementPlayedByConf($saisonB[0]->getSaison(),'South African');
+        }
+        $lastClassementWelsh = $repositoryClassement->findLastClassementPlayedByConf($saison[0]->getSaison(),'Welsh');
+        if(empty($lastClassementWelsh)){
+            $saisonB = $repositorySaison->findBy(["actuelle"=>"Non"],['id'=>'desc']);
+            $lastClassementWelsh =  $repositoryClassement->findLastClassementPlayedByConf($saisonB[0]->getSaison(),'Welsh');
         }
         
         $repositoryArticle = $this->getDoctrine()->getRepository(\App\Entity\Article::class);
@@ -70,8 +79,10 @@ class AccueilController extends AbstractController {
         //var_dump($xml);
         return $this->render('accueil/accueil.html.twig', [
             'selected' => "Accueil",
-            'classementA' => $lastClassementA,
-            'classementB' => $lastClassementB,
+            'classementIrish' => $lastClassementIrish,
+            'classementScottish' => $lastClassementScottish,
+            'classementSouthAfrican' => $lastClassementSouthAfrican,
+            'classementWelsh' => $lastClassementWelsh,
             'lastFiveArticles' => $lastFiveArticles,
             'othersArticles' => $othersArticles,
             'presse'=>$data,

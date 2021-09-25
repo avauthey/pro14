@@ -88,6 +88,11 @@ class Equipe
      */
     private $tags;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->palmares = new ArrayCollection();
@@ -361,6 +366,18 @@ class Equipe
                 $tag->setEquipe(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getActive(): int
+    {
+        return $this->active;
+    }
+
+    public function setActive(int $active): self
+    {
+        $this->active = $active;
 
         return $this;
     }

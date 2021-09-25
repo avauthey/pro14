@@ -88,7 +88,7 @@
             <h3 class="text-white">Classement</h3>
             <div class="row">
                 <div class="col-lg-6">
-                    <span class="text-white">Conférence A :</span>
+                    <span class="text-white">{{classementIrish|first.conference}} Conference :</span>
                     <div class="table-responsive classement-reduce-size mt-1">
                         <table class="table">
                             <thead class="thead-dark">
@@ -106,7 +106,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for confA in classementA %}
+                                {% for confA in classementIrish %}
                                     <tr style='background-color: #F2F2F2'>
                                         <th>{{ confA.classement }} </th>
                                         <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confA.equipe.id})}}">{{ confA.equipe.nom }}</a></td>
@@ -126,7 +126,7 @@
                         
                 </div>
                 <div class="col-lg-6">
-                    <span class="text-white">Conférence B :</span>
+                    <span class="text-white">{{classementScottish|first.conference}} Conference :</span>
                     <div class="table-responsive classement-reduce-size mt-1">
                         <table class="table">
                             <thead class="thead-dark">
@@ -144,7 +144,84 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for confB in classementB %}
+                                {% for confB in classementScottish %}
+                                    <tr style='background-color: #F2F2F2'>
+                                        <th>{{ confB.classement }} </th>
+                                        <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confB.equipe.id})}}">{{ confB.equipe.nom }}</a> </td>
+                                        <td> {{confB.joue }}</td>
+                                        <td> {{confB.nbPoints }}</td>
+                                        <td> {{confB.victoire }}</td>
+                                        <td> {{confB.nul }}</td>
+                                        <td> {{confB.defaite }}</td>
+                                        <td> {{confB.bo }}</td>
+                                        <td> {{confB.bd }}</td>
+                                        <td> {{confB.difference }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>  
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <span class="text-white">{{classementSouthAfrican|first.conference}} Conference :</span>
+                    <div class="table-responsive classement-reduce-size mt-1">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Pos</th>
+                                    <th>Equipe</th>
+                                    <th>Joué</th>
+                                    <th>Points</th>
+                                    <th>V</th>
+                                    <th>N</th>
+                                    <th>D</th>
+                                    <th>BO</th>
+                                    <th>BD</th>
+                                    <th>+/-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for confA in classementSouthAfrican %}
+                                    <tr style='background-color: #F2F2F2'>
+                                        <th>{{ confA.classement }} </th>
+                                        <td><img src="{{ asset('images/logo/'~confA.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confA.equipe.id})}}">{{ confA.equipe.nom }}</a></td>
+                                        <td> {{confA.joue }}</td>
+                                        <td> {{confA.nbPoints }}</td>
+                                        <td> {{confA.victoire }}</td>
+                                        <td> {{confA.nul }}</td>
+                                        <td> {{confA.defaite }}</td>
+                                        <td> {{confA.bo }}</td>
+                                        <td> {{confA.bd }}</td>
+                                        <td> {{confA.difference }}</td>
+                                    </tr>                                    
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                        
+                </div>
+                <div class="col-lg-6">
+                    <span class="text-white">{{classementWelsh|first.conference}} Conference :</span>
+                    <div class="table-responsive classement-reduce-size mt-1">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Pos</th>
+                                    <th>Equipe</th>
+                                    <th>Joué</th>
+                                    <th>Points</th>
+                                    <th>V</th>
+                                    <th>N</th>
+                                    <th>D</th>
+                                    <th>BO</th>
+                                    <th>BD</th>
+                                    <th>+/-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for confB in classementWelsh %}
                                     <tr style='background-color: #F2F2F2'>
                                         <th>{{ confB.classement }} </th>
                                         <td><img src="{{ asset('images/logo/'~confB.equipe.logo)}}" width="19"> <a style="color:inherit" href="{{ path('equipe', {'id':confB.equipe.id})}}">{{ confB.equipe.nom }}</a> </td>

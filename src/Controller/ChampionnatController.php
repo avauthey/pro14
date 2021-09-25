@@ -22,34 +22,79 @@ class ChampionnatController extends AbstractController {
             $saison = $repositorySaison->findBy(['saison'=>$nomSaison]);
         }
         $saisonsPrecedentes = $repositorySaison->findPrevious($saison[0]->getId());
-        $lesEquipes = $repositoryEquipe->findAllByNomOrder('ASC');
-        $classementsA = array();
-        $classementsB = array();
-        $classementsBDDA = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'A');
-        foreach($classementsBDDA as $unClass){
-            $classementsA[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
-        }
-        $classementsBDDB = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'B');
-        foreach($classementsBDDB as $unClass){
-            $classementsB[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
-        }
-        $lastClassementA = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'A');
-        $lastClassementB = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
         $lesRealisateurs = $repositoryJournee->findRealisateur($saison[0]->getSaison());
         $lesMarqueurs = $repositoryJournee->findMarqueur($saison[0]->getSaison());
-        return $this->render('competition/classement.html.twig', [
-            'selected' => "Competition",
-            'equipes'=> $lesEquipes,
-            'classementsA'=> $classementsA,
-            'classementsB'=> $classementsB,
-            'active' => "Classement",
-            'lastClassementA' => $lastClassementA,
-            'lastClassementB' => $lastClassementB,
-            'realisateurs'=>$lesRealisateurs,
-            'marqueurs'=>$lesMarqueurs,
-            'saison' => $saison[0]->getSaison(),
-            'saisonsPrécédentes'=> $saisonsPrecedentes,
-        ]);
+        
+        if($saison[0]->getSaison() < '2021-2022'){
+            $classementsA = array();
+            $classementsB = array();
+            $classementsBDDA = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'A');
+            foreach($classementsBDDA as $unClass){
+                $classementsA[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
+            }
+            $classementsBDDB = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'B');
+            foreach($classementsBDDB as $unClass){
+                $classementsB[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
+            }
+            $lastClassementA = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'A');
+            $lastClassementB = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'B');
+            return $this->render('competition/classementBefore2021.html.twig', [
+                'selected' => "Competition",
+                'classementsA'=> $classementsA,
+                'classementsB'=> $classementsB,
+                'active' => "Classement",
+                'lastClassementA' => $lastClassementA,
+                'lastClassementB' => $lastClassementB,
+                'realisateurs'=>$lesRealisateurs,
+                'marqueurs'=>$lesMarqueurs,
+                'saison' => $saison[0]->getSaison(),
+                'saisonsPrécédentes'=> $saisonsPrecedentes,
+            ]);
+        }else{
+            $classementsIrish = [];
+            $classementsBDDIrish = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'Irish');
+            foreach($classementsBDDIrish as $unClass){
+                $classementsIrish[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
+            }
+            $lastClassementIrish = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'Irish');
+            
+            $classementsScottish = [];
+            $classementsBDDScottish = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'Scottish/Italian');
+            foreach($classementsBDDScottish as $unClass){
+                $classementsScottish[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
+            }
+            $lastClassementScottish = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'Scottish/Italian');
+            
+            $classementsSouthAfrican = [];
+            $classementsBDDSouthAfrican = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'South African');
+            foreach($classementsBDDSouthAfrican as $unClass){
+                $classementsSouthAfrican[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
+            }
+            $lastClassementSouthAfrican = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'South African');
+            
+            $classementsWelsh = [];
+            $classementsBDDWelsh = $repository->findAllClassementBySaisonConf($saison[0]->getSaison(),'Welsh');
+            foreach($classementsBDDWelsh as $unClass){
+                $classementsWelsh[$unClass->getEquipe()->getId()][$unClass->getJournee()]=$unClass;
+            }
+            $lastClassementWelsh = $repository->findLastClassementPlayedByConf($saison[0]->getSaison(),'Welsh');
+            return $this->render('competition/classement.html.twig', [
+                'selected' => "Competition",
+                'classementsIrish'=> $classementsIrish,
+                'classementsScottish'=> $classementsScottish,
+                'classementsSouthAfrican'=> $classementsSouthAfrican,
+                'classementsWelsh'=> $classementsWelsh,
+                'active' => "Classement",
+                'lastClassementIrish' => $lastClassementIrish,
+                'lastClassementScottish' => $lastClassementScottish,
+                'lastClassementSouthAfrican' => $lastClassementSouthAfrican,
+                'lastClassementWelsh' => $lastClassementWelsh,
+                'realisateurs'=>$lesRealisateurs,
+                'marqueurs'=>$lesMarqueurs,
+                'saison' => $saison[0]->getSaison(),
+                'saisonsPrécédentes'=> $saisonsPrecedentes,
+            ]);
+        }        
     }
     
     public function getCalendrier($nomSaison = null){
