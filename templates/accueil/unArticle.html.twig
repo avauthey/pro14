@@ -11,7 +11,7 @@
 </nav>
 <div class='container-fluid pb-6 mb-3'>
     <div class='row justify-content-center'>
-        <div class='col-lg-10'>
+        <div class='col-lg-8'>
             <h1>{{ article.titre }}</h1>
             <small class="text-muted">Date Création : {{ article.dateCreation|date('d/m/Y')}}</small><br />
             {% if article.dateDerniereModification is not null %}
@@ -20,10 +20,10 @@
         </div>
     </div>
     <div class='row justify-content-center mt-2'>
-        <div class='col-lg-10'>{{article.contenu | raw}}</div>
+        <div class='col-lg-8'>{{article.contenu | raw}}</div>
     </div>
     <div class='row justify-content-center mt-4'>
-        <div class='col-lg-10'>
+        <div class='col-lg-8'>
             <div class="media">
                 <img src="{{ asset('images/author/'~article.author.avatar)}}" class="mr-3" alt="..." width="64px">
                 <div class="media-body">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div class='row justify-content-center mt-4'>
-        <div class="col-lg-10">
+        <div class="col-lg-8">
             <span class="tags">
                 <i class="fas fa-tags text-vert"></i> Tags :
                 {% for tag in tags %}
